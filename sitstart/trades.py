@@ -150,8 +150,12 @@ def build_offer(target_value: float, target_pos: str | None, partner: Team, me: 
     if not best:
         return None
     _, combo, total, f = best
-    return {"assets": [{"label": a["label"], "kind": a["kind"], "value": round(a["value"]),
-                        "age": a["age"], "pos": a["pos"]} for a in combo],
+    return _offer_dict(combo, total, target_value, f)
+
+
+def _offer_dict(combo, total: float, target_value: float, f: float) -> dict:
+    return {"assets": [{"id": a["id"], "label": a["label"], "kind": a["kind"], "value": round(a["value"]),
+                        "age": a["age"], "pos": a["pos"], "core": bool(a.get("core"))} for a in combo],
             "total": round(total), "ratio": round(total / target_value, 3), "fit": round(f, 2)}
 
 
@@ -200,9 +204,86 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
                 "offer": offer,
             })
     out.sort(key=lambda x: -x["score"])
-    return {"targets": [x for x in out if x["offer"]][:MAX_TARGETS],
-            "out_of_reach": [x for x in out if not x["offer"]][:5],
-            "assets": assets}
+    targets = [x for x in out if x["offer"]][:MAX_TARGETS]
+    flag_reuse(targets, teams, me, market, assets)
+    unreachable = [x for x in out if not x["offer"]]
+    swings = bigger_swings(teams, me, market, slots, positions, unreachable, assets, core, ppg)
+    return {"targets": targets, "out_of_reach": unreachable[:5], "bigger_swings": swings, "assets": assets}
+
+
+def flag_reuse(targets: list[dict], teams: dict[int, Team], me: Team, market: Market, assets: list[dict]) -> None:
+    """Each offer is built on its own, so one pick can appear in several. Mark shared pieces and,
+    where possible, add the next-best package without them (`alt_offer`)."""
+    from collections import Counter
+    uses = Counter(a["id"] for t in targets for a in t["offer"]["assets"])
+    for t in targets:
+        shared = [a for a in t["offer"]["assets"] if uses[a["id"]] > 1]
+        t["shared"] = [{"label": a["label"], "offers": uses[a["id"]]} for a in shared]
+        t["alt_offer"] = None
+        if shared:
+            drop = {a["id"] for a in shared}
+            rest = [a for a in assets if a["id"] not in drop]
+            t["alt_offer"] = build_offer(t["value"], t["pos"], teams[t["owner_roster_id"]], me, market, rest)
+
+
+SWING_MIN_GAIN = 300      # net win-now gain needed for a starter-inclusive trade to be worth showing
+MAX_SWINGS = 5
+
+
+def _player_asset(pid: str, market: Market, core: bool) -> dict:
+    mp = market.player(pid) or {}
+    return {"kind": "player", "id": pid, "label": mp.get("name") or pid, "pos": mp.get("pos"), "age": mp.get("age"),
+            "value": market.value(pid), "redraft": market.redraft(pid), "core": core}
+
+
+def bigger_swings(teams: dict[int, Team], me: Team, market: Market, slots: list[str], positions: dict[str, str],
+                  candidates: list[dict], assets: list[dict], core: set[str], ppg: dict[str, float] | None,
+                  max_extra: int = 2) -> list[dict]:
+    """Two-for-ones for players your surplus can't reach: one of your core players plus up to two other
+    pieces. Kept only if your best lineup still improves after losing the core player."""
+    core_assets = [_player_asset(pid, market, True) for pid in core if market.value(pid) > 0]
+    out = []
+    for x in candidates[:10]:
+        T = x["value"]
+        partner = teams[x["owner_roster_id"]]
+        others = [a for a in assets if a["value"] >= 0.08 * T][:16]
+        best = None
+        for c in core_assets:
+            for k_extra in range(0, max_extra + 1):
+                for extra in combinations(others, k_extra):
+                    combo = [c, *extra]
+                    k = len(combo)
+                    need = T * (1 + CONSOLIDATION * (k - 1))
+                    total = sum(a["value"] for a in combo)
+                    if not (need <= total <= need * 1.25):
+                        continue
+                    if max(a["value"] for a in combo) < 0.5 * T:
+                        continue
+                    if not qb_safe(me, market, combo, x["pos"]):
+                        continue
+                    gone = {a["id"] for a in combo if a["kind"] == "player"}
+                    after = [p for p in me.players if p not in gone] + [x["player_id"]]
+                    new = best_win_now(after, slots, market, positions)
+                    net = sum(market.redraft(p) for p in new) - me.win_now
+                    if net < SWING_MIN_GAIN:
+                        continue
+                    f = sum(fit(a, partner) * a["value"] for a in combo) / total
+                    key = (round(net / 250), round(f, 1), -k, -total)
+                    if best is None or key > best[0]:
+                        best = (key, combo, total, f, net)
+        if best:
+            _, combo, total, f, net = best
+            gives = [a for a in combo if a.get("core")]
+            out.append({**{k: x[k] for k in ("player_id", "name", "pos", "age", "nfl_team", "owner", "owner_label",
+                                              "owner_roster_id", "value", "fc_value", "ktc_value", "disagree",
+                                              "motive", "why", "ppg")},
+                        "injury_status": x.get("injury_status"),
+                        "net_gain": round(net), "score": round(net * x["motive"]),
+                        "gives_starter": [{"name": a["label"], "ppg": round(ppg[a["id"]], 1) if ppg and a["id"] in ppg else None}
+                                          for a in gives],
+                        "offer": _offer_dict(combo, total, T, f)})
+    out.sort(key=lambda s: -s["score"])
+    return out[:MAX_SWINGS]
 
 
 # --------------------------------------------------------------------------- #
@@ -272,7 +353,7 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
     unavailable = {pid for pid in me.players
                    if (sleeper_players.get(pid) or {}).get("injury_status") in ("Out", "IR", "PUP", "Sus", "Doubtful")}
     found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable)
-    for t in found["targets"] + found["out_of_reach"]:
+    for t in found["targets"] + found["out_of_reach"] + found["bigger_swings"]:
         t["injury_status"] = (sleeper_players.get(t["player_id"]) or {}).get("injury_status")
 
     def team_row(t):
@@ -286,7 +367,7 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
         "season": season, "week": week, "deadline_week": settings.get("trade_deadline"),
         "league_name": lg["name"], "me": team_row(me),
         "needs": position_needs(teams, me, market),
-        "targets": found["targets"], "out_of_reach": found["out_of_reach"],
+        "targets": found["targets"], "out_of_reach": found["out_of_reach"], "bigger_swings": found["bigger_swings"],
         "my_assets": [{k: a[k] for k in ("label", "kind", "value", "age", "pos")} for a in found["assets"][:12]],
         "teams": [team_row(t) for t in sorted(teams.values(), key=lambda t: t.record_rank)],
         "trades_this_season": len(trades),

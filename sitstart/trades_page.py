@@ -22,7 +22,7 @@ td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-chil
 .pname{font-weight:600}tr.me td{font-weight:600}.small{font-size:12px}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .tag.contender{color:var(--accent)}.tag.middle{color:var(--sub)}.tag.rebuilder{color:var(--warn)}
-.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}
+.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}.tag.core{color:var(--accent)}.reuse{margin-top:4px;max-width:260px}
 .offer div{white-space:nowrap}.gain{color:var(--good);font-weight:600}
 .chips span{display:inline-block;margin:2px 6px 2px 0}
 @media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}}
@@ -77,6 +77,46 @@ def _values_note(rep: dict) -> str:
     return "Market value = FantasyCalc (KeepTradeCut was unavailable this run). "
 
 
+def _reuse(t: dict) -> str:
+    shared = t.get("shared") or []
+    if not shared:
+        return ""
+    names = ", ".join(f'{escape(x["label"])} (in {x["offers"]} offers)' for x in shared)
+    alt = t.get("alt_offer")
+    if alt:
+        alt_s = (" Without it: " + ", ".join(escape(a["label"]) for a in alt["assets"])
+                 + f" ({alt['ratio']:.0%}).")
+    else:
+        alt_s = " No package works without it."
+    return f'<div class="sub small reuse">Shared: {names}.{alt_s}</div>'
+
+
+def _swing_rows(swings: list[dict]) -> str:
+    rows = []
+    for x in swings:
+        o = x["offer"]
+        gives = "".join(
+            f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
+            + (' <span class="tag core">starter</span>' if a.get("core") else "") + '</div>' for a in o["assets"])
+        starter = x["gives_starter"][0] if x.get("gives_starter") else {}
+        ppg = ""
+        if isinstance(x.get("ppg"), (int, float)):
+            ppg = f'<div class="sub small">{x["ppg"]:.1f} pts/game'
+            if isinstance(starter.get("ppg"), (int, float)):
+                ppg += f' vs {starter["ppg"]:.1f} for {escape(starter["name"])}'
+            ppg += '</div>'
+        inj = f' <span class="tag inj">{escape(x["injury_status"])}</span>' if x.get("injury_status") else ""
+        rows.append(
+            f'<tr><td><span class="pname">{escape(x["name"])}</span>{inj}<div class="sub small">{escape(x["pos"] or "")}, '
+            f'{_age(x["age"])}, {escape(x.get("nfl_team") or "FA")}</div></td>'
+            f'<td>{escape(x["owner"])} {_tag(x["owner_label"])}<div class="sub small">{escape(x["why"])}</div></td>'
+            f'<td><span class="gain">+{_fmt(x["net_gain"])}</span><div class="sub small">net, after losing '
+            f'{escape(starter.get("name", "a starter"))}</div>{ppg}</td>'
+            f'<td class="num">{_fmt(x["value"])}{_sources(x)}</td>'
+            f'<td class="offer">{gives}<div class="sub small">{o["ratio"]:.0%} of his value</div></td></tr>')
+    return "".join(rows)
+
+
 def _target_rows(targets: list[dict]) -> str:
     rows = []
     for i, t in enumerate(targets, 1):
@@ -99,7 +139,7 @@ def _target_rows(targets: list[dict]) -> str:
             f'<td>{escape(t["owner"])} {_tag(t["owner_label"])}<div class="sub small">{escape(t["why"])}</div></td>'
             f'<td><span class="gain">+{_fmt(t["gain"])}</span>{replaces}{ppg}</td>'
             f'<td class="num">{_fmt(t["value"])}{trend_s}{_sources(t)}</td>'
-            f'<td class="offer">{offer}<div class="sub small">{o["ratio"]:.0%} of his value</div></td></tr>')
+            f'<td class="offer">{offer}<div class="sub small">{o["ratio"]:.0%} of his value</div>{_reuse(t)}</td></tr>')
     return "".join(rows)
 
 
@@ -125,7 +165,17 @@ def render(rep: dict) -> str:
     oor = rep.get("out_of_reach") or []
     oor_html = ('<p class="sub">Would help but cost more than your tradeable players and picks can cover: '
                 + ", ".join(f'{escape(t["name"])} ({escape(t["owner"])}, value {_fmt(t["value"])})' for t in oor)
-                + ". Offering a starter changes that math.</p>") if oor else ""
+                + ". See Bigger swings below for trades that include one of your starters.</p>") if oor else ""
+    swings = rep.get("bigger_swings") or []
+    swings_html = ""
+    if swings:
+        swings_html = ('<section class="card"><h2>Bigger swings <span class="sub">trades that include one of your starters</span></h2>'
+                       '<table><tr class="head"><td>Player</td><td>Their team</td><td>Your lineup, net</td>'
+                       '<td class="num">Market value</td><td>Suggested offer</td></tr>'
+                       f'{_swing_rows(swings)}</table>'
+                       '<p class="sub">For players your other assets can\'t reach. Each one sends a starter plus up to two '
+                       'other pieces, and only shows up if your best lineup still improves after losing that starter '
+                       '(net, in win-now value). Same pricing rules as above.</p></section>')
     chips = "".join(f'<span>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span></span>'
                     for a in rep.get("my_assets") or [])
     team_rows = "".join(
@@ -147,6 +197,7 @@ def render(rep: dict) -> str:
 <section class="card"><h2>Top targets</h2>{target_html}{oor_html}
 <p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
 Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. A benched player still counts as depth, so offers prefer giving up the least win-now value.</p></section>
+{swings_html}
 <section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
 <section class="card"><h2>League map</h2><table>
 <tr class="head"><td>Team</td><td class="num">Record</td><td>Lifecycle</td><td class="num">Win-now rank</td><td class="num">Dynasty rank</td>

@@ -790,3 +790,48 @@ class OfferRuleTests(unittest.TestCase):
         mid = self.teams[3]
         assets = [self.asset(n, 2700) for n in ("A", "B", "C")]
         self.assertIsNone(build_offer(6000, "WR", mid, self.teams[1], self.m, assets))  # best piece < 50%
+
+
+class SwingAndReuseTests(unittest.TestCase):
+    def setUp(self):
+        self.m, self.pos, self.teams = MarketTests().teams()
+        self.me = self.teams[1]
+
+    def test_reuse_flagged_with_alternative(self):
+        from sitstart.trades import flag_reuse
+        A = {"kind": "pick", "id": "A", "label": "2028 1st", "pos": None, "age": None, "value": 3000, "redraft": 0}
+        B = {"kind": "pick", "id": "B", "label": "2029 1st", "pos": None, "age": None, "value": 3000, "redraft": 0}
+        mk = lambda name: {"name": name, "value": 2900, "pos": "RB", "owner_roster_id": 3,
+                           "offer": {"assets": [{"id": "A", "label": "2028 1st"}]}}
+        targets = [mk("T1"), mk("T2")]
+        flag_reuse(targets, self.teams, self.me, self.m, [A, B])
+        self.assertEqual(targets[0]["shared"], [{"label": "2028 1st", "offers": 2}])
+        self.assertEqual([a["label"] for a in targets[0]["alt_offer"]["assets"]], ["2029 1st"])
+
+    def test_no_reuse_no_flag(self):
+        from sitstart.trades import flag_reuse
+        t = [{"name": "T1", "value": 2900, "pos": "RB", "owner_roster_id": 3,
+              "offer": {"assets": [{"id": "A", "label": "2028 1st"}]}}]
+        flag_reuse(t, self.teams, self.me, self.m, [])
+        self.assertEqual(t[0]["shared"], [])
+        self.assertIsNone(t[0]["alt_offer"])
+
+    def test_bigger_swing_sends_a_starter_only_if_lineup_improves(self):
+        from sitstart.trades import bigger_swings
+        m = self.m
+        m.players["s1"] = {"name": "Star QB", "pos": "QB", "age": 27, "team": "ZZZ", "value": 6500.0, "redraft": 9000.0,
+                           "trend": None, "tier": None}
+        cand = {"player_id": "s1", "name": "Star QB", "pos": "QB", "age": 27, "nfl_team": "ZZZ", "owner": "seller",
+                "owner_label": "rebuilder", "owner_roster_id": 2, "value": 6500, "fc_value": 6500, "ktc_value": None,
+                "disagree": False, "motive": 1.0, "why": "", "ppg": 25.0}
+        core = {"q2", "q3", "r2"}
+        swings = bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], [], core,
+                               {"q2": 18.0, "s1": 25.0})
+        self.assertEqual(len(swings), 1)
+        s = swings[0]
+        self.assertEqual(s["gives_starter"], [{"name": "Young QB", "ppg": 18.0}])
+        self.assertEqual(s["net_gain"], 5000)      # 9000 in, 4000 out (Young QB's win-now)
+        self.assertTrue(s["offer"]["assets"][0]["core"])
+        # A lineup-neutral swap is not shown
+        m.players["s1"]["redraft"] = 4100.0
+        self.assertEqual(bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], [], core, None), [])
