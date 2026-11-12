@@ -11,7 +11,7 @@ For each player on another roster:
   motive  = how likely his manager is to sell (their lifecycle, his age, whether he starts for them)
   score   = gain x motive
 Then an offer is built from your surplus (bench players and picks) at 100-120% of his
-market value, shaped to what the other manager needs: picks and young players for a
+market value (+8% per extra piece), shaped to what the other manager needs: picks and young players for a
 rebuilder, producers for a contender. Superflex: never offers a QB if that would leave
 you with fewer than 3 startable QBs.
 """
@@ -107,21 +107,35 @@ def fit(asset: dict, partner: Team) -> float:
     return 0.8
 
 
+CONSOLIDATION = 0.08   # extra value needed per additional piece (the other manager gives up roster quality)
+
+
+def _is_first(a: dict) -> bool:
+    return a["kind"] == "pick" and " 1st" in a["label"]
+
+
 def build_offer(target_value: float, target_pos: str | None, partner: Team, me: Team, market: Market,
                 assets: list[dict], max_pieces: int = 3) -> dict | None:
+    """Cheapest sensible package. Rules:
+    - total >= target x (1 + 8% per extra piece), and <= that + 20%
+    - the best piece is worth at least half the target (no pile of bench players for a star)
+    - prefer what the other manager wants (fit), then spending fewer 1st-round picks,
+      then fewer pieces, then the smallest overpay"""
     pool = [a for a in assets if a["value"] >= 0.08 * target_value][:24]
     best = None
     for k in range(1, max_pieces + 1):
+        need = target_value * (1 + CONSOLIDATION * (k - 1))
         for combo in combinations(pool, k):
             total = sum(a["value"] for a in combo)
-            if not (target_value <= total <= 1.2 * target_value):
+            if not (need <= total <= need * 1.2):
                 continue
-            if max(a["value"] for a in combo) < 0.45 * target_value:
-                continue  # no pile of small pieces for a star
+            if max(a["value"] for a in combo) < 0.5 * target_value:
+                continue
             if not qb_safe(me, market, list(combo), target_pos):
                 continue
             f = sum(fit(a, partner) * a["value"] for a in combo) / total
-            key = (round(f, 2), -k, -(total / target_value))
+            firsts = sum(_is_first(a) for a in combo)
+            key = (round(f, 1), -firsts, -k, -abs(total / need - 1.0))
             if best is None or key > best[0]:
                 best = (key, combo, total, f)
     if not best:

@@ -740,3 +740,33 @@ class KtcTests(unittest.TestCase):
         fc = parse_fantasycalc(MarketTests.FC)
         m, status = blend_ktc(fc, MarketTests.FC, parse(self.HTML))
         self.assertGreaterEqual(status["ktc_players_unmapped"], 1)    # "Only In KTC" has no match
+
+
+class OfferRuleTests(unittest.TestCase):
+    def setUp(self):
+        self.m, self.pos, self.teams = MarketTests().teams()
+
+    def asset(self, label, value, kind="player", age=29, pos="WR"):
+        return {"kind": kind, "id": label, "label": label, "pos": None if kind == "pick" else pos,
+                "age": None if kind == "pick" else age, "value": value, "redraft": 0 if kind == "pick" else value * 0.6}
+
+    def test_prefers_bench_over_first_round_pick(self):
+        from sitstart.trades import build_offer
+        mid = self.teams[3]   # "middle" team: fit is equal for players and picks
+        assets = [self.asset("2028 1st", 3000, "pick"), self.asset("Bench WR", 3000)]
+        o = build_offer(2900, "RB", mid, self.teams[1], self.m, assets)
+        self.assertEqual([a["label"] for a in o["assets"]], ["Bench WR"])
+
+    def test_consolidation_premium(self):
+        from sitstart.trades import build_offer
+        mid = self.teams[3]
+        assets = [self.asset("A", 3000), self.asset("B", 2600)]
+        self.assertIsNone(build_offer(5600, "RB", mid, self.teams[1], self.m, assets))   # 5600 < 5600 x 1.08
+        o = build_offer(5150, "RB", mid, self.teams[1], self.m, assets)
+        self.assertEqual(len(o["assets"]), 2)
+
+    def test_no_bench_pile_for_star(self):
+        from sitstart.trades import build_offer
+        mid = self.teams[3]
+        assets = [self.asset(n, 2700) for n in ("A", "B", "C")]
+        self.assertIsNone(build_offer(6000, "WR", mid, self.teams[1], self.m, assets))  # best piece < 50%

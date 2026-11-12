@@ -145,7 +145,7 @@ def render(rep: dict) -> str:
 <p class="sub">{lens}</p></section>
 <section class="card"><h2>Top targets</h2>{target_html}{oor_html}
 <p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
-Offers total 100&ndash;120% of the player's market value. Expect to add a little when you send 2&ndash;3 pieces for one; managers pay a premium for the single best piece.</p></section>
+Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. Offers spend bench players before 1st-round picks.</p></section>
 <section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
 <section class="card"><h2>League map</h2><table>
 <tr class="head"><td>Team</td><td class="num">Record</td><td>Lifecycle</td><td class="num">Win-now rank</td><td class="num">Dynasty rank</td>
