@@ -18,6 +18,16 @@ All 108 team-weeks in the league. Lineups chosen from each week's roster, scored
 | Blend, w = 0.9 | 11970.9 | 110.8 | 84.1% | +0.45 (SE 0.55; 35W-27L) |
 | Expert consensus only | 11947.7 | 110.6 | 84.0% | +0.23 (SE 0.66; 36W-29L) |
 
+## Stats adjustment (shadow), Weeks 2-9
+
+50/50 blend x (1 + stats adjustment, capped at 15%), using only games before each week. 96 team-weeks.
+
+| Approach | Total pts | vs 50/50 blend, per team-week |
+| --- | --- | --- |
+| 50/50 blend | 10494.2 | |
+| Blend + stats | 10377.1 | -1.22 (SE 0.68; 25W-32L) |
+| Hindsight best | 12511.1 | |
+
 ## Your team (9 weeks)
 
 | Week | Actual | Sleeper only | Best blend | Experts only | Hindsight |
