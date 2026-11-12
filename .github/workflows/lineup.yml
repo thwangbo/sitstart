@@ -48,7 +48,7 @@ jobs:
         run: >
           python -m sitstart
           --username "${{ vars.SLEEPER_USERNAME || 'thwangbo' }}"
-          --out data --html site/index.html --notify
+          --out data --html site/index.html --trades site/trades.html --notify
 
       - name: Save snapshot history
         run: |

@@ -571,3 +571,103 @@ class GradeTests(unittest.TestCase):
         html = render(snap)
         self.assertIn("Report card", html)
         self.assertIn("94.0", html)
+
+
+class MarketTests(unittest.TestCase):
+    FC = [
+        {"player": {"sleeperId": "q1", "name": "Vet QB", "position": "QB", "maybeAge": 33, "maybeTeam": "AAA"}, "value": 3000, "redraftValue": 6000},
+        {"player": {"sleeperId": "q2", "name": "Young QB", "position": "QB", "maybeAge": 23, "maybeTeam": "BBB"}, "value": 7000, "redraftValue": 4000},
+        {"player": {"sleeperId": "q3", "name": "Backup QB", "position": "QB", "maybeAge": 28, "maybeTeam": "CCC"}, "value": 1500, "redraftValue": 2000},
+        {"player": {"sleeperId": "q4", "name": "Bench QB", "position": "QB", "maybeAge": 27, "maybeTeam": "DDD"}, "value": 1400, "redraftValue": 1800},
+        {"player": {"sleeperId": "r1", "name": "Old RB", "position": "RB", "maybeAge": 29, "maybeTeam": "EEE"}, "value": 2500, "redraftValue": 5000},
+        {"player": {"sleeperId": "r2", "name": "Weak RB", "position": "RB", "maybeAge": 25, "maybeTeam": "FFF"}, "value": 1200, "redraftValue": 900},
+        {"player": {"sleeperId": "r3", "name": "Kid RB", "position": "RB", "maybeAge": 22, "maybeTeam": "GGG"}, "value": 2600, "redraftValue": 800},
+        {"player": {"name": "2027 1st (Early)", "position": "PICK"}, "value": 5000},
+        {"player": {"name": "2027 1st (Late)", "position": "PICK"}, "value": 2500},
+        {"player": {"name": "2027 1st", "position": "PICK"}, "value": 3000},
+        {"player": {"name": "2028 1st", "position": "PICK"}, "value": 2200},
+        {"player": {"name": "2028 2nd", "position": "PICK"}, "value": 1400},
+    ]
+    SLOTS = ["QB", "RB", "SUPER_FLEX"]
+
+    def market(self):
+        from sitstart.market import parse_fantasycalc
+        return parse_fantasycalc(self.FC)
+
+    def teams(self):
+        from sitstart.market import build_profiles
+        m = self.market()
+        pos = {pid: p["pos"] for pid, p in m.players.items()}
+        rosters = [
+            {"roster_id": 1, "owner_id": "me", "players": ["q2", "q3", "q4", "r2", "r3"], "settings": {"wins": 8, "losses": 1, "fpts": 900}},
+            {"roster_id": 2, "owner_id": "u2", "players": ["q1"], "settings": {"wins": 1, "losses": 8, "fpts": 500}},
+            {"roster_id": 3, "owner_id": "u3", "players": ["r1"], "settings": {"wins": 5, "losses": 4, "fpts": 700}},
+        ]
+        users = [{"user_id": "me", "display_name": "me"}, {"user_id": "u2", "display_name": "seller"},
+                 {"user_id": "u3", "display_name": "mid"}]
+        traded = [{"season": "2027", "round": 1, "roster_id": 2, "owner_id": 1}]   # I own the seller's 2027 1st
+        return m, pos, build_profiles(rosters, users, m, self.SLOTS, pos, traded, [], 2026, 2)
+
+    def test_pick_values_and_fallback(self):
+        m = self.market()
+        self.assertEqual(m.pick_value("2027", 1, "Early"), 5000)
+        self.assertEqual(m.pick_value("2028", 1, "Early"), 2200)    # no tiers listed for 2028
+        self.assertEqual(m.pick_value("2030", 1), 2200)             # unlisted season: latest listed
+        self.assertEqual(m.pick_value("2028", 2), 1400)
+
+    def test_pick_ownership_and_tiers(self):
+        m, pos, teams = self.teams()
+        mine = {p["label"] for p in teams[1].picks}
+        self.assertIn("2027 1st (Early)", mine)     # seller is last in standings -> early pick
+        self.assertIn("2027 1st (Late)", mine)      # my own, I'm first
+        self.assertFalse(any(p["season"] == "2027" and p["round"] == 1 for p in teams[2].picks))
+
+    def test_lifecycle_labels(self):
+        _, _, teams = self.teams()
+        self.assertEqual(teams[1].label, "contender")
+        self.assertEqual(teams[2].label, "rebuilder")
+
+    def test_targets_buy_vet_from_rebuilder_with_surplus(self):
+        from sitstart.trades import find_targets
+        m, pos, teams = self.teams()
+        res = find_targets(teams, teams[1], m, self.SLOTS, pos)
+        names = [t["name"] for t in res["targets"]]
+        self.assertEqual(names[0], "Vet QB")         # biggest win-now gain, rebuilding seller, he's 33
+        t = res["targets"][0]
+        self.assertEqual(t["motive"], 1.0)
+        offered = {a["label"] for a in t["offer"]["assets"]}
+        self.assertNotIn("Young QB", offered)        # my starters are never offered
+        self.assertTrue(1.0 <= t["offer"]["ratio"] <= 1.2)
+
+    def test_qb_guard_and_protect(self):
+        from sitstart.trades import my_assets, qb_safe
+        m, pos, teams = self.teams()
+        me = teams[1]
+        assets = my_assets(me, m, pos, protect={"q4"})
+        self.assertNotIn("Bench QB", [a["label"] for a in assets])
+        backup = next(a for a in my_assets(me, m, pos) if a["label"] == "Bench QB")
+        self.assertFalse(qb_safe(me, m, [backup], "RB"))   # would leave 2 startable QBs
+        self.assertTrue(qb_safe(me, m, [backup], "QB"))    # unless a QB comes back
+
+    def test_offer_rejects_pile_of_small_pieces(self):
+        from sitstart.trades import build_offer
+        m, pos, teams = self.teams()
+        small = [{"kind": "pick", "id": str(i), "label": f"p{i}", "pos": None, "age": None, "value": 1000, "redraft": 0}
+                 for i in range(3)]
+        self.assertIsNone(build_offer(3000, "RB", teams[2], teams[1], m, small))
+
+    def test_trades_page_renders(self):
+        from sitstart.trades import find_targets, position_needs
+        from sitstart.trades_page import render
+        m, pos, teams = self.teams()
+        me = teams[1]
+        res = find_targets(teams, me, m, self.SLOTS, pos)
+        row = lambda t: {"roster_id": t.roster_id, "name": t.name, "wins": t.wins, "losses": t.losses,
+                         "record_rank": t.record_rank, "win_now_rank": t.win_now_rank, "dynasty_rank": t.dynasty_rank,
+                         "age": t.age, "youth": t.youth, "label": t.label, "reasons": t.reasons, "picks": []}
+        rep = {"week": 10, "deadline_week": 12, "me": row(me), "needs": position_needs(teams, me, m),
+               "targets": res["targets"], "out_of_reach": res["out_of_reach"], "my_assets": res["assets"],
+               "teams": [row(t) for t in teams.values()], "generated_at": "2026-11-12T17:00:00+00:00"}
+        html = render(rep)
+        self.assertIn("Vet QB", html)
+        self.assertIn("2 weeks left", html)

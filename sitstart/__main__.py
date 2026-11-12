@@ -54,6 +54,30 @@ def load_consensus(client, schedule, ids_text):
     return map_to_sleeper(ecr, ids, client.players())
 
 
+def run_trades(client, snap, args) -> None:
+    """v2 trade finder. Never fails the weekly run."""
+    from .consensus import fetch
+    from .market import FC_URL
+    from .trades import build_report
+    from .trades_page import render as render_trades
+    try:
+        lg = snap.league
+        url = FC_URL.format(qbs=2 if lg["is_superflex"] else 1, teams=lg["total_rosters"] or 12,
+                            ppr=lg["scoring_summary"]["points_per_reception"])
+        report = build_report(client, snap.to_dict(), json.loads(fetch(url)))
+    except Exception as e:
+        print(f"Warning: trade targets not updated ({e})", file=sys.stderr)
+        return
+    Path(args.out, "trades_latest.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
+    out = Path(args.trades)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_trades(report), encoding="utf-8")
+    me = report["me"]
+    print(f"\nTrade targets: you're a {me['label']}; {len(report['targets'])} targets with offers. Wrote {out}")
+    for t in report["targets"][:3]:
+        print(f"  {t['name']} ({t['owner']}): offer " + ", ".join(a["label"] for a in t["offer"]["assets"]))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Pull your Sleeper league, roster, lineup and projections.")
     ap.add_argument("--username", required=True, help="Your Sleeper username")
@@ -67,6 +91,7 @@ def main(argv=None) -> int:
                     help="Weight on expert consensus in the score, 0-1 (default 0.5, from the Weeks 1-9 backtest)")
     ap.add_argument("--no-stats", action="store_true", help="Skip the advanced-stats view")
     ap.add_argument("--html", help="Also write the results page to this path, e.g. site/index.html")
+    ap.add_argument("--trades", help="Also write the trade-targets page to this path, e.g. site/trades.html")
     ap.add_argument("--notify", action="store_true",
                     help="Send a phone alert via ntfy when something changes (topic from NTFY_TOPIC)")
     args = ap.parse_args(argv)
@@ -119,6 +144,8 @@ def main(argv=None) -> int:
     if snap.data_status.get("projections_source") == "none":
         print("Warning: Sleeper returned no projections from either endpoint.", file=sys.stderr)
 
+    if args.trades:
+        snap.data_status["trades_page"] = True
     path = save_snapshot(snap, args.out)
     print(format_summary(snap))
     print(f"\nSaved {path}")
@@ -129,6 +156,9 @@ def main(argv=None) -> int:
         html_path.parent.mkdir(parents=True, exist_ok=True)
         html_path.write_text(render(snap.to_dict()), encoding="utf-8")
         print(f"Wrote {html_path}")
+
+    if args.trades:
+        run_trades(client, snap, args)
 
     if args.notify:
         from .notify import alert_key, build_alert, send

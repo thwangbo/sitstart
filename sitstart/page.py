@@ -200,7 +200,7 @@ def render(snap: dict) -> str:
 :root{{--bg:#f7f6f3;--card:#fff;--ink:#1d1d1b;--sub:#6b6a66;--line:#e6e4de;--accent:#2f5bd3;--good:#1f7a4d;--warn:#a86400;--bad:#b3261e}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#151514;--card:#1f1f1d;--ink:#ecebe7;--sub:#a3a29d;--line:#33322f;--accent:#7f9cf5;--good:#5cc28f;--warn:#e0a84a;--bad:#f08a80}}}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}}
-main{{max-width:1120px;margin:0 auto;padding:28px 16px 48px}}
+main{{max-width:1120px;margin:0 auto;padding:28px 16px 48px}}a{{color:var(--accent)}}
 header h1{{margin:0;font-size:24px}}header p{{margin:4px 0 0;color:var(--sub)}}
 .grid{{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}}
 @media (min-width:1000px){{.grid{{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}}}}
@@ -221,7 +221,7 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 .grades td{{text-align:right;font-variant-numeric:tabular-nums}}.grades td:first-child{{text-align:left}}.grades .bt td{{color:var(--sub)}}
 </style></head><body><main>
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
-<p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}</p></header>
+<p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}{' &middot; <a href="trades.html">Trade targets &rarr;</a>' if ds.get("trades_page") else ""}</p></header>
 <div class="grid">
 <div>
 {_suggestion_block(snap.get("suggestion"))}
