@@ -224,55 +224,136 @@
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 657,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.633,
+        "corr_E": 0.639,
+        "n_players": 293,
+        "proj_week_field": "1",
+        "top_qbs": [
+          "Joe Burrow 20.9",
+          "Jalen Hurts 20.9",
+          "Drake Maye 19.7"
+        ]
       },
       "2": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 565,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.679,
+        "corr_E": 0.676,
+        "n_players": 298,
+        "proj_week_field": "2",
+        "top_qbs": [
+          "Josh Allen 22.0",
+          "Jalen Hurts 20.8",
+          "Lamar Jackson 20.3"
+        ]
       },
       "3": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 472,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.71,
+        "corr_E": 0.711,
+        "n_players": 281,
+        "proj_week_field": "3",
+        "top_qbs": [
+          "Lamar Jackson 24.5",
+          "Josh Allen 23.7",
+          "Brock Purdy 21.5"
+        ]
       },
       "4": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 461,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.627,
+        "corr_E": 0.616,
+        "n_players": 276,
+        "proj_week_field": "4",
+        "top_qbs": [
+          "Josh Allen 23.4",
+          "Lamar Jackson 21.7",
+          "Patrick Mahomes 21.3"
+        ]
       },
       "5": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 425,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.708,
+        "corr_E": 0.683,
+        "n_players": 259,
+        "proj_week_field": "5",
+        "top_qbs": [
+          "Josh Allen 21.9",
+          "Jared Goff 21.8",
+          "Dak Prescott 20.9"
+        ]
       },
       "6": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 425,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.62,
+        "corr_E": 0.626,
+        "n_players": 248,
+        "proj_week_field": "6",
+        "top_qbs": [
+          "Josh Allen 25.3",
+          "Brock Purdy 22.0",
+          "Matthew Stafford 21.4"
+        ]
       },
       "7": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 395,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.67,
+        "corr_E": 0.662,
+        "n_players": 239,
+        "proj_week_field": "7",
+        "top_qbs": [
+          "Drake Maye 21.7",
+          "Brock Purdy 20.3",
+          "Jared Goff 20.2"
+        ]
       },
       "8": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 386,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.618,
+        "corr_E": 0.604,
+        "n_players": 246,
+        "proj_week_field": "8",
+        "top_qbs": [
+          "Josh Allen 24.4",
+          "Dak Prescott 22.8",
+          "Joe Burrow 22.1"
+        ]
       },
       "9": {
         "projections": "app",
         "projected_players": 3117,
         "consensus_players": 437,
-        "team_weeks": 12
+        "team_weeks": 12,
+        "corr_P": 0.644,
+        "corr_E": 0.652,
+        "n_players": 263,
+        "proj_week_field": "9",
+        "top_qbs": [
+          "Josh Allen 22.5",
+          "Brock Purdy 21.7",
+          "Patrick Mahomes 21.0"
+        ]
       }
     }
   },
