@@ -28,8 +28,8 @@ def normalize(raw: Any) -> dict[str, dict]:
     out: dict[str, dict] = {}
     if isinstance(raw, list):
         for e in raw:
-            if isinstance(e, dict) and e.get("player_id") and isinstance(e.get("stats"), dict):
-                out[str(e["player_id"])] = e["stats"]
+            if isinstance(e, dict) and e.get("player_id") and isinstance(e.get("stats"), dict) and e["stats"]:
+                out[str(e["player_id"])] = {**e["stats"], "_week": e.get("week")}
     elif isinstance(raw, dict):
         for pid, stats in raw.items():
             if isinstance(stats, dict):

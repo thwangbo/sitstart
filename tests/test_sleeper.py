@@ -342,6 +342,7 @@ class PageAndAlertTests(unittest.TestCase):
 class ProjectionTests(unittest.TestCase):
     def test_normalize_app_list_shape(self):
         self.assertEqual(set(normalize(PROJ_APP)), {"100", "200", "202", "400", "301"})
+        self.assertIn("_week", normalize([{"player_id": "1", "week": 3, "stats": {"rec": 1}}])["1"])
 
     def test_normalize_v1_map_shape_drops_empty_entries(self):
         self.assertEqual(normalize({"6462": {}, "100": {"pass_yd": 200}}), {"100": {"pass_yd": 200}})

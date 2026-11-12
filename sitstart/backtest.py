@@ -74,6 +74,36 @@ def run_week(week: int, slots: list[str], matchups: list[dict], players: dict, P
     return rows
 
 
+def _corr(xs: list[float], ys: list[float]):
+    n = len(xs)
+    if n < 3:
+        return None
+    mx, my = sum(xs) / n, sum(ys) / n
+    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    sx = math.sqrt(sum((x - mx) ** 2 for x in xs))
+    sy = math.sqrt(sum((y - my) ** 2 for y in ys))
+    return round(sxy / (sx * sy), 3) if sx and sy else None
+
+
+def diagnostics(P: dict, E: dict, matchups: list[dict], raw: dict, players: dict) -> dict:
+    """Sanity checks that the projections really belong to this week.
+    corr(P, actual) should be clearly positive (~0.5+) across rostered players who played."""
+    actual = {}
+    for m in matchups:
+        actual.update({k: float(v or 0) for k, v in (m.get("players_points") or {}).items()})
+    both = [pid for pid in actual if pid in P and (P[pid] > 0.5 or actual[pid] > 0)]
+    cE = [pid for pid in both if pid in E]
+    weeks_seen = sorted({str(s.get("_week")) for s in raw.values() if isinstance(s, dict) and s.get("_week")})[:3]
+    qbs = sorted(((v, pid) for pid, v in P.items() if (players.get(pid) or {}).get("position") == "QB"), reverse=True)[:3]
+    return {
+        "corr_P": _corr([P[p] for p in both], [actual[p] for p in both]),
+        "corr_E": _corr([E[p] for p in cE], [actual[p] for p in cE]),
+        "n_players": len(both),
+        "proj_week_field": ",".join(weeks_seen) or "n/a",
+        "top_qbs": [f"{(players.get(pid) or {}).get('full_name', pid)} {v:.1f}" for v, pid in qbs],
+    }
+
+
 def summarize(rows: list[dict], my_roster_id) -> dict:
     keys = ["actual", "hindsight"] + [f"w{w:.1f}" for w in WEIGHTS]
     n = len(rows)
@@ -167,8 +197,11 @@ def main(argv=None) -> int:
             E = expert_points(cons, P, positions)
         matchups = client.get(f"league/{lid}/matchups/{wk}") or []
         notes[wk] = {"projections": src, "projected_players": len(P), "consensus_players": len(E),
-                     "team_weeks": len(matchups)}
-        print(f"Week {wk}: projections {src} ({len(P)}), consensus mapped {len(E)}, teams {len(matchups)}")
+                     "team_weeks": len(matchups), **diagnostics(P, E, matchups, raw, players)}
+        d = notes[wk]
+        print(f"Week {wk}: projections {src} ({len(P)}), consensus mapped {len(E)}, teams {len(matchups)} | "
+              f"proj week field {d['proj_week_field']} | corr(P, actual) {d['corr_P']} | corr(E, actual) {d['corr_E']} | "
+              f"top QBs {d['top_qbs']}")
         rows += run_week(wk, slots, matchups, players, P, E, excluded)
 
     s = summarize(rows, my_rid)
