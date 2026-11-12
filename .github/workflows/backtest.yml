@@ -1,0 +1,44 @@
+# On-demand backtest: Actions tab -> Backtest -> Run workflow.
+# Writes backtest/REPORT.md and backtest/results.json.
+
+name: Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      weeks:
+        description: "Weeks to test, e.g. 1-9"
+        default: "1-9"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lineup-check
+  cancel-in-progress: false
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Backtest
+        run: >
+          python -m sitstart.backtest
+          --username "${{ vars.SLEEPER_USERNAME || 'thwangbo' }}"
+          --weeks "${{ inputs.weeks }}"
+
+      - name: Save results
+        run: |
+          cat backtest/REPORT.md >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "lineup-bot"
+          git config user.email "lineup-bot@users.noreply.github.com"
+          git add backtest
+          git commit -m "Backtest weeks ${{ inputs.weeks }}" || echo "No changes"
+          git pull --rebase
+          git push

@@ -377,3 +377,74 @@ class ScheduleTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ConsensusTests(unittest.TestCase):
+    ECR = ('"page","page_pos","scrape_date","fantasypros_id","player_name","pos","team","rank","ecr","sd","best","worst","player_opponent_id","pos_rank"\n'
+           '"qb","QB",2026-11-12,"1","Qb One","QB","WAS",1,1.2,0.5,1,2,"NYG","QB1"\n'
+           '"ppr-wr","WR",2026-11-12,"3","Wr Two","WR","CHI",2,2.4,0.9,1,4,"NA","WR2"\n'
+           '"ppr-wr","WR",2026-11-12,"4","D.J. Wr-One Jr.","WR","CIN",1,1.1,0.3,1,2,"NYJ","WR1"\n'
+           '"k","K",2026-11-12,"9","Kicker","K","CIN",1,1,0,1,1,"NYJ","K1"\n')
+
+    def test_parse_skips_non_skill_positions(self):
+        from sitstart.consensus import parse_ecr
+        rows = parse_ecr(self.ECR)
+        self.assertEqual([r["pos"] for r in rows], ["QB", "WR", "WR"])
+        self.assertEqual(rows[2]["rank"], 1)
+
+    def test_map_by_id_then_name(self):
+        from sitstart.consensus import map_to_sleeper, parse_ecr
+        players = {"100": {"full_name": "Qb One", "position": "QB"},
+                   "300": {"full_name": "DJ Wr One", "position": "WR"}}
+        m = map_to_sleeper(parse_ecr(self.ECR), {"1": "100"}, players)
+        self.assertEqual(m["100"]["rank"], 1)          # by crosswalk
+        self.assertEqual(m["300"]["name"], "D.J. Wr-One Jr.")  # by normalized name
+
+    def test_expert_points_use_projection_ladder(self):
+        from sitstart.consensus import expert_points
+        cons = {"a": {"pos": "WR", "rank": 1}, "b": {"pos": "WR", "rank": 3}, "c": {"pos": "WR", "rank": 9}}
+        P = {"a": 10.0, "b": 15.0, "x": 12.0}
+        E = expert_points(cons, P, {"a": "WR", "b": "WR", "c": "WR", "x": "WR"})
+        self.assertEqual(E, {"a": 15.0, "b": 10.0, "c": 0.0})
+
+    def test_blend(self):
+        from sitstart.consensus import blend
+        self.assertEqual(blend(10, 14, 0.5), 12.0)
+        self.assertEqual(blend(10, None, 0.5), 10.0)
+        self.assertEqual(blend(None, 8, 0.0), 0.0)
+
+    def test_stale_snapshot_detected(self):
+        from sitstart.consensus import matches_week, parse_ecr
+        games = make_schedule().games
+        rows = parse_ecr(self.ECR) * 10
+        self.assertTrue(matches_week(rows, games))
+        for r in rows:
+            r["opponent"] = "BUF"
+        self.assertFalse(matches_week(rows, games))
+
+
+class BacktestTests(unittest.TestCase):
+    def test_week_scoring(self):
+        from sitstart.backtest import run_week, summarize
+        players = {"q1": {"full_name": "Q1", "position": "QB"}, "q2": {"full_name": "Q2", "position": "QB"},
+                   "w1": {"full_name": "W1", "position": "WR"}, "w2": {"full_name": "W2", "position": "WR"}}
+        slots = ["QB", "WR"]
+        m = [{"roster_id": 1, "players": ["q1", "q2", "w1", "w2"], "starters": ["q1", "w1"],
+              "players_points": {"q1": 10, "q2": 25, "w1": 5, "w2": 12}}]
+        P = {"q1": 18, "q2": 16, "w1": 9, "w2": 10}      # Sleeper likes q1, w2
+        E = {"q1": 15, "q2": 20, "w1": 8, "w2": 11}      # experts like q2, w2
+        rows = run_week(1, slots, m, players, P, E, set())
+        r = rows[0]
+        self.assertEqual((r["actual"], r["hindsight"]), (15.0, 37.0))
+        self.assertEqual(r["w0.0"], 22.0)   # q1 + w2
+        self.assertEqual(r["w1.0"], 37.0)   # q2 + w2
+        s = summarize(rows, 1)
+        self.assertEqual(s["best_weight"], 0.5)  # 0.5..1.0 tie at 37; pick the one nearest 0.5
+        self.assertEqual(s["my_team"]["totals"]["actual"], 15.0)
+
+    def test_taxi_players_excluded(self):
+        from sitstart.backtest import run_week
+        players = {"q1": {"full_name": "Q1", "position": "QB"}, "q2": {"full_name": "Q2", "position": "QB"}}
+        m = [{"roster_id": 1, "players": ["q1", "q2"], "starters": ["q1"], "players_points": {"q1": 5, "q2": 30}}]
+        rows = run_week(1, ["QB"], m, players, {"q1": 1, "q2": 20}, {}, {"q2"})
+        self.assertEqual(rows[0]["hindsight"], 5.0)
