@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .consensus import blend, expert_points
 from .projections import fetch_projections, league_points
 from .schedule import Schedule
 
@@ -167,6 +168,9 @@ class WeekContext:
     schedule: Schedule | None = None
     points: dict[str, dict] = field(default_factory=dict)
     now: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    consensus: dict[str, dict] = field(default_factory=dict)   # sleeper_id -> consensus row
+    expert: dict[str, float] = field(default_factory=dict)     # sleeper_id -> expert-implied points
+    weight: float = 0.5                                        # blend weight on experts
 
 
 def player_card(pid: str | None, players: dict[str, dict], ctx: WeekContext | None = None) -> dict | None:
@@ -191,6 +195,11 @@ def player_card(pid: str | None, players: dict[str, dict], ctx: WeekContext | No
         pts = ctx.points.get(str(pid), {})
         card["proj_pts"] = pts.get("proj_pts")
         card["proj_pts_sleeper_half"] = pts.get("proj_pts_sleeper_half")
+        cons = ctx.consensus.get(str(pid))
+        card["consensus_rank"] = f"{cons['pos']}{cons['rank']}" if cons else None
+        card["expert_pts"] = ctx.expert.get(str(pid))
+        if card["proj_pts"] is not None or card["expert_pts"] is not None:
+            card["score"] = blend(card["proj_pts"], card["expert_pts"], ctx.weight)
         if ctx.schedule is not None:
             g = ctx.schedule.game(team)
             card["bye"] = ctx.schedule.on_bye(team)
@@ -200,6 +209,7 @@ def player_card(pid: str | None, players: dict[str, dict], ctx: WeekContext | No
             card["locked"] = ctx.schedule.is_locked(team, ctx.now)
         if card.get("bye"):
             card["proj_pts"] = 0.0
+            card["score"] = 0.0
     return card
 
 
@@ -273,7 +283,9 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
                    players: dict[str, dict] | None = None,
                    schedule: Schedule | None = None,
                    now: datetime | None = None,
-                   fetch_proj: bool = True) -> SleeperSnapshot:
+                   fetch_proj: bool = True,
+                   consensus: dict[str, dict] | None = None,
+                   weight: float = 0.5) -> SleeperSnapshot:
     state = client.get("state/nfl") or {}
     season = str(season or state.get("league_season") or state.get("season"))
     week = int(week or state.get("display_week") or state.get("week") or 1)
@@ -301,7 +313,13 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
         positions = {pid: (players.get(pid) or {}).get("position") for pid in raw}
         points = league_points(raw, scoring, positions)
 
-    ctx = WeekContext(schedule=schedule, points=points, now=now or datetime.now(timezone.utc))
+    consensus = consensus or {}
+    expert = {}
+    if consensus and points:
+        positions_all = {pid: (p or {}).get("position") for pid, p in players.items()}
+        expert = expert_points(consensus, {pid: v["proj_pts"] for pid, v in points.items()}, positions_all)
+    ctx = WeekContext(schedule=schedule, points=points, now=now or datetime.now(timezone.utc),
+                      consensus=consensus, expert=expert, weight=weight)
     users_by_id = {str(u["user_id"]): u for u in users}
 
     def team_label(roster: dict) -> dict:
@@ -369,6 +387,9 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
         "projections_count": len(points),
         "schedule_loaded": schedule is not None,
         "bye_teams": schedule.bye_teams() if schedule else None,
+        "consensus_players": len(consensus),
+        "consensus_scrape_date": next((r.get("scrape_date") for r in consensus.values()), None),
+        "blend_weight": weight if consensus else 0.0,
     }
 
     bench = cards(bench_ids)
@@ -386,8 +407,15 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
     )
 
 
+def card_value(card: dict | None):
+    """The number the app ranks on: the blended score when experts are in, else Sleeper's projection."""
+    if not card:
+        return None
+    return card["score"] if isinstance(card.get("score"), (int, float)) else card.get("proj_pts")
+
+
 def _lineup_total(lineup: list[dict]) -> float | None:
-    vals = [r["player"].get("proj_pts") for r in lineup if r["player"]]
+    vals = [card_value(r["player"]) for r in lineup if r["player"]]
     vals = [v for v in vals if isinstance(v, (int, float))]
     return round(sum(vals), 1) if vals else None
 
@@ -397,7 +425,7 @@ def _lineup_total(lineup: list[dict]) -> float | None:
 # --------------------------------------------------------------------------- #
 
 def _fmt_pts(card: dict | None) -> str:
-    v = card.get("proj_pts") if card else None
+    v = card_value(card)
     return f"{v:5.1f}" if isinstance(v, (int, float)) else "   --"
 
 
@@ -414,7 +442,9 @@ def format_summary(snap: SleeperSnapshot) -> str:
         f"Projections: {ds.get('projections_source')} ({ds.get('projections_count')} players)"
         + (f"  |  Byes: {', '.join(ds['bye_teams'])}" if ds.get("bye_teams") else ""),
         "",
-        "Current lineup                               proj",
+        _blend_note(ds),
+        "",
+        "Current lineup                              score",
     ]
     for row in snap.lineup:
         p = row["player"]
@@ -456,7 +486,7 @@ def format_summary(snap: SleeperSnapshot) -> str:
             lines.append("Suggested changes: none. Your lineup is already the best by Sleeper projections.")
 
     lines.append("")
-    bench = sorted(snap.bench, key=lambda c: -(c.get("proj_pts") or 0))
+    bench = sorted(snap.bench, key=lambda c: -(card_value(c) or 0))
     lines.append(f"Bench ({len(bench)}): " + ", ".join(_bench_label(c) for c in bench))
     if snap.taxi:
         lines.append(f"Taxi ({len(snap.taxi)}): " + ", ".join(c["name"] for c in snap.taxi))
@@ -483,10 +513,19 @@ _FLAG_WORDS = {"STARTER_ON_BYE": "on bye", "STARTER_OUT": "Out", "STARTER_IR": "
                "STARTER_DOUBTFUL": "Doubtful", "NO_NFL_TEAM": "has no NFL team"}
 
 
+def _blend_note(ds: dict) -> str:
+    if ds.get("consensus_players"):
+        w = ds.get("blend_weight", 0.5)
+        return (f"Score = {1 - w:.0%} Sleeper projection + {w:.0%} expert consensus "
+                f"(FantasyPros via DynastyProcess, {ds.get('consensus_scrape_date')}; {ds['consensus_players']} players)")
+    return "Score = Sleeper projection (expert consensus unavailable this run)"
+
+
 def _bench_label(c: dict) -> str:
     s = f"{c['name']} {c['position']}"
-    if isinstance(c.get("proj_pts"), (int, float)):
-        s += f" {c['proj_pts']:.1f}"
+    v = card_value(c)
+    if isinstance(v, (int, float)):
+        s += f" {v:.1f}"
     if c.get("bye"):
         s += " [bye]"
     elif c.get("injury_status"):

@@ -14,6 +14,22 @@ from .schedule import load_schedule
 from .sleeper import SleeperClient, SleeperError, build_snapshot, format_summary, save_snapshot
 
 
+def load_consensus(client, schedule):
+    """This week's expert consensus mapped to Sleeper ids, or None (with a warning) if unavailable or stale."""
+    from .consensus import IDS_URL, WEEKLY_URL, fetch, map_to_sleeper, matches_week, parse_ecr, parse_id_map
+    try:
+        ecr = parse_ecr(fetch(WEEKLY_URL))
+        ids = parse_id_map(fetch(IDS_URL))
+    except Exception as e:
+        print(f"Warning: expert consensus unavailable ({e}). Using Sleeper projections only.", file=sys.stderr)
+        return None
+    if schedule is not None and not matches_week(ecr, schedule.games):
+        print("Warning: expert consensus file is for a different week (not updated yet). "
+              "Using Sleeper projections only.", file=sys.stderr)
+        return None
+    return map_to_sleeper(ecr, ids, client.players())
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Pull your Sleeper league, roster, lineup and projections.")
     ap.add_argument("--username", required=True, help="Your Sleeper username")
@@ -22,6 +38,9 @@ def main(argv=None) -> int:
     ap.add_argument("--week", type=int, help="Defaults to the current NFL week")
     ap.add_argument("--out", default="data", help="Folder for the snapshot JSON (default: data)")
     ap.add_argument("--no-projections", action="store_true", help="Skip Sleeper projections")
+    ap.add_argument("--no-experts", action="store_true", help="Skip expert consensus (Sleeper projections only)")
+    ap.add_argument("--expert-weight", type=float, default=0.5,
+                    help="Weight on expert consensus in the score, 0-1 (default 0.5, from the Weeks 1-9 backtest)")
     ap.add_argument("--html", help="Also write the results page to this path, e.g. site/index.html")
     ap.add_argument("--notify", action="store_true",
                     help="Send a phone alert via ntfy when something changes (topic from NTFY_TOPIC)")
@@ -52,8 +71,13 @@ def main(argv=None) -> int:
         except Exception as e:  # schedule is an enhancement; keep going without it
             print(f"Warning: couldn't load the NFL schedule ({e}). Bye and lock checks are off.", file=sys.stderr)
 
+        consensus = None
+        if not args.no_experts:
+            consensus = load_consensus(client, schedule)
+
         snap = build_snapshot(client, args.username, season, week, args.league_id,
-                              schedule=schedule, fetch_proj=not args.no_projections)
+                              schedule=schedule, fetch_proj=not args.no_projections,
+                              consensus=consensus, weight=args.expert_weight)
     except SleeperError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1

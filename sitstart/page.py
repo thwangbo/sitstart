@@ -6,6 +6,7 @@ from datetime import datetime
 from html import escape
 
 from .schedule import utc_to_pacific
+from .sleeper import card_value
 
 FLAG_WORDS = {
     "EMPTY_SLOT": "Empty slot",
@@ -52,12 +53,13 @@ def _status(card: dict | None, flag: str | None = None, locked: bool = False) ->
 
 def _player_cells(card: dict | None) -> str:
     if not card:
-        return '<td class="name empty">Empty</td><td></td><td></td>'
+        return '<td class="name empty">Empty</td><td></td><td></td><td></td>'
     who = f'<span class="pname">{escape(card["name"])}</span> <span class="sub">{escape(card.get("position") or "")}' \
           f'{", " + escape(card["team"]) if card.get("team") else ""}</span>'
     game = escape(card.get("opponent") or "")
     when = _pt(card.get("kickoff_utc"))
-    return f'<td class="name">{who}</td><td>{game}</td><td class="sub">{when}</td>'
+    rank = escape(card.get("consensus_rank") or "")
+    return f'<td class="name">{who}</td><td>{game}</td><td class="sub">{when}</td><td class="sub">{rank}</td>'
 
 
 def _suggestion_block(sug: dict | None) -> str:
@@ -81,8 +83,17 @@ def _suggestion_block(sug: dict | None) -> str:
             f'{r["slot"]} {r["name"]}' for r in sug["lineup"] if r["name"])) + "</p>"
     return (f'<section class="card accent"><h2>Suggested changes{gain}</h2>'
             f'<table class="sug">{"".join(rows)}</table>{moves}'
-            '<p class="sub">Ranked on Sleeper projections in your league scoring. Questionable players are discounted 15%.</p>'
+            '<p class="sub">Ranked on Score (Sleeper projections blended with expert consensus). Questionable players are discounted 15%.</p>'
             '</section>')
+
+
+def _blend_note(ds: dict) -> str:
+    if ds.get("consensus_players"):
+        w = ds.get("blend_weight", 0.5)
+        return (f"Score = {1 - w:.0%} Sleeper projection in your league scoring + {w:.0%} expert consensus "
+                f"(FantasyPros rankings via DynastyProcess, {ds.get('consensus_scrape_date')}). "
+                "Experts = consensus positional rank.")
+    return "Score = Sleeper projection in your league scoring. Expert consensus was unavailable this run."
 
 
 def render(snap: dict) -> str:
@@ -93,13 +104,13 @@ def render(snap: dict) -> str:
 
     lineup_rows = "".join(
         f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td>{_player_cells(r["player"])}'
-        f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts((r["player"] or {}).get("proj_pts"))}</td></tr>'
+        f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts(card_value(r["player"]))}</td></tr>'
         for r in snap["lineup"])
-    total = sum((r["player"] or {}).get("proj_pts") or 0 for r in snap["lineup"])
+    total = sum(card_value(r["player"]) or 0 for r in snap["lineup"])
 
-    bench = sorted(snap["bench"], key=lambda c: -((c.get("proj_pts") or 0)))
+    bench = sorted(snap["bench"], key=lambda c: -(card_value(c) or 0))
     bench_rows = "".join(
-        f'<tr>{_player_cells(c)}<td>{_status(c)}</td><td class="num">{_pts(c.get("proj_pts"))}</td></tr>'
+        f'<tr>{_player_cells(c)}<td>{_status(c)}</td><td class="num">{_pts(card_value(c))}</td></tr>'
         for c in bench)
 
     opp_html = ""
@@ -107,11 +118,11 @@ def render(snap: dict) -> str:
     if opp:
         opp_rows = "".join(
             f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td>{_player_cells(r["player"])}'
-            f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts((r["player"] or {}).get("proj_pts"))}</td></tr>'
+            f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts(card_value(r["player"]))}</td></tr>'
             for r in opp["lineup"])
         opp_html = (f'<section class="card"><h2>Opponent: {escape(opp.get("team_name") or "")}'
                     f' <span class="sub">projected {_pts(opp.get("proj_total"))}</span></h2>'
-                    f'<table>{opp_rows}</table></section>')
+                    f'<table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{opp_rows}</table></section>')
 
     reserve = ", ".join(escape(c["name"]) for c in snap.get("reserve") or [])
     taxi = ", ".join(escape(c["name"]) for c in snap.get("taxi") or [])
@@ -144,19 +155,20 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 .tag{{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor}}
 .tag.bad{{color:var(--bad)}}.tag.warn{{color:var(--warn)}}.tag.muted{{color:var(--sub)}}
 .verb{{font-weight:700;width:56px}}.verb.start{{color:var(--good)}}.verb.sit{{color:var(--bad)}}
-.total td{{font-weight:700;border-top:2px solid var(--line)}}
+.total td{{font-weight:700;border-top:2px solid var(--line)}}.head td{{color:var(--sub);font-size:12px;border-top:none;padding-top:0}}
 </style></head><body><main>
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
 <p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}</p></header>
 <div class="grid">
 <div>
 {_suggestion_block(snap.get("suggestion"))}
-<section class="card"><h2>Current lineup</h2><table>{lineup_rows}
-<tr class="total"><td colspan="5">Projected total</td><td class="num">{total:.1f}</td></tr></table></section>
+<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{lineup_rows}
+<tr class="total"><td colspan="6">Projected total</td><td class="num">{total:.1f}</td></tr></table></section>
 </div>
 <div>{opp_html}</div>
 </div>
-<section class="card"><h2>Bench</h2><table>{bench_rows}</table>{extras}</section>
+<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
+<p class="sub">{escape(_blend_note(ds))}</p>
 <p class="sub">Projections: Sleeper ({escape(str(ds.get("projections_source")))}, {ds.get("projections_count")} players). Byes: {escape(byes)}. Kickoff times are Pacific.</p>
 </main></body></html>
 """

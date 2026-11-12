@@ -27,7 +27,7 @@ def _value(card: dict) -> float:
     """Projected points, discounted if Questionable; anyone who can't play ranks below every active player."""
     if not can_play(card):
         return -1.0
-    v = card.get("proj_pts")
+    v = card.get("score") if isinstance(card.get("score"), (int, float)) else card.get("proj_pts")
     v = float(v) if isinstance(v, (int, float)) else 0.0
     if card.get("injury_status") == "Questionable":
         v *= QUESTIONABLE_FACTOR
@@ -118,7 +118,8 @@ def suggested_changes(lineup: list[dict], best: list[dict]) -> dict:
              if r["player"] and b["player"] and r["player"]["player_id"] != b["player"]["player_id"]
              and r["player"]["player_id"] in new_ids]
     def brief(c: dict) -> dict:
-        raw = c.get("proj_pts") if isinstance(c.get("proj_pts"), (int, float)) else 0.0
+        raw = c.get("score") if isinstance(c.get("score"), (int, float)) else c.get("proj_pts")
+        raw = raw if isinstance(raw, (int, float)) else 0.0
         return {"player_id": c["player_id"], "name": c["name"], "proj_pts": round(raw, 1),
                 "value": round(max(_value(c), 0.0), 1), "injury_status": c.get("injury_status")}
 

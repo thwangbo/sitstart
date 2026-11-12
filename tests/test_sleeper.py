@@ -449,3 +449,25 @@ class BacktestTests(unittest.TestCase):
         m = [{"roster_id": 1, "players": ["q1", "q2"], "starters": ["q1"], "players_points": {"q1": 5, "q2": 30}}]
         rows = run_week(1, ["QB"], m, players, {"q1": 1, "q2": 20}, {}, {"q2"})
         self.assertEqual(rows[0]["hindsight"], 5.0)
+
+
+class BlendInSnapshotTests(unittest.TestCase):
+    def test_score_blends_and_drives_suggestion(self):
+        # Experts rank Qb Two as QB1 (expert pts = best QB projection 18.8); Sleeper gives him nothing.
+        cons = {"101": {"pos": "QB", "rank": 1, "scrape_date": "2026-11-12"},
+                "100": {"pos": "QB", "rank": 2, "scrape_date": "2026-11-12"}}
+        proj = PROJ_APP + [{"player_id": "101", "stats": {"pass_yd": 100}}]   # 4.0 pts
+        snap = build_snapshot(FakeClient(ROUTES, proj=proj), "tim", schedule=make_schedule(), now=FRIDAY,
+                              consensus=cons, weight=0.5)
+        qb2 = next(c for c in snap.bench if c["name"] == "Qb Two")
+        self.assertEqual(qb2["consensus_rank"], "QB1")
+        self.assertEqual(qb2["expert_pts"], 18.8)
+        self.assertAlmostEqual(qb2["score"], 11.4)   # 4.0 + 0.5 * (18.8 - 4.0)
+        self.assertEqual(snap.data_status["blend_weight"], 0.5)
+        self.assertIn("50% expert consensus", format_summary(snap))
+
+    def test_without_consensus_score_equals_projection(self):
+        snap = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY)
+        qb = snap.lineup[0]["player"]
+        self.assertEqual(qb["score"], qb["proj_pts"])
+        self.assertIn("unavailable", format_summary(snap))
