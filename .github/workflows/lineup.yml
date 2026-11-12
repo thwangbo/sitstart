@@ -1,0 +1,68 @@
+# Runs the lineup check on a schedule, publishes the results page to GitHub Pages,
+# and sends a phone alert (ntfy) when a recommendation changes.
+#
+# Times are UTC. During standard time (Nov–Mar) Pacific = UTC-8:
+#   Tue 7:07 PM PT, Thu 2:37 PM PT (before Thursday night), Sat 7:07 PM PT,
+#   Sun 8:40 AM PT (after early-game inactives post). In Sep–Oct each lands an hour later.
+# The odd minutes dodge GitHub's busy top-of-the-hour queue.
+
+name: Lineup check
+
+on:
+  schedule:
+    - cron: "7 3 * * 3"
+    - cron: "37 22 * * 4"
+    - cron: "7 3 * * 0"
+    - cron: "40 16 * * 0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: lineup-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tests
+        run: python -m unittest discover -s tests
+
+      - name: Lineup check
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          PAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: >
+          python -m sitstart
+          --username "${{ vars.SLEEPER_USERNAME || 'thwangbo' }}"
+          --out data --html site/index.html --notify
+
+      - name: Save snapshot history
+        run: |
+          git config user.name "lineup-bot"
+          git config user.email "lineup-bot@users.noreply.github.com"
+          git add data
+          git commit -m "Lineup check $(date -u +%Y-%m-%dT%H:%MZ)" || echo "No changes"
+          git push
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
