@@ -750,12 +750,32 @@ class OfferRuleTests(unittest.TestCase):
         return {"kind": kind, "id": label, "label": label, "pos": None if kind == "pick" else pos,
                 "age": None if kind == "pick" else age, "value": value, "redraft": 0 if kind == "pick" else value * 0.6}
 
-    def test_prefers_bench_over_first_round_pick(self):
+    def test_prefers_giving_least_win_now_depth(self):
         from sitstart.trades import build_offer
         mid = self.teams[3]   # "middle" team: fit is equal for players and picks
-        assets = [self.asset("2028 1st", 3000, "pick"), self.asset("Bench WR", 3000)]
+        assets = [self.asset("2028 1st", 3000, "pick"), self.asset("Depth WR", 3000)]
         o = build_offer(2900, "RB", mid, self.teams[1], self.m, assets)
-        self.assertEqual([a["label"] for a in o["assets"]], ["Bench WR"])
+        self.assertEqual([a["label"] for a in o["assets"]], ["2028 1st"])   # the WR still covers injuries and byes
+
+    def test_injury_fill_in_is_protected(self):
+        from sitstart.trades import core_players, my_assets
+        m, pos, teams = self.m, self.pos, self.teams
+        me = teams[1]
+        # Young QB (a starter) is hurt: Bench QB now fills in, so he's core and can't be offered.
+        core = core_players(me, m, MarketTests.SLOTS, pos, unavailable={"q2"})
+        self.assertIn("q4", core)
+        self.assertNotIn("Bench QB", [a["label"] for a in my_assets(me, m, pos, core=core)])
+        healthy_core = core_players(me, m, MarketTests.SLOTS, pos)
+        self.assertNotIn("q4", healthy_core)
+
+    def test_seller_motive_ignores_bench_status(self):
+        from sitstart.trades import seller_motive
+        m, teams = self.m, self.teams
+        mid = teams[3]
+        on_lineup = seller_motive(mid, "r1", m)[0]
+        mid.starters = []           # same player, now "benched"
+        self.assertEqual(seller_motive(mid, "r1", m)[0], on_lineup)
+        self.assertNotIn("bench", seller_motive(mid, "r1", m)[1])
 
     def test_consolidation_premium(self):
         from sitstart.trades import build_offer

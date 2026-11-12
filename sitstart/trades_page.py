@@ -113,8 +113,9 @@ def render(rep: dict) -> str:
         f'<span class="need-item"><b>{n["pos"]}</b> {n["rank"]}{_suffix(n["rank"])} of {len(rep["teams"])} '
         f'{_tag("below avg") if n["need"] else _tag("ok")}</span>' for n in rep["needs"])
     lens = ("You're contending, so targets are ranked on how much they improve your starting lineup this season, "
-            "weighted by how likely their manager is to sell. Offers use only your bench players and picks; "
-            "this week's lineup is never offered.") if me["label"] != "rebuilder" else (
+            "weighted by how likely their manager is to sell (their team's direction and the player's age). "
+            "Offers never include your best lineup or the players filling in for your injured starters; "
+            "they favor picks and the players who add the least to your lineup this season.") if me["label"] != "rebuilder" else (
             "You're rebuilding, so targets are young players ranked on dynasty value, "
             "weighted by how likely their manager is to sell.")
     targets = rep.get("targets") or []
@@ -122,7 +123,7 @@ def render(rep: dict) -> str:
                    f'<td>Your lineup gain</td><td class="num">Market value</td><td>Suggested offer</td></tr>'
                    f'{_target_rows(targets)}</table>') if targets else '<p class="sub">No upgrades found that your surplus can pay for.</p>'
     oor = rep.get("out_of_reach") or []
-    oor_html = ('<p class="sub">Would help but cost more than your bench and picks can cover: '
+    oor_html = ('<p class="sub">Would help but cost more than your tradeable players and picks can cover: '
                 + ", ".join(f'{escape(t["name"])} ({escape(t["owner"])}, value {_fmt(t["value"])})' for t in oor)
                 + ". Offering a starter changes that math.</p>") if oor else ""
     chips = "".join(f'<span>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span></span>'
@@ -145,7 +146,7 @@ def render(rep: dict) -> str:
 <p class="sub">{lens}</p></section>
 <section class="card"><h2>Top targets</h2>{target_html}{oor_html}
 <p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
-Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. Offers spend bench players before 1st-round picks.</p></section>
+Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. A benched player still counts as depth, so offers prefer giving up the least win-now value.</p></section>
 <section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
 <section class="card"><h2>League map</h2><table>
 <tr class="head"><td>Team</td><td class="num">Record</td><td>Lifecycle</td><td class="num">Win-now rank</td><td class="num">Dynasty rank</td>

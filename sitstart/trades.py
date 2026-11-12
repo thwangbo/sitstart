@@ -2,7 +2,7 @@
 
 Lens follows your team's lifecycle:
 - contender: buy this-season production (win-now value) cheaply in dynasty value,
-  ideally veterans on rebuilding teams, paying with bench players and picks
+  ideally veterans on rebuilding teams, paying with picks and players outside your core
 - rebuilder: buy dynasty value (young players), ideally surplus on contending teams
 
 For each player on another roster:
@@ -10,7 +10,8 @@ For each player on another roster:
             dynasty value for a rebuilder
   motive  = how likely his manager is to sell (their lifecycle, his age, whether he starts for them)
   score   = gain x motive
-Then an offer is built from your surplus (bench players and picks) at 100-120% of his
+Then an offer is built from players outside your core (your best lineup, plus whoever is
+filling in for injured starters) and picks, at 100-120% of his
 market value (+8% per extra piece), shaped to what the other manager needs: picks and young players for a
 rebuilder, producers for a contender. Superflex: never offers a QB if that would leave
 you with fewer than 3 startable QBs.
@@ -36,20 +37,20 @@ def _pos(market: Market, pid: str):
 
 
 def seller_motive(team: Team, pid: str, market: Market) -> tuple[float, str]:
+    """How likely his manager is to sell, from their lifecycle and his age only.
+    Whether he's on their bench is deliberately ignored: a benched player is often hurt,
+    on bye or in a tough matchup, not surplus."""
     age, pos = _age(market, pid), _pos(market, pid)
-    starter = pid in team.starters
     vet = bool(age) and age >= VET_AGE.get(pos, 28) - 1
     if team.label == "rebuilder":
         if vet:
             return 1.0, f"{team.name} is rebuilding and he's {age:.0f}"
         return 0.6, f"{team.name} is rebuilding, but he's young, so expect to pay full price"
     if team.label == "middle":
-        if not starter:
-            return 0.6, f"{team.name} is in the middle and he's their depth"
-        return 0.45 if vet else 0.35, f"{team.name} is in the middle; he starts for them"
-    if not starter:
-        return 0.5, f"{team.name} is contending but he's on their bench"
-    return 0.15, f"{team.name} is contending and he starts for them"
+        if vet:
+            return 0.5, f"{team.name} is in the middle and he's {age:.0f}"
+        return 0.35, f"{team.name} is in the middle; he's young enough that they'll want a premium"
+    return 0.2, f"{team.name} is contending, so they'll want help now in return"
 
 
 def position_needs(teams: dict[int, Team], me: Team, market: Market) -> list[dict]:
@@ -68,10 +69,21 @@ def position_needs(teams: dict[int, Team], me: Team, market: Market) -> list[dic
     return out
 
 
-def my_assets(me: Team, market: Market, positions: dict[str, str], protect: set[str] | None = None) -> list[dict]:
-    """What you can offer without hurting your lineup: bench players and picks.
-    `protect`: players to keep regardless (e.g. this week's recommended lineup, which covers injured starters)."""
-    keep = set(me.starters) | set(protect or ())
+def core_players(me: Team, market: Market, slots: list[str], positions: dict[str, str],
+                 protect: set[str] | None = None, unavailable: set[str] | None = None) -> set[str]:
+    """Players you shouldn't trade away for help elsewhere:
+    - your best lineup at full health (season-long win-now values)
+    - the best lineup without your currently injured players, i.e. who's filling in for them
+    - anyone in `protect` (this week's recommended lineup)"""
+    healthy = [p for p in me.players if p not in (unavailable or set())]
+    fill_ins = best_win_now(healthy, slots, market, positions) if slots else []
+    return set(me.starters) | set(fill_ins) | set(protect or ())
+
+
+def my_assets(me: Team, market: Market, positions: dict[str, str], protect: set[str] | None = None,
+              core: set[str] | None = None) -> list[dict]:
+    """What you can offer: players outside your core, and picks."""
+    keep = set(me.starters) | set(protect or ()) | set(core or ())
     assets = []
     for pid in me.players:
         if pid in keep or market.value(pid) <= 0:
@@ -110,17 +122,14 @@ def fit(asset: dict, partner: Team) -> float:
 CONSOLIDATION = 0.08   # extra value needed per additional piece (the other manager gives up roster quality)
 
 
-def _is_first(a: dict) -> bool:
-    return a["kind"] == "pick" and " 1st" in a["label"]
-
-
 def build_offer(target_value: float, target_pos: str | None, partner: Team, me: Team, market: Market,
                 assets: list[dict], max_pieces: int = 3) -> dict | None:
     """Cheapest sensible package. Rules:
     - total >= target x (1 + 8% per extra piece), and <= that + 20%
-    - the best piece is worth at least half the target (no pile of bench players for a star)
-    - prefer what the other manager wants (fit), then spending fewer 1st-round picks,
-      then fewer pieces, then the smallest overpay"""
+    - the best piece is worth at least half the target (no pile of depth pieces for a star)
+    - prefer what the other manager wants (fit), then giving up the least win-now depth
+      (a player on your bench still has value as injury and bye cover), then fewer pieces,
+      then the smallest overpay"""
     pool = [a for a in assets if a["value"] >= 0.08 * target_value][:24]
     best = None
     for k in range(1, max_pieces + 1):
@@ -134,8 +143,8 @@ def build_offer(target_value: float, target_pos: str | None, partner: Team, me: 
             if not qb_safe(me, market, list(combo), target_pos):
                 continue
             f = sum(fit(a, partner) * a["value"] for a in combo) / total
-            firsts = sum(_is_first(a) for a in combo)
-            key = (round(f, 1), -firsts, -k, -abs(total / need - 1.0))
+            depth = sum(a["redraft"] for a in combo if a["kind"] == "player")   # win-now value you give up
+            key = (round(f, 1), -round(depth / 500), -k, -abs(total / need - 1.0))
             if best is None or key > best[0]:
                 best = (key, combo, total, f)
     if not best:
@@ -148,9 +157,10 @@ def build_offer(target_value: float, target_pos: str | None, partner: Team, me: 
 
 def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[str],
                  positions: dict[str, str], ppg: dict[str, float] | None = None,
-                 protect: set[str] | None = None) -> dict:
+                 protect: set[str] | None = None, unavailable: set[str] | None = None) -> dict:
     """{"targets": [...] with offers, "out_of_reach": [...] that would help but can't be matched from your surplus}"""
-    assets = my_assets(me, market, positions, protect)
+    core = core_players(me, market, slots, positions, protect, unavailable)
+    assets = my_assets(me, market, positions, protect, core)
     contender = me.label != "rebuilder"
     my_floor = min((market.redraft(p) for p in me.starters), default=0.0)
     out = []
@@ -259,7 +269,9 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
         if r.get("player_id"):
             protect.add(r["player_id"])
     ppg = season_ppg(client.get_url, season, lg["scoring_settings"], positions)
-    found = find_targets(teams, me, market, slots, positions, ppg, protect)
+    unavailable = {pid for pid in me.players
+                   if (sleeper_players.get(pid) or {}).get("injury_status") in ("Out", "IR", "PUP", "Sus", "Doubtful")}
+    found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable)
     for t in found["targets"] + found["out_of_reach"]:
         t["injury_status"] = (sleeper_players.get(t["player_id"]) or {}).get("injury_status")
 
