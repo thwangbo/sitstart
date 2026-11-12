@@ -835,3 +835,16 @@ class SwingAndReuseTests(unittest.TestCase):
         # A lineup-neutral swap is not shown
         m.players["s1"]["redraft"] = 4100.0
         self.assertEqual(bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], [], core, None), [])
+
+
+class QbGuardTests(unittest.TestCase):
+    def test_short_on_qbs_still_allows_non_qb_trades(self):
+        from sitstart.trades import qb_safe
+        m, pos, teams = MarketTests().teams()
+        me = teams[1]
+        me.players = ["q2", "q3", "r2", "r3"]          # only 2 startable QBs
+        pick = {"kind": "pick", "id": "P", "label": "2028 1st", "pos": None, "age": None, "value": 2200, "redraft": 0}
+        self.assertTrue(qb_safe(me, m, [pick], "RB"))                      # doesn't make it worse
+        backup = {"kind": "player", "id": "q3", "label": "Backup QB", "pos": "QB", "age": 28, "value": 1500, "redraft": 2000}
+        self.assertFalse(qb_safe(me, m, [backup], "RB"))                   # would make it worse
+        self.assertTrue(qb_safe(me, m, [backup], "QB"))                    # QB comes back

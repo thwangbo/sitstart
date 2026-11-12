@@ -100,10 +100,13 @@ def my_assets(me: Team, market: Market, positions: dict[str, str], protect: set[
 
 
 def qb_safe(me: Team, market: Market, giving: list[dict], receiving_pos: str | None) -> bool:
-    """Superflex guard: keep at least MIN_QBS startable QBs after the trade."""
+    """Superflex guard: a trade may not leave you with fewer than MIN_QBS startable QBs,
+    unless it doesn't reduce the number you already have (if you're already short, a trade
+    that doesn't touch your QBs is still fine)."""
+    startable = [p for p in me.players if _pos(market, p) == "QB" and market.redraft(p) >= QB_STARTABLE]
     gone = {a["id"] for a in giving if a["kind"] == "player"}
-    qbs = [p for p in me.players if p not in gone and _pos(market, p) == "QB" and market.redraft(p) >= QB_STARTABLE]
-    return len(qbs) + (1 if receiving_pos == "QB" else 0) >= MIN_QBS
+    after = len([p for p in startable if p not in gone]) + (1 if receiving_pos == "QB" else 0)
+    return after >= MIN_QBS or after >= len(startable)
 
 
 def fit(asset: dict, partner: Team) -> float:
