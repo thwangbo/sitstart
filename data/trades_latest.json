@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T17:38:13+00:00",
+ "generated_at": "2026-11-12T17:39:41+00:00",
  "season": 2026,
  "week": 10,
  "deadline_week": 12,
@@ -110,7 +110,8 @@
     "total": 4340,
     "ratio": 1.005,
     "fit": 1.0
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "7588",
@@ -155,7 +156,8 @@
     "total": 3781,
     "ratio": 1.003,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "12519",
@@ -207,7 +209,8 @@
     "total": 4313,
     "ratio": 1.001,
     "fit": 1.0
-   }
+   },
+   "injury_status": "Questionable"
   },
   {
    "player_id": "8228",
@@ -252,7 +255,8 @@
     "total": 2804,
     "ratio": 1.006,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "3198",
@@ -297,7 +301,8 @@
     "total": 2753,
     "ratio": 1.001,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "4034",
@@ -342,7 +347,8 @@
     "total": 4639,
     "ratio": 1.042,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "4217",
@@ -387,7 +393,8 @@
     "total": 2760,
     "ratio": 1.001,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "6790",
@@ -432,7 +439,8 @@
     "total": 3135,
     "ratio": 1.006,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "8138",
@@ -484,7 +492,8 @@
     "total": 5386,
     "ratio": 1.041,
     "fit": 0.81
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "12526",
@@ -536,7 +545,8 @@
     "total": 4523,
     "ratio": 1.011,
     "fit": 1.0
-   }
+   },
+   "injury_status": null
   },
   {
    "player_id": "8146",
@@ -581,7 +591,8 @@
     "total": 4159,
     "ratio": 1.094,
     "fit": 1.0
-   }
+   },
+   "injury_status": "Questionable"
   },
   {
    "player_id": "8167",
@@ -626,7 +637,8 @@
     "total": 4639,
     "ratio": 1.055,
     "fit": 0.8
-   }
+   },
+   "injury_status": null
   }
  ],
  "out_of_reach": [
@@ -653,7 +665,8 @@
     7.9
    ],
    "score": 3044,
-   "offer": null
+   "offer": null,
+   "injury_status": null
   },
   {
    "player_id": "7564",
@@ -678,7 +691,8 @@
     7.9
    ],
    "score": 2493,
-   "offer": null
+   "offer": null,
+   "injury_status": null
   },
   {
    "player_id": "9509",
@@ -703,7 +717,8 @@
     7.9
    ],
    "score": 2363,
-   "offer": null
+   "offer": null,
+   "injury_status": null
   },
   {
    "player_id": "9221",
@@ -728,7 +743,8 @@
     7.9
    ],
    "score": 1253,
-   "offer": null
+   "offer": null,
+   "injury_status": null
   },
   {
    "player_id": "8151",
@@ -753,7 +769,8 @@
     7.9
    ],
    "score": 1049,
-   "offer": null
+   "offer": null,
+   "injury_status": null
   }
  ],
  "my_assets": [
