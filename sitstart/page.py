@@ -53,14 +53,15 @@ def _status(card: dict | None, flag: str | None = None, locked: bool = False) ->
 
 def _player_cells(card: dict | None) -> str:
     if not card:
-        return '<td class="name empty">Empty</td><td></td><td></td><td></td><td></td>'
+        return '<td class="name empty">Empty</td><td class="game"></td><td class="xp"></td><td class="st"></td>'
     who = f'<span class="pname">{escape(card["name"])}</span> <span class="sub">{escape(card.get("position") or "")}' \
           f'{", " + escape(card["team"]) if card.get("team") else ""}</span>'
     game = escape(card.get("opponent") or "")
     when = _pt(card.get("kickoff_utc"))
     rank = escape(card.get("consensus_rank") or "")
-    return (f'<td class="name">{who}</td><td>{game}</td><td class="sub">{when}</td><td class="sub">{rank}</td>'
-            f'<td>{_stats_cell(card)}</td>')
+    game_cell = f'{game}<span class="sub when">{when}</span>' if when else game
+    return (f'<td class="name">{who}</td><td class="game">{game_cell}</td>'
+            f'<td class="sub xp">{rank}</td><td class="st">{_stats_cell(card)}</td>')
 
 
 def _stats_cell(card: dict) -> str:
@@ -124,11 +125,15 @@ def _report_card(grades: list[dict]) -> str:
         for g in sorted(grades, key=lambda g: -g["week"]))
     tot = lambda k: sum(g.get(k) or 0 for g in grades)
     has_stats = [g for g in grades if isinstance(g.get("stats"), (int, float))]
-    stats_tot = f"{sum(g['stats'] for g in has_stats):.1f}" if has_stats else "&ndash;"
+    stats_tot = f"{sum(g['stats'] for g in has_stats):.1f}*" if has_stats else "&ndash;"
+    same = ""
+    if has_stats and len(has_stats) < len(grades):
+        wks = [g["week"] for g in has_stats]
+        same = (f" *Stats view covers Weeks {min(wks)}&ndash;{max(wks)} only; over those weeks the app scored "
+                f"{sum(g['app'] or 0 for g in has_stats):.1f} and the stats view {sum(g['stats'] for g in has_stats):.1f}.")
     note = ("Stats view has beaten the app 3 weeks running. Consider switching it on."
             if stats_streak(grades) else
-            "Gray rows are backtest weeks (before the app existed, no injury info). "
-            "Stats view starts in Week 2 and is shadow-only.")
+            "Gray rows are backtest weeks (before the app existed, no injury info). The stats view is shadow-only.") + same
     return ('<section class="card"><h2>Report card</h2><table class="grades">'
             '<tr class="head"><td>Week</td><td>You</td><td>App</td><td>Sleeper only</td><td>Stats view</td><td>Best possible</td></tr>'
             f'{rows}<tr class="total"><td>Season</td><td>{tot("you"):.1f}</td><td>{tot("app"):.1f}</td>'
@@ -200,7 +205,7 @@ header h1{{margin:0;font-size:24px}}header p{{margin:4px 0 0;color:var(--sub)}}
 .grid{{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}}
 @media (min-width:1000px){{.grid{{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}}}}
 .card{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:16px;overflow-x:auto}}
-.grid .card{{margin-top:0}}.grid>div>.card+.card{{margin-top:16px}}
+.grid .card{{margin-top:0}}.grid>div{{min-width:0}}.grid>div>.card+.card{{margin-top:16px}}
 .card.accent{{border-color:var(--accent);border-width:2px}}.card.ok{{border-color:var(--good)}}
 h2{{font-size:16px;margin:0 0 10px}}.gain{{color:var(--good);margin-left:6px}}
 table{{width:100%;border-collapse:collapse}}td{{padding:7px 8px;border-top:1px solid var(--line);vertical-align:middle;white-space:nowrap}}
@@ -211,7 +216,8 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 .tag.bad{{color:var(--bad)}}.tag.warn{{color:var(--warn)}}.tag.muted{{color:var(--sub)}}
 .verb{{font-weight:700;width:56px}}.verb.start{{color:var(--good)}}.verb.sit{{color:var(--bad)}}
 .total td{{font-weight:700;border-top:2px solid var(--line)}}.head td{{color:var(--sub);font-size:12px;border-top:none;padding-top:0}}
-.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
+.game .when{{display:block;font-size:12px}}
+@media (max-width:640px){{.game,.xp,.st{{display:none}}.slot{{width:64px}}td{{padding:7px 5px}}}}.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
 .grades td{{text-align:right;font-variant-numeric:tabular-nums}}.grades td:first-child{{text-align:left}}.grades .bt td{{color:var(--sub)}}
 </style></head><body><main>
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
@@ -220,13 +226,13 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 <div>
 {_suggestion_block(snap.get("suggestion"))}
 {_stats_view_note(snap)}
-<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td>Stats</td><td></td><td class="num">Score</td></tr>{lineup_rows}
-<tr class="total"><td colspan="7">Projected total</td><td class="num">{total:.1f}</td></tr></table></section>
+<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td class="game">Game (PT)</td><td class="xp">Experts</td><td class="st">Stats</td><td></td><td class="num">Score</td></tr>{lineup_rows}
+<tr class="total"><td colspan="2">Projected total</td><td class="game"></td><td class="xp"></td><td class="st"></td><td></td><td class="num">{total:.1f}</td></tr></table></section>
 </div>
 <div>{opp_html}</div>
 </div>
 {_report_card(snap.get("grades") or [])}
-<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td>Stats</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
+<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td class="game">Game (PT)</td><td class="xp">Experts</td><td class="st">Stats</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
 <p class="sub">{escape(_blend_note(ds))}</p>
 <p class="sub">Projections: Sleeper ({escape(str(ds.get("projections_source")))}, {ds.get("projections_count")} players). Byes: {escape(byes)}. Kickoff times are Pacific.</p>
 </main></body></html>
