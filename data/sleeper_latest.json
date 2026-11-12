@@ -134,16 +134,21 @@
         "years_exp": 2,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 23.23,
-        "proj_pts_sleeper_half": 23.18,
+        "proj_pts": 23.2,
+        "proj_pts_sleeper_half": 23.15,
         "consensus_rank": "QB3",
-        "expert_pts": 22.93,
-        "score": 23.08,
+        "expert_pts": 23.01,
+        "score": 23.11,
         "bye": false,
         "opponent": "@ DET",
         "kickoff_utc": "2026-11-15T14:30:00+00:00",
         "implied_total": 24.5,
-        "locked": false
+        "locked": false,
+        "xfp": 15.25,
+        "usage_trend": -3.6,
+        "stat_pts": 15.92,
+        "stat_adj": -0.15,
+        "score_with_stats": 19.64
       },
       "empty": false,
       "locked": false,
@@ -163,16 +168,21 @@
         "years_exp": 3,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 12.03,
-        "proj_pts_sleeper_half": 12.06,
+        "proj_pts": 12.09,
+        "proj_pts_sleeper_half": 12.09,
         "consensus_rank": "RB19",
-        "expert_pts": 10.6,
-        "score": 11.31,
+        "expert_pts": 10.94,
+        "score": 11.52,
         "bye": false,
         "opponent": "@ LV",
         "kickoff_utc": "2026-11-15T21:05:00+00:00",
         "implied_total": 23.5,
-        "locked": false
+        "locked": false,
+        "xfp": 9.82,
+        "usage_trend": null,
+        "stat_pts": 10.04,
+        "stat_adj": -0.128,
+        "score_with_stats": 10.05
       },
       "empty": false,
       "locked": false,
@@ -192,16 +202,21 @@
         "years_exp": 4,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 15.78,
-        "proj_pts_sleeper_half": 15.77,
+        "proj_pts": 15.72,
+        "proj_pts_sleeper_half": 15.74,
         "consensus_rank": "RB8",
-        "expert_pts": 15.78,
-        "score": 15.78,
+        "expert_pts": 15.72,
+        "score": 15.72,
         "bye": false,
         "opponent": "@ ARI",
         "kickoff_utc": "2026-11-15T21:05:00+00:00",
         "implied_total": 24.5,
-        "locked": false
+        "locked": false,
+        "xfp": 13.38,
+        "usage_trend": 0.6,
+        "stat_pts": 13.97,
+        "stat_adj": -0.111,
+        "score_with_stats": 13.98
       },
       "empty": false,
       "locked": false,
@@ -221,16 +236,21 @@
         "years_exp": 2,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 6.67,
-        "proj_pts_sleeper_half": 6.65,
+        "proj_pts": 6.52,
+        "proj_pts_sleeper_half": 6.54,
         "consensus_rank": "WR34",
-        "expert_pts": 7.81,
-        "score": 7.24,
+        "expert_pts": 7.79,
+        "score": 7.15,
         "bye": false,
         "opponent": "vs BUF",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
         "implied_total": 21.0,
-        "locked": false
+        "locked": false,
+        "xfp": 13.38,
+        "usage_trend": 7.0,
+        "stat_pts": 12.94,
+        "stat_adj": 0.15,
+        "score_with_stats": 8.22
       },
       "empty": false,
       "locked": false,
@@ -250,16 +270,21 @@
         "years_exp": 5,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 13.0,
-        "proj_pts_sleeper_half": 12.99,
+        "proj_pts": 13.3,
+        "proj_pts_sleeper_half": 13.3,
         "consensus_rank": "WR14",
-        "expert_pts": 12.91,
-        "score": 12.96,
+        "expert_pts": 12.87,
+        "score": 13.09,
         "bye": false,
         "opponent": "@ CLE",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
         "implied_total": 23.0,
-        "locked": false
+        "locked": false,
+        "xfp": 7.23,
+        "usage_trend": -3.3,
+        "stat_pts": 7.31,
+        "stat_adj": -0.15,
+        "score_with_stats": 11.13
       },
       "empty": false,
       "locked": false,
@@ -288,7 +313,12 @@
         "opponent": "vs MIN",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
         "implied_total": 22.8,
-        "locked": false
+        "locked": false,
+        "xfp": 19.98,
+        "usage_trend": -4.2,
+        "stat_pts": 20.12,
+        "stat_adj": 0.15,
+        "score_with_stats": 15.11
       },
       "empty": false,
       "locked": false,
@@ -308,16 +338,21 @@
         "years_exp": 3,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 10.32,
-        "proj_pts_sleeper_half": 10.32,
+        "proj_pts": 10.04,
+        "proj_pts_sleeper_half": 10.05,
         "consensus_rank": "TE8",
         "expert_pts": 9.35,
-        "score": 9.84,
+        "score": 9.7,
         "bye": false,
         "opponent": "vs NE",
         "kickoff_utc": "2026-11-15T14:30:00+00:00",
         "implied_total": 27.0,
-        "locked": false
+        "locked": false,
+        "xfp": 6.11,
+        "usage_trend": 0.2,
+        "stat_pts": 6.72,
+        "stat_adj": -0.15,
+        "score_with_stats": 8.24
       },
       "empty": false,
       "locked": false,
@@ -337,16 +372,21 @@
         "years_exp": 13,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 10.49,
-        "proj_pts_sleeper_half": 10.48,
+        "proj_pts": 9.92,
+        "proj_pts_sleeper_half": 9.93,
         "consensus_rank": "TE6",
-        "expert_pts": 10.28,
-        "score": 10.38,
+        "expert_pts": 9.92,
+        "score": 9.92,
         "bye": false,
         "opponent": "@ ATL",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
         "implied_total": 24.8,
-        "locked": false
+        "locked": false,
+        "xfp": 9.57,
+        "usage_trend": 1.8,
+        "stat_pts": 10.06,
+        "stat_adj": 0.014,
+        "score_with_stats": 10.06
       },
       "empty": false,
       "locked": false,
@@ -369,13 +409,18 @@
         "proj_pts": 17.52,
         "proj_pts_sleeper_half": 17.51,
         "consensus_rank": "QB12",
-        "expert_pts": 17.52,
-        "score": 17.52,
+        "expert_pts": 17.68,
+        "score": 17.6,
         "bye": false,
         "opponent": "vs MIN",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
         "implied_total": 22.8,
-        "locked": false
+        "locked": false,
+        "xfp": 23.78,
+        "usage_trend": -6.4,
+        "stat_pts": 23.95,
+        "stat_adj": 0.15,
+        "score_with_stats": 20.24
       },
       "empty": false,
       "locked": false,
@@ -398,13 +443,18 @@
       "proj_pts": 5.72,
       "proj_pts_sleeper_half": 5.77,
       "consensus_rank": "WR74",
-      "expert_pts": 3.46,
-      "score": 4.59,
+      "expert_pts": 3.56,
+      "score": 4.64,
       "bye": false,
       "opponent": "vs MIA",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 21.0,
-      "locked": false
+      "locked": false,
+      "xfp": 3.8,
+      "usage_trend": -0.7,
+      "stat_pts": 3.67,
+      "stat_adj": -0.15,
+      "score_with_stats": 3.94
     },
     {
       "player_id": "13324",
@@ -421,13 +471,15 @@
       "proj_pts": 2.29,
       "proj_pts_sleeper_half": 2.27,
       "consensus_rank": "TE47",
-      "expert_pts": 1.88,
-      "score": 2.08,
+      "expert_pts": 2.21,
+      "score": 2.25,
       "bye": false,
       "opponent": "vs LAC",
       "kickoff_utc": "2026-11-17T01:15:00+00:00",
       "implied_total": 21.5,
-      "locked": false
+      "locked": false,
+      "stat_adj": null,
+      "score_with_stats": 2.25
     },
     {
       "player_id": "13322",
@@ -450,7 +502,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 1.92,
+      "usage_trend": -1.3,
+      "stat_pts": 1.92,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "5850",
@@ -473,7 +530,12 @@
       "opponent": "vs MIN",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 22.8,
-      "locked": false
+      "locked": false,
+      "xfp": 14.68,
+      "usage_trend": null,
+      "stat_pts": 14.78,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "4972",
@@ -496,7 +558,12 @@
       "opponent": "@ CIN",
       "kickoff_utc": "2026-11-16T01:20:00+00:00",
       "implied_total": 23.0,
-      "locked": false
+      "locked": false,
+      "xfp": 0.33,
+      "usage_trend": null,
+      "stat_pts": 0.33,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "3257",
@@ -513,13 +580,18 @@
       "proj_pts": 13.39,
       "proj_pts_sleeper_half": 13.39,
       "consensus_rank": "QB20",
-      "expert_pts": 14.76,
-      "score": 14.07,
+      "expert_pts": 14.66,
+      "score": 14.03,
       "bye": false,
       "opponent": "vs LAC",
       "kickoff_utc": "2026-11-17T01:15:00+00:00",
       "implied_total": 21.5,
-      "locked": false
+      "locked": false,
+      "xfp": 21.15,
+      "usage_trend": -0.6,
+      "stat_pts": 20.68,
+      "stat_adj": 0.15,
+      "score_with_stats": 16.13
     },
     {
       "player_id": "4098",
@@ -542,7 +614,9 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "5045",
@@ -565,7 +639,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 9.64,
+      "usage_trend": 4.2,
+      "stat_pts": 9.64,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "4950",
@@ -588,7 +667,9 @@
       "opponent": "@ DAL",
       "kickoff_utc": "2026-11-15T21:25:00+00:00",
       "implied_total": 29.5,
-      "locked": false
+      "locked": false,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "5892",
@@ -602,16 +683,21 @@
       "years_exp": 7,
       "injury_status": "Questionable",
       "status": "Active",
-      "proj_pts": 8.78,
-      "proj_pts_sleeper_half": 8.72,
+      "proj_pts": 0.0,
+      "proj_pts_sleeper_half": null,
       "consensus_rank": "RB63",
-      "expert_pts": 1.32,
-      "score": 5.05,
+      "expert_pts": 1.62,
+      "score": 0.81,
       "bye": false,
       "opponent": "@ CLE",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 23.0,
-      "locked": false
+      "locked": false,
+      "xfp": 4.66,
+      "usage_trend": -2.1,
+      "stat_pts": 4.71,
+      "stat_adj": null,
+      "score_with_stats": 0.81
     },
     {
       "player_id": "12534",
@@ -634,7 +720,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 15.77,
+      "usage_trend": 9.5,
+      "stat_pts": 15.77,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "13405",
@@ -651,13 +742,18 @@
       "proj_pts": 2.89,
       "proj_pts_sleeper_half": 2.85,
       "consensus_rank": "RB55",
-      "expert_pts": 3.7,
-      "score": 3.29,
+      "expert_pts": 3.59,
+      "score": 3.24,
       "bye": false,
       "opponent": "@ IND",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 17.5,
-      "locked": false
+      "locked": false,
+      "xfp": 2.37,
+      "usage_trend": -1.1,
+      "stat_pts": 2.11,
+      "stat_adj": -0.15,
+      "score_with_stats": 2.75
     },
     {
       "player_id": "11593",
@@ -680,7 +776,12 @@
       "opponent": "vs SF",
       "kickoff_utc": "2026-11-15T21:25:00+00:00",
       "implied_total": 26.0,
-      "locked": false
+      "locked": false,
+      "xfp": 4.78,
+      "usage_trend": 1.4,
+      "stat_pts": 5.15,
+      "stat_adj": 0.139,
+      "score_with_stats": 5.15
     },
     {
       "player_id": "13394",
@@ -695,7 +796,7 @@
       "injury_status": null,
       "status": "Active",
       "proj_pts": 3.45,
-      "proj_pts_sleeper_half": 3.43,
+      "proj_pts_sleeper_half": 3.42,
       "consensus_rank": "WR86",
       "expert_pts": 2.58,
       "score": 3.02,
@@ -703,7 +804,12 @@
       "opponent": "@ TEN",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 28.5,
-      "locked": false
+      "locked": false,
+      "xfp": 2.84,
+      "usage_trend": -3.5,
+      "stat_pts": 3.22,
+      "stat_adj": 0.066,
+      "score_with_stats": 3.22
     },
     {
       "player_id": "7090",
@@ -720,13 +826,18 @@
       "proj_pts": 2.58,
       "proj_pts_sleeper_half": 2.6,
       "consensus_rank": "WR78",
-      "expert_pts": 3.22,
-      "score": 2.9,
+      "expert_pts": 3.41,
+      "score": 3.0,
       "bye": false,
       "opponent": "vs WAS",
       "kickoff_utc": "2026-11-13T01:15:00+00:00",
       "implied_total": 21.5,
-      "locked": false
+      "locked": false,
+      "xfp": 5.03,
+      "usage_trend": -1.4,
+      "stat_pts": 4.92,
+      "stat_adj": 0.15,
+      "score_with_stats": 3.45
     },
     {
       "player_id": "7525",
@@ -749,7 +860,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 14.15,
+      "usage_trend": -1.3,
+      "stat_pts": 14.15,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "11655",
@@ -772,7 +888,12 @@
       "opponent": "vs WAS",
       "kickoff_utc": "2026-11-13T01:15:00+00:00",
       "implied_total": 21.5,
-      "locked": false
+      "locked": false,
+      "xfp": 5.55,
+      "usage_trend": 3.2,
+      "stat_pts": 5.43,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "5022",
@@ -795,7 +916,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 6.24,
+      "usage_trend": -2.3,
+      "stat_pts": 6.24,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "4066",
@@ -818,7 +944,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 4.82,
+      "usage_trend": 2.2,
+      "stat_pts": 4.82,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "4866",
@@ -841,7 +972,12 @@
       "opponent": null,
       "kickoff_utc": null,
       "implied_total": null,
-      "locked": false
+      "locked": false,
+      "xfp": 9.58,
+      "usage_trend": 7.4,
+      "stat_pts": 9.58,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "9493",
@@ -864,7 +1000,12 @@
       "opponent": "@ ARI",
       "kickoff_utc": "2026-11-15T21:05:00+00:00",
       "implied_total": 24.5,
-      "locked": false
+      "locked": false,
+      "xfp": 19.48,
+      "usage_trend": 8.4,
+      "stat_pts": 20.34,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     },
     {
       "player_id": "5872",
@@ -878,16 +1019,21 @@
       "years_exp": 7,
       "injury_status": "Questionable",
       "status": "Active",
-      "proj_pts": 8.56,
-      "proj_pts_sleeper_half": 8.56,
+      "proj_pts": 8.75,
+      "proj_pts_sleeper_half": 8.74,
       "consensus_rank": "WR33",
-      "expert_pts": 7.9,
-      "score": 8.23,
+      "expert_pts": 7.81,
+      "score": 8.28,
       "bye": false,
       "opponent": "@ DAL",
       "kickoff_utc": "2026-11-15T21:25:00+00:00",
       "implied_total": 29.5,
-      "locked": false
+      "locked": false,
+      "xfp": 6.18,
+      "usage_trend": 4.7,
+      "stat_pts": 7.14,
+      "stat_adj": -0.138,
+      "score_with_stats": 7.14
     },
     {
       "player_id": "13270",
@@ -904,13 +1050,15 @@
       "proj_pts": 4.09,
       "proj_pts_sleeper_half": 4.09,
       "consensus_rank": "WR103",
-      "expert_pts": 1.49,
-      "score": 2.79,
+      "expert_pts": 1.43,
+      "score": 2.76,
       "bye": false,
       "opponent": "@ ARI",
       "kickoff_utc": "2026-11-15T21:05:00+00:00",
       "implied_total": 24.5,
-      "locked": false
+      "locked": false,
+      "stat_adj": null,
+      "score_with_stats": 2.76
     },
     {
       "player_id": "8136",
@@ -925,15 +1073,20 @@
       "injury_status": null,
       "status": "Active",
       "proj_pts": 9.78,
-      "proj_pts_sleeper_half": 9.79,
+      "proj_pts_sleeper_half": 9.77,
       "consensus_rank": "RB25",
-      "expert_pts": 8.87,
-      "score": 9.32,
+      "expert_pts": 8.97,
+      "score": 9.38,
       "bye": false,
       "opponent": "@ NYG",
       "kickoff_utc": "2026-11-13T01:15:00+00:00",
       "implied_total": 19.0,
-      "locked": false
+      "locked": false,
+      "xfp": 9.33,
+      "usage_trend": 2.0,
+      "stat_pts": 8.6,
+      "stat_adj": -0.083,
+      "score_with_stats": 8.6
     },
     {
       "player_id": "8119",
@@ -950,13 +1103,18 @@
       "proj_pts": 5.98,
       "proj_pts_sleeper_half": 6.0,
       "consensus_rank": "WR57",
-      "expert_pts": 5.37,
-      "score": 5.68,
+      "expert_pts": 5.46,
+      "score": 5.72,
       "bye": false,
       "opponent": "vs KC",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
       "implied_total": 21.8,
-      "locked": false
+      "locked": false,
+      "xfp": 4.87,
+      "usage_trend": -2.1,
+      "stat_pts": 4.79,
+      "stat_adj": -0.15,
+      "score_with_stats": 4.86
     }
   ],
   "taxi": [],
@@ -982,7 +1140,12 @@
       "opponent": "@ CIN",
       "kickoff_utc": "2026-11-16T01:20:00+00:00",
       "implied_total": 23.0,
-      "locked": false
+      "locked": false,
+      "xfp": 4.99,
+      "usage_trend": -1.5,
+      "stat_pts": 5.04,
+      "stat_adj": null,
+      "score_with_stats": 0.0
     }
   ],
   "opponent": {
@@ -1005,16 +1168,21 @@
           "years_exp": 13,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 16.48,
-          "proj_pts_sleeper_half": 16.49,
+          "proj_pts": 16.52,
+          "proj_pts_sleeper_half": 16.51,
           "consensus_rank": "QB16",
-          "expert_pts": 16.63,
+          "expert_pts": 16.59,
           "score": 16.55,
           "bye": false,
           "opponent": "vs BUF",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 21.0,
-          "locked": false
+          "locked": false,
+          "xfp": 17.08,
+          "usage_trend": 6.0,
+          "stat_pts": 16.52,
+          "stat_adj": -0.002,
+          "score_with_stats": 16.52
         },
         "empty": false,
         "locked": false,
@@ -1037,13 +1205,18 @@
           "proj_pts": 6.33,
           "proj_pts_sleeper_half": 6.3,
           "consensus_rank": "RB32",
-          "expert_pts": 7.82,
-          "score": 7.08,
+          "expert_pts": 7.62,
+          "score": 6.97,
           "bye": false,
           "opponent": "vs HOU",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 18.5,
-          "locked": false
+          "locked": false,
+          "xfp": 8.39,
+          "usage_trend": null,
+          "stat_pts": 7.64,
+          "stat_adj": 0.096,
+          "score_with_stats": 7.64
         },
         "empty": false,
         "locked": false,
@@ -1064,15 +1237,20 @@
           "injury_status": null,
           "status": "Active",
           "proj_pts": 7.34,
-          "proj_pts_sleeper_half": 7.34,
+          "proj_pts_sleeper_half": 7.35,
           "consensus_rank": "RB27",
-          "expert_pts": 8.73,
-          "score": 8.04,
+          "expert_pts": 8.54,
+          "score": 7.94,
           "bye": false,
           "opponent": "@ LV",
           "kickoff_utc": "2026-11-15T21:05:00+00:00",
           "implied_total": 23.5,
-          "locked": false
+          "locked": false,
+          "xfp": 8.65,
+          "usage_trend": 0.2,
+          "stat_pts": 8.84,
+          "stat_adj": 0.113,
+          "score_with_stats": 8.84
         },
         "empty": false,
         "locked": false,
@@ -1092,16 +1270,21 @@
           "years_exp": 2,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 5.6,
-          "proj_pts_sleeper_half": 5.6,
+          "proj_pts": 5.73,
+          "proj_pts_sleeper_half": 5.71,
           "consensus_rank": "WR64",
-          "expert_pts": 4.41,
-          "score": 5.0,
+          "expert_pts": 4.47,
+          "score": 5.1,
           "bye": false,
           "opponent": "@ ATL",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 24.8,
-          "locked": false
+          "locked": false,
+          "xfp": 8.38,
+          "usage_trend": 2.0,
+          "stat_pts": 8.81,
+          "stat_adj": 0.15,
+          "score_with_stats": 5.86
         },
         "empty": false,
         "locked": false,
@@ -1130,7 +1313,12 @@
           "opponent": null,
           "kickoff_utc": null,
           "implied_total": null,
-          "locked": false
+          "locked": false,
+          "xfp": 9.47,
+          "usage_trend": 2.3,
+          "stat_pts": 9.47,
+          "stat_adj": null,
+          "score_with_stats": 0.0
         },
         "empty": false,
         "locked": false,
@@ -1150,16 +1338,21 @@
           "years_exp": 0,
           "injury_status": "Questionable",
           "status": "Active",
-          "proj_pts": 7.76,
-          "proj_pts_sleeper_half": 7.72,
+          "proj_pts": 7.57,
+          "proj_pts_sleeper_half": 7.55,
           "consensus_rank": "WR30",
-          "expert_pts": 8.34,
-          "score": 8.05,
+          "expert_pts": 8.23,
+          "score": 7.9,
           "bye": false,
           "opponent": "vs BUF",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 21.0,
-          "locked": false
+          "locked": false,
+          "xfp": 8.69,
+          "usage_trend": 4.3,
+          "stat_pts": 8.4,
+          "stat_adj": 0.063,
+          "score_with_stats": 8.4
         },
         "empty": false,
         "locked": false,
@@ -1180,15 +1373,20 @@
           "injury_status": "Questionable",
           "status": "Active",
           "proj_pts": 9.35,
-          "proj_pts_sleeper_half": 9.34,
+          "proj_pts_sleeper_half": 9.35,
           "consensus_rank": "TE9",
-          "expert_pts": 9.16,
-          "score": 9.25,
+          "expert_pts": 8.85,
+          "score": 9.1,
           "bye": false,
           "opponent": "vs HOU",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 18.5,
-          "locked": false
+          "locked": false,
+          "xfp": 6.39,
+          "usage_trend": 2.2,
+          "stat_pts": 5.82,
+          "stat_adj": -0.15,
+          "score_with_stats": 7.73
         },
         "empty": false,
         "locked": false,
@@ -1217,7 +1415,12 @@
           "opponent": null,
           "kickoff_utc": null,
           "implied_total": null,
-          "locked": false
+          "locked": false,
+          "xfp": 11.18,
+          "usage_trend": 3.6,
+          "stat_pts": 11.18,
+          "stat_adj": null,
+          "score_with_stats": 0.0
         },
         "empty": false,
         "locked": false,
@@ -1246,14 +1449,19 @@
           "opponent": "@ GB",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
           "implied_total": 19.8,
-          "locked": false
+          "locked": false,
+          "xfp": 9.24,
+          "usage_trend": null,
+          "stat_pts": 8.69,
+          "stat_adj": null,
+          "score_with_stats": 0.0
         },
         "empty": false,
         "locked": false,
         "flag": null
       }
     ],
-    "proj_total": 54.0
+    "proj_total": 53.6
   },
   "league_rosters": [
     {
@@ -1848,15 +2056,16 @@
     ],
     "consensus_players": 396,
     "consensus_scrape_date": "2026-11-12",
-    "blend_weight": 0.5
+    "blend_weight": 0.5,
+    "stats_players": 517
   },
   "suggestion": {
     "actionable": false,
     "start": [],
     "sit": [],
     "slot_moves": [],
-    "current_total": 121.2,
-    "best_total": 121.2,
+    "current_total": 121.0,
+    "best_total": 121.0,
     "gain": 0.0,
     "lineup": [
       {
@@ -1915,5 +2124,153 @@
       }
     ]
   },
-  "generated_at": "2026-11-12T10:50:09+00:00"
+  "stats_view": {
+    "actionable": false,
+    "start": [],
+    "sit": [],
+    "slot_moves": [],
+    "current_total": 116.7,
+    "best_total": 116.7,
+    "gain": 0.0,
+    "lineup": [
+      {
+        "slot": "QB",
+        "player_id": "11564",
+        "name": "Drake Maye",
+        "locked": false
+      },
+      {
+        "slot": "RB",
+        "player_id": "9753",
+        "name": "Zach Charbonnet",
+        "locked": false
+      },
+      {
+        "slot": "RB",
+        "player_id": "8150",
+        "name": "Kyren Williams",
+        "locked": false
+      },
+      {
+        "slot": "WR",
+        "player_id": "11625",
+        "name": "Adonai Mitchell",
+        "locked": false
+      },
+      {
+        "slot": "WR",
+        "player_id": "7569",
+        "name": "Nico Collins",
+        "locked": false
+      },
+      {
+        "slot": "WR",
+        "player_id": "12501",
+        "name": "Matthew Golden",
+        "locked": false
+      },
+      {
+        "slot": "TE",
+        "player_id": "10859",
+        "name": "Sam LaPorta",
+        "locked": false
+      },
+      {
+        "slot": "FLEX",
+        "player_id": "1466",
+        "name": "Travis Kelce",
+        "locked": false
+      },
+      {
+        "slot": "SUPER_FLEX",
+        "player_id": "6804",
+        "name": "Jordan Love",
+        "locked": false
+      }
+    ]
+  },
+  "grades": [
+    {
+      "week": 1,
+      "source": "backtest",
+      "you": 124.9,
+      "app": 124.9,
+      "sleeper": 124.9,
+      "stats": null,
+      "best": 164.66
+    },
+    {
+      "week": 2,
+      "source": "backtest",
+      "you": 93.12,
+      "app": 93.12,
+      "sleeper": 92.12,
+      "stats": 93.12,
+      "best": 123.42
+    },
+    {
+      "week": 3,
+      "source": "backtest",
+      "you": 114.64,
+      "app": 107.64,
+      "sleeper": 107.64,
+      "stats": 127.48,
+      "best": 144.28
+    },
+    {
+      "week": 4,
+      "source": "backtest",
+      "you": 141.94,
+      "app": 158.84,
+      "sleeper": 158.84,
+      "stats": 143.52,
+      "best": 199.74
+    },
+    {
+      "week": 5,
+      "source": "backtest",
+      "you": 156.34,
+      "app": 156.34,
+      "sleeper": 156.34,
+      "stats": 163.64,
+      "best": 166.64
+    },
+    {
+      "week": 6,
+      "source": "backtest",
+      "you": 131.04,
+      "app": 131.04,
+      "sleeper": 121.54,
+      "stats": 131.04,
+      "best": 148.94
+    },
+    {
+      "week": 7,
+      "source": "backtest",
+      "you": 123.8,
+      "app": 123.8,
+      "sleeper": 123.8,
+      "stats": 123.8,
+      "best": 133.2
+    },
+    {
+      "week": 8,
+      "source": "backtest",
+      "you": 138.88,
+      "app": 124.82,
+      "sleeper": 124.82,
+      "stats": 120.62,
+      "best": 160.38
+    },
+    {
+      "week": 9,
+      "source": "backtest",
+      "you": 147.84,
+      "app": 147.84,
+      "sleeper": 147.84,
+      "stats": 145.54,
+      "best": 171.94
+    }
+  ],
+  "generated_at": "2026-11-12T15:27:35+00:00"
 }

@@ -1,0 +1,83 @@
+[
+  {
+    "week": 1,
+    "source": "backtest",
+    "you": 124.9,
+    "app": 124.9,
+    "sleeper": 124.9,
+    "stats": null,
+    "best": 164.66
+  },
+  {
+    "week": 2,
+    "source": "backtest",
+    "you": 93.12,
+    "app": 93.12,
+    "sleeper": 92.12,
+    "stats": 93.12,
+    "best": 123.42
+  },
+  {
+    "week": 3,
+    "source": "backtest",
+    "you": 114.64,
+    "app": 107.64,
+    "sleeper": 107.64,
+    "stats": 127.48,
+    "best": 144.28
+  },
+  {
+    "week": 4,
+    "source": "backtest",
+    "you": 141.94,
+    "app": 158.84,
+    "sleeper": 158.84,
+    "stats": 143.52,
+    "best": 199.74
+  },
+  {
+    "week": 5,
+    "source": "backtest",
+    "you": 156.34,
+    "app": 156.34,
+    "sleeper": 156.34,
+    "stats": 163.64,
+    "best": 166.64
+  },
+  {
+    "week": 6,
+    "source": "backtest",
+    "you": 131.04,
+    "app": 131.04,
+    "sleeper": 121.54,
+    "stats": 131.04,
+    "best": 148.94
+  },
+  {
+    "week": 7,
+    "source": "backtest",
+    "you": 123.8,
+    "app": 123.8,
+    "sleeper": 123.8,
+    "stats": 123.8,
+    "best": 133.2
+  },
+  {
+    "week": 8,
+    "source": "backtest",
+    "you": 138.88,
+    "app": 124.82,
+    "sleeper": 124.82,
+    "stats": 120.62,
+    "best": 160.38
+  },
+  {
+    "week": 9,
+    "source": "backtest",
+    "you": 147.84,
+    "app": 147.84,
+    "sleeper": 147.84,
+    "stats": 145.54,
+    "best": 171.94
+  }
+]
