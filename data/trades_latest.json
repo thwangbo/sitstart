@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T17:45:41+00:00",
+ "generated_at": "2026-11-12T17:47:18+00:00",
  "season": 2026,
  "week": 10,
  "deadline_week": 12,
@@ -96,15 +96,22 @@
       "pos": null
      },
      {
-      "label": "2029 1st",
+      "label": "2027 2nd (Late)",
       "kind": "pick",
-      "value": 2195,
+      "value": 1620,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
       "age": null,
       "pos": null
      }
     ],
-    "total": 4820,
-    "ratio": 1.099,
+    "total": 5104,
+    "ratio": 1.164,
     "fit": 1.0
    },
    "injury_status": null
@@ -138,22 +145,22 @@
    "offer": {
     "assets": [
      {
-      "label": "2028 1st",
-      "kind": "pick",
-      "value": 2626,
-      "age": null,
-      "pos": null
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
      },
      {
-      "label": "2028 3rd (from Coke Heads)",
-      "kind": "pick",
-      "value": 998,
-      "age": null,
-      "pos": null
+      "label": "Deebo Samuel",
+      "kind": "player",
+      "value": 1206,
+      "age": 30.8,
+      "pos": "WR"
      }
     ],
-    "total": 3624,
-    "ratio": 1.009,
+    "total": 3916,
+    "ratio": 1.09,
     "fit": 0.8
    },
    "injury_status": null
@@ -194,15 +201,22 @@
       "pos": null
      },
      {
-      "label": "2029 1st",
+      "label": "2027 2nd (Late)",
       "kind": "pick",
-      "value": 2195,
+      "value": 1620,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1340,
       "age": null,
       "pos": null
      }
     ],
-    "total": 4820,
-    "ratio": 1.016,
+    "total": 5586,
+    "ratio": 1.178,
     "fit": 1.0
    },
    "injury_status": "Questionable"
@@ -236,22 +250,22 @@
    "offer": {
     "assets": [
      {
-      "label": "2028 2nd",
-      "kind": "pick",
-      "value": 1534,
-      "age": null,
-      "pos": null
+      "label": "Kyle Monangai",
+      "kind": "player",
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
      },
      {
-      "label": "David Montgomery",
-      "kind": "player",
-      "value": 1287,
-      "age": 29.4,
-      "pos": "RB"
+      "label": "2028 3rd (from Coke Heads)",
+      "kind": "pick",
+      "value": 998,
+      "age": null,
+      "pos": null
      }
     ],
-    "total": 2821,
-    "ratio": 1.007,
+    "total": 3044,
+    "ratio": 1.086,
     "fit": 0.8
    },
    "injury_status": null
@@ -285,15 +299,15 @@
    "offer": {
     "assets": [
      {
-      "label": "2028 1st",
-      "kind": "pick",
-      "value": 2626,
-      "age": null,
-      "pos": null
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
      }
     ],
-    "total": 2626,
-    "ratio": 1.034,
+    "total": 2710,
+    "ratio": 1.067,
     "fit": 0.8
    },
    "injury_status": null
@@ -334,23 +348,16 @@
       "pos": "WR"
      },
      {
-      "label": "Deebo Samuel",
+      "label": "Kyle Monangai",
       "kind": "player",
-      "value": 1206,
-      "age": 30.8,
-      "pos": "WR"
-     },
-     {
-      "label": "Matt Hibner",
-      "kind": "player",
-      "value": 378,
-      "age": 24.7,
-      "pos": "TE"
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
      }
     ],
-    "total": 4294,
-    "ratio": 1.041,
-    "fit": 0.8
+    "total": 4756,
+    "ratio": 1.152,
+    "fit": 0.79
    },
    "injury_status": null
   },
@@ -383,15 +390,15 @@
    "offer": {
     "assets": [
      {
-      "label": "2028 1st",
-      "kind": "pick",
-      "value": 2626,
-      "age": null,
-      "pos": null
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
      }
     ],
-    "total": 2626,
-    "ratio": 1.052,
+    "total": 2710,
+    "ratio": 1.086,
     "fit": 0.8
    },
    "injury_status": null
@@ -425,55 +432,6 @@
    "offer": {
     "assets": [
      {
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2195,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "Courtland Sutton",
-      "kind": "player",
-      "value": 1014,
-      "age": 31.1,
-      "pos": "WR"
-     }
-    ],
-    "total": 3210,
-    "ratio": 1.001,
-    "fit": 0.8
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "6794",
-   "name": "Justin Jefferson",
-   "pos": "WR",
-   "age": 27.4,
-   "nfl_team": "MIN",
-   "owner": "jaywah",
-   "owner_label": "contender",
-   "owner_roster_id": 11,
-   "value": 6003,
-   "redraft": 6215,
-   "trend": -73,
-   "fc_value": 6003,
-   "ktc_value": 6003,
-   "disagree": false,
-   "gain": 4406,
-   "motive": 0.15,
-   "why": "jaywah is contending and he starts for them",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 11.4,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 661,
-   "offer": {
-    "assets": [
-     {
       "label": "DeVonta Smith",
       "kind": "player",
       "value": 2710,
@@ -481,22 +439,15 @@
       "pos": "WR"
      },
      {
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 2046,
-      "age": 24.4,
-      "pos": "RB"
-     },
-     {
-      "label": "David Montgomery",
-      "kind": "player",
-      "value": 1287,
-      "age": 29.4,
-      "pos": "RB"
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
+      "age": null,
+      "pos": null
      }
     ],
-    "total": 6043,
-    "ratio": 1.007,
+    "total": 3568,
+    "ratio": 1.113,
     "fit": 0.8
    },
    "injury_status": null
@@ -537,23 +488,23 @@
       "pos": "WR"
      },
      {
+      "label": "Kyle Monangai",
+      "kind": "player",
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
+     },
+     {
       "label": "David Montgomery",
       "kind": "player",
       "value": 1287,
       "age": 29.4,
       "pos": "RB"
-     },
-     {
-      "label": "Deebo Samuel",
-      "kind": "player",
-      "value": 1206,
-      "age": 30.8,
-      "pos": "WR"
      }
     ],
-    "total": 5204,
-    "ratio": 1.006,
-    "fit": 0.82
+    "total": 6043,
+    "ratio": 1.168,
+    "fit": 0.8
    },
    "injury_status": null
   },
@@ -593,15 +544,22 @@
       "pos": null
      },
      {
-      "label": "2029 1st",
+      "label": "2027 2nd (Late)",
       "kind": "pick",
-      "value": 2195,
+      "value": 1620,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1340,
       "age": null,
       "pos": null
      }
     ],
-    "total": 4820,
-    "ratio": 1.008,
+    "total": 5586,
+    "ratio": 1.169,
     "fit": 1.0
    },
    "injury_status": null
@@ -635,25 +593,88 @@
    "offer": {
     "assets": [
      {
-      "label": "2028 1st",
+      "label": "2029 1st",
       "kind": "pick",
-      "value": 2626,
+      "value": 2195,
       "age": null,
       "pos": null
      },
      {
-      "label": "2028 2nd",
+      "label": "2027 2nd (Late)",
       "kind": "pick",
-      "value": 1534,
+      "value": 1620,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
       "age": null,
       "pos": null
      }
     ],
-    "total": 4160,
-    "ratio": 1.035,
+    "total": 4674,
+    "ratio": 1.163,
     "fit": 1.0
    },
    "injury_status": "Questionable"
+  },
+  {
+   "player_id": "8167",
+   "name": "Christian Watson",
+   "pos": "WR",
+   "age": 27.5,
+   "nfl_team": "GB",
+   "owner": "simonyangpp",
+   "owner_label": "contender",
+   "owner_roster_id": 1,
+   "value": 4436,
+   "redraft": 5462,
+   "trend": 617,
+   "fc_value": 4396,
+   "ktc_value": 4475,
+   "disagree": false,
+   "gain": 3653,
+   "motive": 0.15,
+   "why": "simonyangpp is contending and he starts for them",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 16.9,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 548,
+   "offer": {
+    "assets": [
+     {
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
+     },
+     {
+      "label": "Kyle Monangai",
+      "kind": "player",
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
+     },
+     {
+      "label": "Tyrone Tracy",
+      "kind": "player",
+      "value": 399,
+      "age": 27.0,
+      "pos": "RB"
+     }
+    ],
+    "total": 5155,
+    "ratio": 1.162,
+    "fit": 0.78
+   },
+   "injury_status": null
   }
  ],
  "out_of_reach": [
@@ -1150,7 +1171,7 @@
    "win_now_rank": 12,
    "dynasty_rank": 11,
    "age": 24.7,
-   "youth": 0.868,
+   "youth": 0.869,
    "label": "rebuilder",
    "reasons": [
     "2-16, 11th in standings",
