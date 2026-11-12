@@ -27,16 +27,16 @@ jobs:
           python - <<'PY'
           import json, re
           html = open("probe/ktc.html", encoding="utf-8", errors="replace").read()
-          m = re.search(r"var\s+playersArray\s*=\s*(\[.*?\]);", html, re.S)
-          print("found array:", bool(m), "html bytes", len(html))
-          if m:
-              arr = json.loads(m.group(1))
-              json.dump(arr, open("probe/ktc_players.json", "w"))
-              print(len(arr)); print(json.dumps(arr[0], indent=1)[:2500])
-              picks = [p for p in arr if p.get("position") in ("RDP", "PICK")]
-              print("picks", len(picks), [p.get("playerName") for p in picks][:40])
-          else:
-              open("probe/ktc_head.txt", "w").write(html[:20000])
+          out = {"bytes": len(html)}
+          for key in ("playersArray", "superflexValues", "oneQBValues", "playerName", "RDP"):
+              i = html.find(key)
+              out[key] = {"count": html.count(key), "first": i, "context": html[max(0, i - 300): i + 600] if i >= 0 else None}
+          out["scripts_with_values"] = [m.start() for m in re.finditer(r"<script[^>]*>", html)][:50]
+          json.dump(out, open("probe/ktc_find.json", "w"), indent=1)
+          i = html.find("superflexValues")
+          if i >= 0:
+              s0 = html.rfind("<script", 0, i); e0 = html.find("</script>", i)
+              open("probe/ktc_script.txt", "w").write(html[s0:e0][:400000])
           PY
           rm -f probe/ktc.html
       - name: Save
