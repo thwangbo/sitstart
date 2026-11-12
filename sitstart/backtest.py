@@ -10,6 +10,7 @@ Approaches
 - hindsight:   the best possible lineup, knowing the results (the ceiling)
 - blend w:     P + w(E - P) for w = 0.0, 0.1, ... 1.0
                w = 0 is Sleeper projections alone, w = 1 is expert consensus alone
+- stats:       the 50/50 blend x (1 + stats adjustment), using only games before that week
 
 Run on GitHub (Sleeper isn't reachable from everywhere):
     python -m sitstart.backtest --username thwangbo --weeks 1-9
@@ -26,7 +27,9 @@ from pathlib import Path
 from .consensus import blend, expert_points, map_to_sleeper, parse_ecr, parse_id_map
 from .optimizer import best_lineup
 from .projections import fetch_projections, league_points
+from .schedule import GAMES_URL, parse_week
 from .sleeper import SleeperClient, pick_league, starting_slots
+from .stats import EP_URL, parse_ep, parse_gsis_map, stat_adjustment, stat_estimates
 
 WEIGHTS = [round(i / 10, 1) for i in range(11)]
 
@@ -55,8 +58,11 @@ def score(pids: list[str], actual: dict[str, float]) -> float:
     return round(sum(float(actual.get(p) or 0) for p in pids), 2)
 
 
+STATS_KEY = "stats0.5"
+
+
 def run_week(week: int, slots: list[str], matchups: list[dict], players: dict, P: dict[str, float],
-             E: dict[str, float], excluded: set[str]) -> list[dict]:
+             E: dict[str, float], excluded: set[str], S: dict[str, dict] | None = None) -> list[dict]:
     rows = []
     for m in matchups:
         actual = {k: float(v or 0) for k, v in (m.get("players_points") or {}).items()}
@@ -70,6 +76,13 @@ def run_week(week: int, slots: list[str], matchups: list[dict], players: dict, P
         for w in WEIGHTS:
             val = {pid: blend(P.get(pid), E.get(pid), w) for pid in pool}
             res[f"w{w:.1f}"] = score(choose(slots, starters, pool, players, val), actual)
+        if S is not None:
+            val = {}
+            for pid in pool:
+                base = blend(P.get(pid), E.get(pid), 0.5)
+                adj = stat_adjustment(base, S.get(pid))
+                val[pid] = base * (1 + adj) if adj is not None else base
+            res[STATS_KEY] = score(choose(slots, starters, pool, players, val), actual)
         rows.append(res)
     return rows
 
@@ -106,6 +119,7 @@ def diagnostics(P: dict, E: dict, matchups: list[dict], raw: dict, players: dict
 
 def summarize(rows: list[dict], my_roster_id) -> dict:
     keys = ["actual", "hindsight"] + [f"w{w:.1f}" for w in WEIGHTS]
+    stats_rows = [r for r in rows if STATS_KEY in r]
     n = len(rows)
     tot = {k: round(sum(r[k] for r in rows), 1) for k in keys}
     mine = [r for r in rows if r["roster_id"] == my_roster_id]
@@ -119,6 +133,17 @@ def summarize(rows: list[dict], my_roster_id) -> dict:
                 "wins": sum(x > 0.005 for x in d), "losses": sum(x < -0.005 for x in d)}
 
     best_w = max(WEIGHTS, key=lambda w: (tot[f"w{w:.1f}"], -abs(w - 0.5)))
+    stats_cmp = None
+    if stats_rows:
+        d = [r[STATS_KEY] - r["w0.5"] for r in stats_rows]
+        mean = sum(d) / len(d)
+        sd = math.sqrt(sum((x - mean) ** 2 for x in d) / (len(d) - 1)) if len(d) > 1 else 0.0
+        stats_cmp = {"team_weeks": len(d), "weeks": sorted({r["week"] for r in stats_rows}),
+                     "stats_total": round(sum(r[STATS_KEY] for r in stats_rows), 1),
+                     "blend_total": round(sum(r["w0.5"] for r in stats_rows), 1),
+                     "hindsight_total": round(sum(r["hindsight"] for r in stats_rows), 1),
+                     "mean_per_team_week": round(mean, 2), "se": round(sd / math.sqrt(len(d)), 2),
+                     "wins": sum(x > 0.005 for x in d), "losses": sum(x < -0.005 for x in d)}
     return {
         "team_weeks": n,
         "totals": tot,
@@ -126,6 +151,7 @@ def summarize(rows: list[dict], my_roster_id) -> dict:
         "share_of_hindsight": {k: round(tot[k] / tot["hindsight"], 4) for k in keys} if tot["hindsight"] else {},
         "vs_projections_only": {f"w{w:.1f}": paired(f"w{w:.1f}") for w in WEIGHTS},
         "best_weight": best_w,
+        "stats_vs_blend": stats_cmp,
         "my_team": {"roster_id": my_roster_id, "team_weeks": len(mine), "totals": my_tot,
                     "by_week": [{k: r[k] for k in ["week", "actual", "hindsight", "w0.0", f"w{best_w:.1f}", "w1.0"]}
                                 for r in sorted(mine, key=lambda r: r["week"])]},
@@ -150,6 +176,16 @@ def report(s: dict, weeks: list[int]) -> str:
         v = s["vs_projections_only"][k]
         lines.append(f"| {label} | {t[k]:.1f} | {ph[k]:.1f} | {sh[k]:.1%} | "
                      f"{v['mean_per_team_week']:+.2f} (SE {v['se']:.2f}; {v['wins']}W-{v['losses']}L) |")
+    sc = s.get("stats_vs_blend")
+    if sc:
+        lines += ["", f"## Stats adjustment (shadow), Weeks {sc['weeks'][0]}-{sc['weeks'][-1]}", "",
+                  f"50/50 blend x (1 + stats adjustment, capped at 15%), using only games before each week. "
+                  f"{sc['team_weeks']} team-weeks.", "",
+                  "| Approach | Total pts | vs 50/50 blend, per team-week |", "| --- | --- | --- |",
+                  f"| 50/50 blend | {sc['blend_total']:.1f} | |",
+                  f"| Blend + stats | {sc['stats_total']:.1f} | {sc['mean_per_team_week']:+.2f} "
+                  f"(SE {sc['se']:.2f}; {sc['wins']}W-{sc['losses']}L) |",
+                  f"| Hindsight best | {sc['hindsight_total']:.1f} | |"]
     m = s["my_team"]
     lines += ["", f"## Your team ({m['team_weeks']} weeks)", "",
               "| Week | Actual | Sleeper only | Best blend | Experts only | Hindsight |", "| --- | --- | --- | --- | --- | --- |"]
@@ -185,6 +221,14 @@ def main(argv=None) -> int:
     positions = {pid: p.get("position") for pid, p in players.items()}
     ecr_dir = Path(args.ecr_dir)
     id_map = parse_id_map((ecr_dir / "ids.csv").read_text(encoding="utf-8"))
+    from .consensus import IDS_URL, fetch
+    try:
+        ep = parse_ep(fetch(EP_URL.format(season=args.season), timeout=120), scoring)
+        gsis_map = parse_gsis_map(fetch(IDS_URL))
+        games_csv = fetch(GAMES_URL, timeout=120)
+    except Exception as e:
+        print(f"Stats data unavailable, skipping stats approach: {e}")
+        ep = None
 
     rows, notes = [], {}
     for wk in weeks:
@@ -202,7 +246,11 @@ def main(argv=None) -> int:
         print(f"Week {wk}: projections {src} ({len(P)}), consensus mapped {len(E)}, teams {len(matchups)} | "
               f"proj week field {d['proj_week_field']} | corr(P, actual) {d['corr_P']} | corr(E, actual) {d['corr_E']} | "
               f"top QBs {d['top_qbs']}")
-        rows += run_week(wk, slots, matchups, players, P, E, excluded)
+        S = None
+        if ep is not None and wk > 1:
+            S = stat_estimates(ep, gsis_map, wk, parse_week(games_csv, args.season, wk)["games"], players)
+            notes[wk]["stats_players"] = len(S)
+        rows += run_week(wk, slots, matchups, players, P, E, excluded, S)
 
     s = summarize(rows, my_rid)
     s["weeks"] = weeks

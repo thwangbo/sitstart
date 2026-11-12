@@ -21,6 +21,7 @@ from typing import Any
 
 from .consensus import blend, expert_points
 from .projections import fetch_projections, league_points
+from .stats import stat_adjustment
 from .schedule import Schedule
 
 BASE_URL = "https://api.sleeper.app/v1"
@@ -171,6 +172,7 @@ class WeekContext:
     consensus: dict[str, dict] = field(default_factory=dict)   # sleeper_id -> consensus row
     expert: dict[str, float] = field(default_factory=dict)     # sleeper_id -> expert-implied points
     weight: float = 0.5                                        # blend weight on experts
+    stats: dict[str, dict] = field(default_factory=dict)       # sleeper_id -> stats-view estimate
 
 
 def player_card(pid: str | None, players: dict[str, dict], ctx: WeekContext | None = None) -> dict | None:
@@ -210,6 +212,15 @@ def player_card(pid: str | None, players: dict[str, dict], ctx: WeekContext | No
         if card.get("bye"):
             card["proj_pts"] = 0.0
             card["score"] = 0.0
+        est = ctx.stats.get(str(pid))
+        if est:
+            card["xfp"] = est.get("xfp")
+            card["usage_trend"] = est.get("trend")
+            card["stat_pts"] = est.get("stat_pts")
+        adj = None if card.get("bye") else stat_adjustment(card.get("score"), est)
+        card["stat_adj"] = adj
+        if isinstance(card.get("score"), (int, float)):
+            card["score_with_stats"] = round(card["score"] * (1 + adj), 2) if adj is not None else card["score"]
     return card
 
 
@@ -272,6 +283,8 @@ class SleeperSnapshot:
     league_rosters: list[dict] = field(default_factory=list)
     data_status: dict = field(default_factory=dict)
     suggestion: dict | None = None
+    stats_view: dict | None = None
+    grades: list = field(default_factory=list)
     generated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat(timespec="seconds"))
 
     def to_dict(self) -> dict:
@@ -285,7 +298,10 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
                    now: datetime | None = None,
                    fetch_proj: bool = True,
                    consensus: dict[str, dict] | None = None,
-                   weight: float = 0.5) -> SleeperSnapshot:
+                   weight: float = 0.5,
+                   stats: dict[str, dict] | None = None,
+                   stats_source: tuple[str, dict] | None = None) -> SleeperSnapshot:
+    """stats_source = (ffopportunity weekly csv text, gsis->sleeper id map); scored here in league settings."""
     state = client.get("state/nfl") or {}
     season = str(season or state.get("league_season") or state.get("season"))
     week = int(week or state.get("display_week") or state.get("week") or 1)
@@ -313,13 +329,16 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
         positions = {pid: (players.get(pid) or {}).get("position") for pid in raw}
         points = league_points(raw, scoring, positions)
 
+    if stats is None and stats_source and schedule is not None:
+        from .stats import parse_ep, stat_estimates
+        stats = stat_estimates(parse_ep(stats_source[0], scoring), stats_source[1], week, schedule.games, players)
     consensus = consensus or {}
     expert = {}
     if consensus and points:
         positions_all = {pid: (p or {}).get("position") for pid, p in players.items()}
         expert = expert_points(consensus, {pid: v["proj_pts"] for pid, v in points.items()}, positions_all)
     ctx = WeekContext(schedule=schedule, points=points, now=now or datetime.now(timezone.utc),
-                      consensus=consensus, expert=expert, weight=weight)
+                      consensus=consensus, expert=expert, weight=weight, stats=stats or {})
     users_by_id = {str(u["user_id"]): u for u in users}
 
     def team_label(roster: dict) -> dict:
@@ -390,6 +409,7 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
         "consensus_players": len(consensus),
         "consensus_scrape_date": next((r.get("scrape_date") for r in consensus.values()), None),
         "blend_weight": weight if consensus else 0.0,
+        "stats_players": len(stats or {}),
     }
 
     bench = cards(bench_ids)
@@ -397,14 +417,34 @@ def build_snapshot(client: SleeperClient, username: str, season: str | None = No
     if points:
         from .optimizer import best_lineup, suggested_changes  # local import avoids a cycle
         suggestion = suggested_changes(lineup, best_lineup(lineup, bench))
+    stats_view = None
+    if points and stats:
+        from .optimizer import best_lineup, suggested_changes
+        stats_view = stats_view_changes(lineup, bench)
 
     return SleeperSnapshot(
         season=season, week=week, league=league_info,
         me={**team_label(mine), "user_id": user_id},
         lineup=lineup, bench=bench, taxi=cards(taxi_ids), reserve=cards(reserve_ids),
         opponent=opponent, league_rosters=league_rosters, data_status=data_status,
-        suggestion=suggestion,
+        suggestion=suggestion, stats_view=stats_view,
     )
+
+
+def stats_view_changes(lineup: list[dict], bench: list[dict]) -> dict:
+    """What the shadow stats view would change (ranks on score_with_stats)."""
+    import copy
+    from .optimizer import best_lineup, suggested_changes
+
+    def swap(c):
+        if c is None:
+            return None
+        c = copy.deepcopy(c)
+        if isinstance(c.get("score_with_stats"), (int, float)):
+            c["score"] = c["score_with_stats"]
+        return c
+    lu = [{**r, "player": swap(r["player"])} for r in lineup]
+    return suggested_changes(lu, best_lineup(lu, [swap(c) for c in bench]))
 
 
 def card_value(card: dict | None):
@@ -484,6 +524,17 @@ def format_summary(snap: SleeperSnapshot) -> str:
                     f"{r['slot']} {r['name']}" for r in sug["lineup"] if r["name"]))
         else:
             lines.append("Suggested changes: none. Your lineup is already the best on Score.")
+
+    sv = snap.stats_view
+    if sv and sv.get("actionable") and sug is not None:
+        main_ids = {c["player_id"] for c in (sug.get("start") or [])} if sug.get("actionable") else set()
+        if {c["player_id"] for c in sv["start"]} != main_ids:
+            lines.append("Stats view (shadow, not applied): start " + ", ".join(c["name"] for c in sv["start"])
+                         + (" over " + ", ".join(c["name"] for c in sv["sit"]) if sv["sit"] else ""))
+    if snap.grades:
+        tot = lambda k: sum(g.get(k) or 0 for g in snap.grades)
+        lines.append(f"Season report card ({len(snap.grades)} wks): you {tot('you'):.1f}, app {tot('app'):.1f}, "
+                     f"best possible {tot('best'):.1f}")
 
     lines.append("")
     bench = sorted(snap.bench, key=lambda c: -(card_value(c) or 0))

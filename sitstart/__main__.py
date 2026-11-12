@@ -14,12 +14,36 @@ from .schedule import load_schedule
 from .sleeper import SleeperClient, SleeperError, build_snapshot, format_summary, save_snapshot
 
 
-def load_consensus(client, schedule):
+def load_ids_text():
+    from .consensus import IDS_URL, fetch
+    try:
+        return fetch(IDS_URL)
+    except Exception as e:
+        print(f"Warning: player ID crosswalk unavailable ({e}). Experts and stats are off.", file=sys.stderr)
+        return None
+
+
+def load_stats_source(season, ids_text):
+    """(ffopportunity csv text, gsis->sleeper map) or None."""
+    from .consensus import fetch
+    from .stats import EP_URL, parse_gsis_map
+    if not ids_text:
+        return None
+    try:
+        return fetch(EP_URL.format(season=season), timeout=120), parse_gsis_map(ids_text)
+    except Exception as e:
+        print(f"Warning: usage stats unavailable ({e}). Stats view is off.", file=sys.stderr)
+        return None
+
+
+def load_consensus(client, schedule, ids_text):
     """This week's expert consensus mapped to Sleeper ids, or None (with a warning) if unavailable or stale."""
-    from .consensus import IDS_URL, WEEKLY_URL, fetch, map_to_sleeper, matches_week, parse_ecr, parse_id_map
+    from .consensus import WEEKLY_URL, fetch, map_to_sleeper, matches_week, parse_ecr, parse_id_map
+    if not ids_text:
+        return None
     try:
         ecr = parse_ecr(fetch(WEEKLY_URL))
-        ids = parse_id_map(fetch(IDS_URL))
+        ids = parse_id_map(ids_text)
     except Exception as e:
         print(f"Warning: expert consensus unavailable ({e}). Using Sleeper projections only.", file=sys.stderr)
         return None
@@ -41,6 +65,7 @@ def main(argv=None) -> int:
     ap.add_argument("--no-experts", action="store_true", help="Skip expert consensus (Sleeper projections only)")
     ap.add_argument("--expert-weight", type=float, default=0.5,
                     help="Weight on expert consensus in the score, 0-1 (default 0.5, from the Weeks 1-9 backtest)")
+    ap.add_argument("--no-stats", action="store_true", help="Skip the advanced-stats view")
     ap.add_argument("--html", help="Also write the results page to this path, e.g. site/index.html")
     ap.add_argument("--notify", action="store_true",
                     help="Send a phone alert via ntfy when something changes (topic from NTFY_TOPIC)")
@@ -71,13 +96,22 @@ def main(argv=None) -> int:
         except Exception as e:  # schedule is an enhancement; keep going without it
             print(f"Warning: couldn't load the NFL schedule ({e}). Bye and lock checks are off.", file=sys.stderr)
 
+        ids_text = load_ids_text()
         consensus = None
         if not args.no_experts:
-            consensus = load_consensus(client, schedule)
+            consensus = load_consensus(client, schedule, ids_text)
+        stats_source = None if args.no_stats else load_stats_source(season, ids_text)
 
         snap = build_snapshot(client, args.username, season, week, args.league_id,
                               schedule=schedule, fetch_proj=not args.no_projections,
-                              consensus=consensus, weight=args.expert_weight)
+                              consensus=consensus, weight=args.expert_weight, stats_source=stats_source)
+
+        from . import grades as grades_mod
+        try:
+            snap.grades = grades_mod.update(args.out, snap.season, snap.week, snap.league["league_id"],
+                                            snap.me["roster_id"], client.get)
+        except Exception as e:  # the report card is an extra; never fail the run over it
+            print(f"Warning: report card not updated ({e})", file=sys.stderr)
     except SleeperError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1

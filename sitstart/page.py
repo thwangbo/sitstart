@@ -53,13 +53,23 @@ def _status(card: dict | None, flag: str | None = None, locked: bool = False) ->
 
 def _player_cells(card: dict | None) -> str:
     if not card:
-        return '<td class="name empty">Empty</td><td></td><td></td><td></td>'
+        return '<td class="name empty">Empty</td><td></td><td></td><td></td><td></td>'
     who = f'<span class="pname">{escape(card["name"])}</span> <span class="sub">{escape(card.get("position") or "")}' \
           f'{", " + escape(card["team"]) if card.get("team") else ""}</span>'
     game = escape(card.get("opponent") or "")
     when = _pt(card.get("kickoff_utc"))
     rank = escape(card.get("consensus_rank") or "")
-    return f'<td class="name">{who}</td><td>{game}</td><td class="sub">{when}</td><td class="sub">{rank}</td>'
+    return (f'<td class="name">{who}</td><td>{game}</td><td class="sub">{when}</td><td class="sub">{rank}</td>'
+            f'<td>{_stats_cell(card)}</td>')
+
+
+def _stats_cell(card: dict) -> str:
+    adj = card.get("stat_adj")
+    if not isinstance(adj, (int, float)):
+        return ""
+    cls = "up" if adj > 0.025 else "down" if adj < -0.025 else "flat"
+    tip = f'Recent expected points {card.get("xfp")}, usage trend {card.get("usage_trend")}'
+    return f'<span class="stat {cls}" title="{escape(tip)}">{adj:+.0%}</span>'
 
 
 def _suggestion_block(sug: dict | None) -> str:
@@ -85,6 +95,45 @@ def _suggestion_block(sug: dict | None) -> str:
             f'<table class="sug">{"".join(rows)}</table>{moves}'
             '<p class="sub">Ranked on Score (Sleeper projections blended with expert consensus). Questionable players are discounted 15%.</p>'
             '</section>')
+
+
+def _stats_view_note(snap: dict) -> str:
+    sv, sug = snap.get("stats_view"), snap.get("suggestion") or {}
+    if not sv or not sv.get("actionable"):
+        return ""
+    main = {c["player_id"] for c in sug.get("start", [])} if sug.get("actionable") else set()
+    if {c["player_id"] for c in sv["start"]} == main:
+        return ""
+    starts = ", ".join(escape(c["name"]) for c in sv["start"])
+    sits = ", ".join(escape(c["name"]) for c in sv["sit"])
+    return ('<section class="card"><h2>Stats view <span class="sub">shadow mode, not applied</span></h2>'
+            f'<p>Usage and matchup data would start <b>{starts}</b>' + (f' over <b>{sits}</b>' if sits else '') + '.</p>'
+            '<p class="sub">Shown for comparison only. It joins the recommendations once the report card shows it beating the app.</p></section>')
+
+
+def _report_card(grades: list[dict]) -> str:
+    if not grades:
+        return ""
+    from .grades import stats_streak
+    def cell(v):
+        return f"{v:.1f}" if isinstance(v, (int, float)) else "&ndash;"
+    rows = "".join(
+        f'<tr class="{"bt" if g.get("source") == "backtest" else ""}"><td>Week {g["week"]}</td>'
+        f'<td>{cell(g.get("you"))}</td><td>{cell(g.get("app"))}</td><td>{cell(g.get("sleeper"))}</td>'
+        f'<td>{cell(g.get("stats"))}</td><td>{cell(g.get("best"))}</td></tr>'
+        for g in sorted(grades, key=lambda g: -g["week"]))
+    tot = lambda k: sum(g.get(k) or 0 for g in grades)
+    has_stats = [g for g in grades if isinstance(g.get("stats"), (int, float))]
+    stats_tot = f"{sum(g['stats'] for g in has_stats):.1f}" if has_stats else "&ndash;"
+    note = ("Stats view has beaten the app 3 weeks running. Consider switching it on."
+            if stats_streak(grades) else
+            "Gray rows are backtest weeks (before the app existed, no injury info). "
+            "Stats view starts in Week 2 and is shadow-only.")
+    return ('<section class="card"><h2>Report card</h2><table class="grades">'
+            '<tr class="head"><td>Week</td><td>You</td><td>App</td><td>Sleeper only</td><td>Stats view</td><td>Best possible</td></tr>'
+            f'{rows}<tr class="total"><td>Season</td><td>{tot("you"):.1f}</td><td>{tot("app"):.1f}</td>'
+            f'<td>{tot("sleeper"):.1f}</td><td>{stats_tot}</td><td>{tot("best"):.1f}</td></tr></table>'
+            f'<p class="sub">Points your lineup scored under each approach. {note}</p></section>')
 
 
 def _blend_note(ds: dict) -> str:
@@ -162,18 +211,22 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 .tag.bad{{color:var(--bad)}}.tag.warn{{color:var(--warn)}}.tag.muted{{color:var(--sub)}}
 .verb{{font-weight:700;width:56px}}.verb.start{{color:var(--good)}}.verb.sit{{color:var(--bad)}}
 .total td{{font-weight:700;border-top:2px solid var(--line)}}.head td{{color:var(--sub);font-size:12px;border-top:none;padding-top:0}}
+.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
+.grades td{{text-align:right;font-variant-numeric:tabular-nums}}.grades td:first-child{{text-align:left}}.grades .bt td{{color:var(--sub)}}
 </style></head><body><main>
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
 <p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}</p></header>
 <div class="grid">
 <div>
 {_suggestion_block(snap.get("suggestion"))}
-<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{lineup_rows}
-<tr class="total"><td colspan="6">Projected total</td><td class="num">{total:.1f}</td></tr></table></section>
+{_stats_view_note(snap)}
+<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td>Stats</td><td></td><td class="num">Score</td></tr>{lineup_rows}
+<tr class="total"><td colspan="7">Projected total</td><td class="num">{total:.1f}</td></tr></table></section>
 </div>
 <div>{opp_html}</div>
 </div>
-<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
+{_report_card(snap.get("grades") or [])}
+<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td>Stats</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
 <p class="sub">{escape(_blend_note(ds))}</p>
 <p class="sub">Projections: Sleeper ({escape(str(ds.get("projections_source")))}, {ds.get("projections_count")} players). Byes: {escape(byes)}. Kickoff times are Pacific.</p>
 </main></body></html>

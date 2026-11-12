@@ -471,3 +471,103 @@ class BlendInSnapshotTests(unittest.TestCase):
         qb = snap.lineup[0]["player"]
         self.assertEqual(qb["score"], qb["proj_pts"])
         self.assertIn("unavailable", format_summary(snap))
+
+
+class StatsTests(unittest.TestCase):
+    EP = ("season,week,player_id,full_name,position,receptions_exp,rec_yards_gained_exp,rec_touchdown_exp,"
+          "rush_yards_gained_exp,rush_touchdown_exp,pass_yards_gained_exp,pass_touchdown_exp,pass_interception_exp\n"
+          "2026,1,G1,Wr One,WR,4,50,0.2,0,0,0,0,0\n"      # 2 + 5 + 1.2 = 8.2
+          "2026,2,G1,Wr One,WR,6,80,0.5,0,0,0,0,0\n"      # 3 + 8 + 3 = 14.0
+          "2026,3,G1,Wr One,WR,8,100,0.5,0,0,0,0,0\n"     # 4 + 10 + 3 = 17.0
+          "2026,1,G2,Te One,TE,4,40,0,0,0,0,0,0\n"
+          "2026,2,G9,Kicker Guy,K,0,0,0,0,0,0,0,0\n")
+
+    def test_expected_points_in_league_scoring(self):
+        from sitstart.stats import parse_ep
+        ep = parse_ep(self.EP, SCORING)
+        self.assertEqual([round(x, 1) for _, x in ep["G1"]], [8.2, 14.0, 17.0])
+        self.assertNotIn("G9", ep)
+
+    def test_te_premium_in_expected_points(self):
+        from sitstart.stats import parse_ep
+        ep = parse_ep(self.EP, {**SCORING, "bonus_rec_te": 0.5})
+        self.assertAlmostEqual(ep["G2"][0][1], 4 * 0.5 + 40 * 0.1 + 4 * 0.5)
+
+    def test_recency_weighting_uses_only_prior_weeks(self):
+        from sitstart.stats import parse_ep, recent_xfp
+        hist = parse_ep(self.EP, SCORING)["G1"]
+        val, n, trend = recent_xfp(hist, before_week=3)   # weeks 1-2 only: (14*.4 + 8.2*.3) / .7
+        self.assertEqual(n, 2)
+        self.assertAlmostEqual(val, round((14.0 * 0.4 + 8.2 * 0.3) / 0.7, 2))
+        self.assertIsNone(trend)
+
+    def test_matchup_factor(self):
+        from sitstart.stats import matchup_factor
+        games = {"A": {"implied_total": 30.0}, "B": {"implied_total": 20.0}}
+        self.assertEqual(matchup_factor("A", games), 1.1)
+        self.assertEqual(matchup_factor("B", games), 0.9)
+        self.assertEqual(matchup_factor("Z", games), 1.0)
+
+    def test_adjustment_capped_and_needs_two_games(self):
+        from sitstart.stats import stat_adjustment
+        self.assertEqual(stat_adjustment(10.0, {"stat_pts": 20.0, "games": 3}), 0.15)
+        self.assertEqual(stat_adjustment(10.0, {"stat_pts": 9.0, "games": 3}), -0.1)
+        self.assertIsNone(stat_adjustment(10.0, {"stat_pts": 20.0, "games": 1}))
+        self.assertIsNone(stat_adjustment(0.5, {"stat_pts": 5.0, "games": 3}))
+
+    def test_snapshot_carries_shadow_fields_without_changing_suggestion(self):
+        stats = {"100": {"stat_pts": 30.0, "xfp": 28.0, "games": 4, "trend": 2.0, "matchup": 1.07}}
+        base = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY)
+        snap = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY, stats=stats)
+        qb = snap.lineup[0]["player"]
+        self.assertEqual(qb["stat_adj"], 0.15)
+        self.assertAlmostEqual(qb["score_with_stats"], round(qb["score"] * 1.15, 2))
+        self.assertEqual(snap.suggestion, base.suggestion)     # shadow: recommendations unchanged
+        self.assertIsNotNone(snap.stats_view)
+
+
+class GradeTests(unittest.TestCase):
+    def setUp(self):
+        self.snap = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY).to_dict()
+        # Actual results: Qb Two (bench) blew up; Wr One scored 20.
+        self.mine = {"roster_id": 1, "starters": ["100", "200", "202", "300", "301", "302", "400", "303", "0"],
+                     "players_points": {"100": 15, "101": 30, "200": 10, "202": 4, "300": 20, "301": 0,
+                                        "302": 0, "303": 6, "400": 8, "401": 1, "201": 12}}
+
+    def test_grade_week(self):
+        from sitstart.grades import grade_week
+        g = grade_week(self.snap, self.mine)
+        self.assertEqual(g["you"], 63.0)
+        self.assertEqual(g["app"], 94.0)    # app also starts Qb Two (Superflex) and Te Two (FLEX)
+        self.assertGreaterEqual(g["best"], g["app"])
+        self.assertIsNone(g["stats"])       # no stats data in this snapshot
+
+    def test_update_grades_finished_weeks_and_seeds_backtest(self):
+        from sitstart import grades
+        with tempfile.TemporaryDirectory() as d:
+            snap9 = dict(self.snap, week=9)
+            Path(d, "sleeper_2026_wk09.json").write_text(json.dumps(snap9))
+            Path(d, "sleeper_2026_wk10.json").write_text(json.dumps(self.snap))   # current week: not graded
+            bt = Path(d, "results.json")
+            bt.write_text(json.dumps({"rows": [
+                {"week": 1, "roster_id": 1, "actual": 100, "w0.0": 98, "w0.5": 101, "hindsight": 130},
+                {"week": 1, "roster_id": 2, "actual": 90, "w0.0": 91, "w0.5": 92, "hindsight": 120}]}))
+            get = lambda path: [self.mine] if path.endswith("/matchups/9") else []
+            out = grades.update(d, "2026", 10, "L-dyn", 1, get, backtest_results=bt)
+            self.assertEqual([(g["week"], g["source"]) for g in out], [(1, "backtest"), (9, "live")])
+            self.assertEqual(out[1]["you"], 63.0)
+            self.assertEqual(json.loads(Path(d, "grades.json").read_text())[0]["app"], 101)
+
+    def test_stats_streak(self):
+        from sitstart.grades import stats_streak
+        g = [{"week": w, "app": 100, "stats": 101} for w in (7, 8, 9)]
+        self.assertTrue(stats_streak(g))
+        g[1]["stats"] = 99
+        self.assertFalse(stats_streak(g))
+
+    def test_page_shows_report_card(self):
+        from sitstart.page import render
+        snap = dict(self.snap, grades=[{"week": 9, "source": "live", "you": 63, "app": 94, "sleeper": 90, "stats": None, "best": 99}])
+        html = render(snap)
+        self.assertIn("Report card", html)
+        self.assertIn("94.0", html)
