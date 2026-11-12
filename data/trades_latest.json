@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T17:47:18+00:00",
+ "generated_at": "2026-11-12T18:07:26+00:00",
  "season": 2026,
  "week": 10,
  "deadline_week": 12,
@@ -96,22 +96,15 @@
       "pos": null
      },
      {
-      "label": "2027 2nd (Late)",
+      "label": "2029 1st",
       "kind": "pick",
-      "value": 1620,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "2029 3rd",
-      "kind": "pick",
-      "value": 858,
+      "value": 2195,
       "age": null,
       "pos": null
      }
     ],
-    "total": 5104,
-    "ratio": 1.164,
+    "total": 4820,
+    "ratio": 1.099,
     "fit": 1.0
    },
    "injury_status": null
@@ -132,8 +125,8 @@
    "ktc_value": 3415,
    "disagree": false,
    "gain": 2840,
-   "motive": 0.45,
-   "why": "KPop Travis Hunter is in the middle; he starts for them",
+   "motive": 0.5,
+   "why": "KPop Travis Hunter is in the middle and he's 27",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -141,7 +134,56 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1278,
+   "score": 1420,
+   "offer": {
+    "assets": [
+     {
+      "label": "2028 1st",
+      "kind": "pick",
+      "value": 2626,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1340,
+      "age": null,
+      "pos": null
+     }
+    ],
+    "total": 3966,
+    "ratio": 1.104,
+    "fit": 0.8
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "4034",
+   "name": "Christian McCaffrey",
+   "pos": "RB",
+   "age": 30.4,
+   "nfl_team": "SF",
+   "owner": "vipkraken",
+   "owner_label": "contender",
+   "owner_roster_id": 6,
+   "value": 4135,
+   "redraft": 7634,
+   "trend": -52,
+   "fc_value": 4454,
+   "ktc_value": 3816,
+   "disagree": false,
+   "gain": 5825,
+   "motive": 0.2,
+   "why": "vipkraken is contending, so they'll want help now in return",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 18.6,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 1165,
    "offer": {
     "assets": [
      {
@@ -152,15 +194,113 @@
       "pos": "WR"
      },
      {
-      "label": "Deebo Samuel",
+      "label": "David Montgomery",
       "kind": "player",
-      "value": 1206,
-      "age": 30.8,
-      "pos": "WR"
+      "value": 1279,
+      "age": 29.4,
+      "pos": "RB"
+     },
+     {
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
+      "age": null,
+      "pos": null
      }
     ],
-    "total": 3916,
+    "total": 4848,
+    "ratio": 1.172,
+    "fit": 0.76
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "8228",
+   "name": "Jaylen Warren",
+   "pos": "RB",
+   "age": 28.0,
+   "nfl_team": "PIT",
+   "owner": "Honolulu Blues",
+   "owner_label": "middle",
+   "owner_roster_id": 3,
+   "value": 2802,
+   "redraft": 3841,
+   "trend": 90,
+   "fc_value": 2787,
+   "ktc_value": 2817,
+   "disagree": false,
+   "gain": 2032,
+   "motive": 0.5,
+   "why": "Honolulu Blues is in the middle and he's 28",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 16.0,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 1016,
+   "offer": {
+    "assets": [
+     {
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2195,
+      "age": null,
+      "pos": null
+     },
+     {
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
+      "age": null,
+      "pos": null
+     }
+    ],
+    "total": 3054,
     "ratio": 1.09,
+    "fit": 0.8
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "3198",
+   "name": "Derrick Henry",
+   "pos": "RB",
+   "age": 32.9,
+   "nfl_team": "BAL",
+   "owner": "Brock & Roll",
+   "owner_label": "middle",
+   "owner_roster_id": 7,
+   "value": 2540,
+   "redraft": 3793,
+   "trend": -986,
+   "fc_value": 2749,
+   "ktc_value": 2330,
+   "disagree": false,
+   "gain": 1984,
+   "motive": 0.5,
+   "why": "Brock & Roll is in the middle and he's 33",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 15.1,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 992,
+   "offer": {
+    "assets": [
+     {
+      "label": "2028 1st",
+      "kind": "pick",
+      "value": 2626,
+      "age": null,
+      "pos": null
+     }
+    ],
+    "total": 2626,
+    "ratio": 1.034,
     "fit": 0.8
    },
    "injury_status": null
@@ -203,7 +343,7 @@
      {
       "label": "2027 2nd (Late)",
       "kind": "pick",
-      "value": 1620,
+      "value": 1609,
       "age": null,
       "pos": null
      },
@@ -215,151 +355,11 @@
       "pos": null
      }
     ],
-    "total": 5586,
-    "ratio": 1.178,
+    "total": 5574,
+    "ratio": 1.175,
     "fit": 1.0
    },
    "injury_status": "Questionable"
-  },
-  {
-   "player_id": "8228",
-   "name": "Jaylen Warren",
-   "pos": "RB",
-   "age": 28.0,
-   "nfl_team": "PIT",
-   "owner": "Honolulu Blues",
-   "owner_label": "middle",
-   "owner_roster_id": 3,
-   "value": 2802,
-   "redraft": 3841,
-   "trend": 90,
-   "fc_value": 2787,
-   "ktc_value": 2817,
-   "disagree": false,
-   "gain": 2032,
-   "motive": 0.45,
-   "why": "Honolulu Blues is in the middle; he starts for them",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 16.0,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 914,
-   "offer": {
-    "assets": [
-     {
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 2046,
-      "age": 24.4,
-      "pos": "RB"
-     },
-     {
-      "label": "2028 3rd (from Coke Heads)",
-      "kind": "pick",
-      "value": 998,
-      "age": null,
-      "pos": null
-     }
-    ],
-    "total": 3044,
-    "ratio": 1.086,
-    "fit": 0.8
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "3198",
-   "name": "Derrick Henry",
-   "pos": "RB",
-   "age": 32.9,
-   "nfl_team": "BAL",
-   "owner": "Brock & Roll",
-   "owner_label": "middle",
-   "owner_roster_id": 7,
-   "value": 2540,
-   "redraft": 3793,
-   "trend": -986,
-   "fc_value": 2749,
-   "ktc_value": 2330,
-   "disagree": false,
-   "gain": 1984,
-   "motive": 0.45,
-   "why": "Brock & Roll is in the middle; he starts for them",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 15.1,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 893,
-   "offer": {
-    "assets": [
-     {
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2710,
-      "age": 28.0,
-      "pos": "WR"
-     }
-    ],
-    "total": 2710,
-    "ratio": 1.067,
-    "fit": 0.8
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "4034",
-   "name": "Christian McCaffrey",
-   "pos": "RB",
-   "age": 30.4,
-   "nfl_team": "SF",
-   "owner": "vipkraken",
-   "owner_label": "contender",
-   "owner_roster_id": 6,
-   "value": 4127,
-   "redraft": 7634,
-   "trend": -52,
-   "fc_value": 4454,
-   "ktc_value": 3800,
-   "disagree": false,
-   "gain": 5825,
-   "motive": 0.15,
-   "why": "vipkraken is contending and he starts for them",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 18.6,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 874,
-   "offer": {
-    "assets": [
-     {
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2710,
-      "age": 28.0,
-      "pos": "WR"
-     },
-     {
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 2046,
-      "age": 24.4,
-      "pos": "RB"
-     }
-    ],
-    "total": 4756,
-    "ratio": 1.152,
-    "fit": 0.79
-   },
-   "injury_status": null
   },
   {
    "player_id": "4217",
@@ -370,15 +370,15 @@
    "owner": "Brock & Roll",
    "owner_label": "middle",
    "owner_roster_id": 7,
-   "value": 2496,
+   "value": 2470,
    "redraft": 3567,
    "trend": 361,
    "fc_value": 2758,
-   "ktc_value": 2233,
+   "ktc_value": 2182,
    "disagree": false,
    "gain": 1917,
-   "motive": 0.45,
-   "why": "Brock & Roll is in the middle; he starts for them",
+   "motive": 0.5,
+   "why": "Brock & Roll is in the middle and he's 33",
    "replaces": [
     "Sam LaPorta"
    ],
@@ -386,19 +386,19 @@
    "replaces_ppg": [
     9.4
    ],
-   "score": 863,
+   "score": 958,
    "offer": {
     "assets": [
      {
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2710,
-      "age": 28.0,
-      "pos": "WR"
+      "label": "2028 1st",
+      "kind": "pick",
+      "value": 2626,
+      "age": null,
+      "pos": null
      }
     ],
-    "total": 2710,
-    "ratio": 1.086,
+    "total": 2626,
+    "ratio": 1.063,
     "fit": 0.8
    },
    "injury_status": null
@@ -419,8 +419,8 @@
    "ktc_value": 3298,
    "disagree": false,
    "gain": 1856,
-   "motive": 0.45,
-   "why": "Brock & Roll is in the middle; he starts for them",
+   "motive": 0.5,
+   "why": "Brock & Roll is in the middle and he's 28",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -428,15 +428,15 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 835,
+   "score": 928,
    "offer": {
     "assets": [
      {
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2710,
-      "age": 28.0,
-      "pos": "WR"
+      "label": "2028 1st",
+      "kind": "pick",
+      "value": 2626,
+      "age": null,
+      "pos": null
      },
      {
       "label": "2029 3rd",
@@ -446,8 +446,8 @@
       "pos": null
      }
     ],
-    "total": 3568,
-    "ratio": 1.113,
+    "total": 3484,
+    "ratio": 1.086,
     "fit": 0.8
    },
    "injury_status": null
@@ -468,8 +468,8 @@
    "ktc_value": 5172,
    "disagree": false,
    "gain": 4375,
-   "motive": 0.15,
-   "why": "vipkraken is contending and he starts for them",
+   "motive": 0.2,
+   "why": "vipkraken is contending, so they'll want help now in return",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -477,7 +477,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 656,
+   "score": 875,
    "offer": {
     "assets": [
      {
@@ -497,128 +497,16 @@
      {
       "label": "David Montgomery",
       "kind": "player",
-      "value": 1287,
+      "value": 1279,
       "age": 29.4,
       "pos": "RB"
      }
     ],
-    "total": 6043,
-    "ratio": 1.168,
+    "total": 6035,
+    "ratio": 1.167,
     "fit": 0.8
    },
    "injury_status": null
-  },
-  {
-   "player_id": "12526",
-   "name": "Tetairoa McMillan",
-   "pos": "WR",
-   "age": 23.6,
-   "nfl_team": "CAR",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 4780,
-   "redraft": 2847,
-   "trend": -574,
-   "fc_value": 4475,
-   "ktc_value": 5085,
-   "disagree": false,
-   "gain": 1038,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 12.7,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 623,
-   "offer": {
-    "assets": [
-     {
-      "label": "2028 1st",
-      "kind": "pick",
-      "value": 2626,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "2027 2nd (Late)",
-      "kind": "pick",
-      "value": 1620,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "2029 2nd",
-      "kind": "pick",
-      "value": 1340,
-      "age": null,
-      "pos": null
-     }
-    ],
-    "total": 5586,
-    "ratio": 1.169,
-    "fit": 1.0
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "8146",
-   "name": "Garrett Wilson",
-   "pos": "WR",
-   "age": 26.3,
-   "nfl_team": "NYJ",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 4020,
-   "redraft": 2798,
-   "trend": -559,
-   "fc_value": 3800,
-   "ktc_value": 4241,
-   "disagree": false,
-   "gain": 989,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 11.5,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 593,
-   "offer": {
-    "assets": [
-     {
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2195,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "2027 2nd (Late)",
-      "kind": "pick",
-      "value": 1620,
-      "age": null,
-      "pos": null
-     },
-     {
-      "label": "2029 3rd",
-      "kind": "pick",
-      "value": 858,
-      "age": null,
-      "pos": null
-     }
-    ],
-    "total": 4674,
-    "ratio": 1.163,
-    "fit": 1.0
-   },
-   "injury_status": "Questionable"
   },
   {
    "player_id": "8167",
@@ -636,8 +524,8 @@
    "ktc_value": 4475,
    "disagree": false,
    "gain": 3653,
-   "motive": 0.15,
-   "why": "simonyangpp is contending and he starts for them",
+   "motive": 0.2,
+   "why": "simonyangpp is contending, so they'll want help now in return",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -645,7 +533,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 548,
+   "score": 731,
    "offer": {
     "assets": [
      {
@@ -675,6 +563,118 @@
     "fit": 0.78
    },
    "injury_status": null
+  },
+  {
+   "player_id": "6801",
+   "name": "Tee Higgins",
+   "pos": "WR",
+   "age": 27.8,
+   "nfl_team": "CIN",
+   "owner": "Hello My Lova",
+   "owner_label": "contender",
+   "owner_roster_id": 12,
+   "value": 4443,
+   "redraft": 5270,
+   "trend": 1119,
+   "fc_value": 4414,
+   "ktc_value": 4472,
+   "disagree": false,
+   "gain": 3461,
+   "motive": 0.2,
+   "why": "Hello My Lova is contending, so they'll want help now in return",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 17.0,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 692,
+   "offer": {
+    "assets": [
+     {
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
+     },
+     {
+      "label": "Kyle Monangai",
+      "kind": "player",
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
+     },
+     {
+      "label": "Tyrone Tracy",
+      "kind": "player",
+      "value": 399,
+      "age": 27.0,
+      "pos": "RB"
+     }
+    ],
+    "total": 5155,
+    "ratio": 1.16,
+    "fit": 0.78
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "6813",
+   "name": "Jonathan Taylor",
+   "pos": "RB",
+   "age": 27.8,
+   "nfl_team": "IND",
+   "owner": "vipkraken",
+   "owner_label": "contender",
+   "owner_roster_id": 6,
+   "value": 4812,
+   "redraft": 5135,
+   "trend": -678,
+   "fc_value": 5085,
+   "ktc_value": 4538,
+   "disagree": false,
+   "gain": 3326,
+   "motive": 0.2,
+   "why": "vipkraken is contending, so they'll want help now in return",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 15.6,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 665,
+   "offer": {
+    "assets": [
+     {
+      "label": "DeVonta Smith",
+      "kind": "player",
+      "value": 2710,
+      "age": 28.0,
+      "pos": "WR"
+     },
+     {
+      "label": "Kyle Monangai",
+      "kind": "player",
+      "value": 2046,
+      "age": 24.4,
+      "pos": "RB"
+     },
+     {
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 858,
+      "age": null,
+      "pos": null
+     }
+    ],
+    "total": 5614,
+    "ratio": 1.167,
+    "fit": 0.76
+   },
+   "injury_status": null
   }
  ],
  "out_of_reach": [
@@ -687,15 +687,15 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 10266,
+   "value": 10364,
    "redraft": 10507,
    "trend": 413,
    "fc_value": 10133,
-   "ktc_value": 10399,
+   "ktc_value": 10596,
    "disagree": false,
    "gain": 8698,
    "motive": 0.35,
-   "why": "KPop Travis Hunter is in the middle; he starts for them",
+   "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -724,7 +724,7 @@
    "disagree": false,
    "gain": 7124,
    "motive": 0.35,
-   "why": "Honolulu Blues is in the middle; he starts for them",
+   "why": "Honolulu Blues is in the middle; he's young enough that they'll want a premium",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -753,7 +753,7 @@
    "disagree": false,
    "gain": 6751,
    "motive": 0.35,
-   "why": "Brock & Roll is in the middle; he starts for them",
+   "why": "Brock & Roll is in the middle; he's young enough that they'll want a premium",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -774,15 +774,15 @@
    "owner": "jaywah",
    "owner_label": "contender",
    "owner_roster_id": 11,
-   "value": 10498,
+   "value": 10399,
    "redraft": 10160,
    "trend": -76,
    "fc_value": 10399,
-   "ktc_value": 10596,
+   "ktc_value": 10399,
    "disagree": false,
    "gain": 8351,
-   "motive": 0.15,
-   "why": "jaywah is contending and he starts for them",
+   "motive": 0.2,
+   "why": "jaywah is contending, so they'll want help now in return",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -790,7 +790,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1253,
+   "score": 1670,
    "offer": null,
    "injury_status": null
   },
@@ -810,8 +810,8 @@
    "ktc_value": 6527,
    "disagree": false,
    "gain": 6993,
-   "motive": 0.15,
-   "why": "jaywah is contending and he starts for them",
+   "motive": 0.2,
+   "why": "jaywah is contending, so they'll want help now in return",
    "replaces": [
     "Saquon Barkley"
    ],
@@ -819,7 +819,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1049,
+   "score": 1399,
    "offer": null,
    "injury_status": null
   }
@@ -856,14 +856,14 @@
   {
    "label": "2027 2nd (Late)",
    "kind": "pick",
-   "value": 1620.5,
+   "value": 1609.0,
    "age": null,
    "pos": null
   },
   {
    "label": "2028 2nd",
    "kind": "pick",
-   "value": 1534.0,
+   "value": 1534.5,
    "age": null,
    "pos": null
   },
@@ -877,14 +877,14 @@
   {
    "label": "Rachaad White",
    "kind": "player",
-   "value": 1335.0,
+   "value": 1336.5,
    "age": 27.8,
    "pos": "RB"
   },
   {
    "label": "David Montgomery",
    "kind": "player",
-   "value": 1287.0,
+   "value": 1279.0,
    "age": 29.4,
    "pos": "RB"
   },
@@ -896,18 +896,18 @@
    "pos": "TE"
   },
   {
-   "label": "Deebo Samuel",
-   "kind": "player",
-   "value": 1206.5,
-   "age": 30.8,
-   "pos": "WR"
-  },
-  {
    "label": "Jacoby Brissett",
    "kind": "player",
    "value": 1167.0,
    "age": 33.9,
    "pos": "QB"
+  },
+  {
+   "label": "2027 3rd (Late) (from vipkraken)",
+   "kind": "pick",
+   "value": 1053.5,
+   "age": null,
+   "pos": null
   }
  ],
  "teams": [
@@ -1140,7 +1140,7 @@
    "win_now_rank": 11,
    "dynasty_rank": 3,
    "age": 24.2,
-   "youth": 0.619,
+   "youth": 0.618,
    "label": "rebuilder",
    "reasons": [
     "4-14, 10th in standings",
@@ -1171,7 +1171,7 @@
    "win_now_rank": 12,
    "dynasty_rank": 11,
    "age": 24.7,
-   "youth": 0.869,
+   "youth": 0.868,
    "label": "rebuilder",
    "reasons": [
     "2-16, 11th in standings",
