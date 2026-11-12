@@ -1,4 +1,4 @@
-# sitstart: Step 1, Sleeper connector (v0.2, Nov 11 2026)
+# sitstart: dynasty sit/start helper for Sleeper (v0.3, Nov 12 2026)
 
 Pulls your dynasty Superflex league from Sleeper and the NFL schedule from nflverse, then saves a JSON snapshot for the scoring model (step 3). It's free, needs no API keys, and uses only the Python standard library.
 
@@ -47,6 +47,16 @@ py -m unittest discover -s tests
 - **The `Projections:` line.** It should say `app` with a few hundred players. `v1` means the fallback endpoint worked. `none` means neither endpoint returned data; everything else still runs.
 - **Projected points vs Sleeper's app.** For a few starters, `proj` should be close to what Sleeper shows. Small differences are expected where your league's scoring differs from standard half-PPR.
 - **Byes** should match this week's actual byes (Week 10: CHI, DEN, PHI, TB).
+
+## How the score works
+
+**Score = 50% Sleeper projection + 50% expert consensus.** Sleeper's projected stat lines are scored with your league's settings. The expert half comes from this week's FantasyPros consensus rankings (free, via DynastyProcess). A consensus WR12 gets the 12th-best WR projection, which puts ranks on the same points scale. If the consensus file hasn't updated for the current week yet, the score falls back to Sleeper alone, and the page says so.
+
+The 50/50 weight comes from the Weeks 1–9 backtest (`backtest/REPORT.md`). Across all 108 team-weeks in the league:
+- Blends beat either source alone by about 0.4–0.5 points per team-week.
+- Any weight from 0.4 to 0.9 performed about the same.
+
+To re-run the backtest, go to **Actions**, then **Backtest**, then **Run workflow**.
 
 ## Automatic runs on GitHub
 

@@ -67,7 +67,7 @@ def _suggestion_block(sug: dict | None) -> str:
         return '<section class="card"><h2>Suggested changes</h2><p class="sub">Projections unavailable this run.</p></section>'
     if not sug.get("actionable"):
         return ('<section class="card ok"><h2>Your lineup is set</h2>'
-                '<p>No changes beat your current lineup by Sleeper projections.</p></section>')
+                '<p>No changes beat your current lineup on Score.</p></section>')
     rows = []
     for verb, group in (("Start", sug["start"]), ("Sit", sug["sit"])):
         for c in group:
@@ -116,13 +116,19 @@ def render(snap: dict) -> str:
     opp_html = ""
     opp = snap.get("opponent")
     if opp:
-        opp_rows = "".join(
-            f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td>{_player_cells(r["player"])}'
-            f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts(card_value(r["player"]))}</td></tr>'
-            for r in opp["lineup"])
+        def opp_row(r):
+            c = r["player"]
+            who = (f'<span class="pname">{escape(c["name"])}</span> <span class="sub">{escape(c.get("position") or "")}'
+                   f'{", " + escape(c["team"]) if c.get("team") else ""}</span>') if c else "Empty"
+            rank = escape((c or {}).get("consensus_rank") or "")
+            return (f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td><td class="name">{who}</td>'
+                    f'<td class="sub">{rank}</td><td>{_status(c, r["flag"], r.get("locked"))}</td>'
+                    f'<td class="num">{_pts(card_value(c))}</td></tr>')
+        opp_rows = "".join(opp_row(r) for r in opp["lineup"])
         opp_html = (f'<section class="card"><h2>Opponent: {escape(opp.get("team_name") or "")}'
                     f' <span class="sub">projected {_pts(opp.get("proj_total"))}</span></h2>'
-                    f'<table><tr class="head"><td>Slot</td><td>Player</td><td>Game</td><td>Kickoff (PT)</td><td>Experts</td><td></td><td class="num">Score</td></tr>{opp_rows}</table></section>')
+                    '<table><tr class="head"><td>Slot</td><td>Player</td><td>Experts</td><td></td><td class="num">Score</td></tr>'
+                    f'{opp_rows}</table></section>')
 
     reserve = ", ".join(escape(c["name"]) for c in snap.get("reserve") or [])
     taxi = ", ".join(escape(c["name"]) for c in snap.get("taxi") or [])

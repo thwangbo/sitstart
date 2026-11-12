@@ -470,7 +470,7 @@ def format_summary(snap: SleeperSnapshot) -> str:
         lines.append("")
         if sug.get("actionable"):
             gain = f": +{sug['gain']:.1f} pts" if sug["gain"] > 0.05 else ""
-            lines.append(f"Suggested changes (Sleeper projections only){gain}")
+            lines.append(f"Suggested changes{gain}")
             for verb, group in (("START", sug["start"]), ("SIT  ", sug["sit"])):
                 for c in group:
                     note = ""
@@ -483,7 +483,7 @@ def format_summary(snap: SleeperSnapshot) -> str:
                 lines.append("  Then set slots as: " + ", ".join(
                     f"{r['slot']} {r['name']}" for r in sug["lineup"] if r["name"]))
         else:
-            lines.append("Suggested changes: none. Your lineup is already the best by Sleeper projections.")
+            lines.append("Suggested changes: none. Your lineup is already the best on Score.")
 
     lines.append("")
     bench = sorted(snap.bench, key=lambda c: -(card_value(c) or 0))
