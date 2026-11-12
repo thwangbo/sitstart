@@ -671,3 +671,5 @@ class MarketTests(unittest.TestCase):
         html = render(rep)
         self.assertIn("Vet QB", html)
         self.assertIn("2 weeks left", html)
+        rep["targets"][0]["injury_status"] = "Questionable"
+        self.assertIn("tag inj", render(rep))

@@ -234,6 +234,8 @@ def build_report(client, snap: dict, fc_rows: list[dict]) -> dict:
             protect.add(r["player_id"])
     ppg = season_ppg(client.get_url, season, lg["scoring_settings"], positions)
     found = find_targets(teams, me, market, slots, positions, ppg, protect)
+    for t in found["targets"] + found["out_of_reach"]:
+        t["injury_status"] = (sleeper_players.get(t["player_id"]) or {}).get("injury_status")
 
     def team_row(t):
         return {"roster_id": t.roster_id, "name": t.name, "wins": t.wins, "losses": t.losses,

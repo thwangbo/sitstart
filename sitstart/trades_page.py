@@ -22,7 +22,7 @@ td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-chil
 .pname{font-weight:600}tr.me td{font-weight:600}.small{font-size:12px}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .tag.contender{color:var(--accent)}.tag.middle{color:var(--sub)}.tag.rebuilder{color:var(--warn)}
-.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}
+.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}
 .offer div{white-space:nowrap}.gain{color:var(--good);font-weight:600}
 .chips span{display:inline-block;margin:2px 6px 2px 0}
 @media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}}
@@ -70,7 +70,9 @@ def _target_rows(targets: list[dict]) -> str:
         trend_s = f' <span class="sub small">{trend:+,} 30d</span>' if isinstance(trend, (int, float)) and abs(trend) >= 100 else ""
         rows.append(
             f'<tr><td class="num sub">{i}</td>'
-            f'<td><span class="pname">{escape(t["name"])}</span><div class="sub small">{escape(t["pos"] or "")}, '
+            f'<td><span class="pname">{escape(t["name"])}</span>'
+            + (f' <span class="tag inj">{escape(t["injury_status"])}</span>' if t.get("injury_status") else "")
+            + f'<div class="sub small">{escape(t["pos"] or "")}, '
             f'{_age(t["age"])}, {escape(t.get("nfl_team") or "FA")}</div></td>'
             f'<td>{escape(t["owner"])} {_tag(t["owner_label"])}<div class="sub small">{escape(t["why"])}</div></td>'
             f'<td><span class="gain">+{_fmt(t["gain"])}</span>{replaces}{ppg}</td>'
