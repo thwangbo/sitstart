@@ -32,13 +32,13 @@ def main(argv=None) -> int:
     except Exception:
         pass
 
-    previous = None
-    prev_path = Path(args.out) / "sleeper_latest.json"
-    if prev_path.exists():
+    last_sent = None
+    sent_path = Path(args.out) / "last_alert.json"
+    if sent_path.exists():
         try:
-            previous = json.loads(prev_path.read_text(encoding="utf-8"))
+            last_sent = json.loads(sent_path.read_text(encoding="utf-8"))
         except Exception:
-            previous = None
+            last_sent = None
 
     client = SleeperClient()
     try:
@@ -73,9 +73,9 @@ def main(argv=None) -> int:
         print(f"Wrote {html_path}")
 
     if args.notify:
-        from .notify import build_alert, send
+        from .notify import alert_key, build_alert, send
         topic = os.environ.get("NTFY_TOPIC", "").strip()
-        alert = build_alert(snap.to_dict(), previous)
+        alert = build_alert(snap.to_dict(), last_sent)
         if not topic:
             print("Alerts skipped: NTFY_TOPIC is not set.")
         elif alert is None:
@@ -83,6 +83,8 @@ def main(argv=None) -> int:
         else:
             try:
                 send(topic, alert[0], alert[1], os.environ.get("PAGE_URL") or None)
+                sent_path.parent.mkdir(parents=True, exist_ok=True)
+                sent_path.write_text(json.dumps(alert_key(snap.to_dict())), encoding="utf-8")
                 print(f"Alert sent: {alert[0]}")
             except Exception as e:  # an alert failure shouldn't fail the run
                 print(f"Warning: alert not sent ({e})", file=sys.stderr)

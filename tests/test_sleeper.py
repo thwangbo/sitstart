@@ -324,14 +324,14 @@ class PageAndAlertTests(unittest.TestCase):
         self.assertIn("Start", msg)
 
     def test_no_alert_when_nothing_changed(self):
-        from sitstart.notify import build_alert
-        self.assertIsNone(build_alert(self.snap, json.loads(json.dumps(self.snap))))
+        from sitstart.notify import alert_key, build_alert
+        self.assertIsNone(build_alert(self.snap, alert_key(json.loads(json.dumps(self.snap)))))
 
     def test_alert_when_starter_newly_out(self):
-        from sitstart.notify import build_alert
+        from sitstart.notify import alert_key, build_alert
         prev = json.loads(json.dumps(self.snap))
-        prev["lineup"][5]["flag"] = None  # Wr Three wasn't Out last run
-        self.assertIsNotNone(build_alert(self.snap, prev))
+        prev["lineup"][5]["flag"] = None  # Wr Three wasn't Out when the last alert went out
+        self.assertIsNotNone(build_alert(self.snap, alert_key(prev)))
 
     def test_utc_to_pacific(self):
         from sitstart.schedule import utc_to_pacific

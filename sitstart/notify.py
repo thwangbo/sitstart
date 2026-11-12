@@ -7,9 +7,15 @@ in a GitHub secret, never in the code.
 
 from __future__ import annotations
 
+import json
 import urllib.request
 
 NTFY_SERVER = "https://ntfy.sh"
+
+
+def alert_key(snap: dict | None) -> list:
+    """What an alert is about, in JSON-safe form. Saved after each alert actually sent."""
+    return json.loads(json.dumps(_key(snap)))
 
 
 def _key(snap: dict | None) -> tuple:
@@ -23,9 +29,10 @@ def _key(snap: dict | None) -> tuple:
     return (snap.get("week"), start, sit, flags)
 
 
-def build_alert(snap: dict, previous: dict | None) -> tuple[str, str] | None:
-    """(title, message) if this run should alert, else None."""
-    if previous is not None and _key(snap) == _key(previous):
+def build_alert(snap: dict, last_sent: list | None) -> tuple[str, str] | None:
+    """(title, message) if this run should alert, else None.
+    last_sent is alert_key() of the last alert that actually went out (None if never)."""
+    if last_sent is not None and alert_key(snap) == last_sent:
         return None
     week = snap.get("week")
     lines = []
