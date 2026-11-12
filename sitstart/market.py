@@ -232,3 +232,100 @@ def classify(t: Team, n: int, youth_median: float) -> None:
 
 def ordinal(n: int) -> str:
     return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+# --------------------------------------------------------------------------- #
+# Second source: KeepTradeCut, blended onto FantasyCalc's scale
+# --------------------------------------------------------------------------- #
+
+DISAGREE = 0.25   # sources differ by more than 25% of their average
+
+
+def rank_scaler(source_values: list[float], target_values: list[float]):
+    """Map a value from one source onto the other's scale by rank (quantile matching).
+    The Nth most valuable asset in KTC gets the value of the Nth most valuable asset in FantasyCalc."""
+    src = sorted(source_values, reverse=True)
+    tgt = sorted(target_values, reverse=True)
+    if not src or not tgt:
+        return lambda v: v
+
+    def scale(v: float) -> float:
+        # rank position of v in src (fractional, interpolated between neighbours)
+        lo, hi = 0, len(src)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if src[mid] > v:
+                lo = mid + 1
+            else:
+                hi = mid
+        r = lo  # number of src values strictly greater than v
+        if r < len(src) and r > 0 and src[r - 1] != src[r]:
+            frac = (src[r - 1] - v) / (src[r - 1] - src[r])
+            r = r - 1 + frac
+        idx = r  # rank for rank: Nth in one source -> Nth in the other
+        i0 = int(idx)
+        if i0 >= len(tgt) - 1:
+            # deeper than the target list: taper proportionally from its last value
+            cutoff = src[min(len(tgt) - 1, len(src) - 1)]
+            return tgt[-1] * (v / cutoff) if cutoff > 0 else 0.0
+        return tgt[i0] + (tgt[i0 + 1] - tgt[i0]) * (idx - i0)
+    return scale
+
+
+def blend_ktc(fc: Market, fc_rows: list[dict], ktc: list[dict], mfl_to_sleeper: dict[str, str] | None = None,
+              name_to_sleeper: dict[tuple, str] | None = None) -> tuple[Market, dict]:
+    """Average FantasyCalc and KTC (rescaled) dynasty values. Win-now (redraft) values stay FantasyCalc's.
+    Returns (blended market, status)."""
+    from .consensus import norm_name
+    fc_mfl = {str((r.get("player") or {}).get("mflId")): str((r.get("player") or {}).get("sleeperId"))
+              for r in fc_rows or [] if (r.get("player") or {}).get("mflId") and (r.get("player") or {}).get("sleeperId")}
+    fc_names = {(norm_name(p["name"]), p["pos"]): pid for pid, p in fc.players.items()}
+    lookup_mfl = {**(mfl_to_sleeper or {}), **fc_mfl}
+    lookup_name = {**(name_to_sleeper or {}), **fc_names}
+
+    scale = rank_scaler([k["value"] for k in ktc], list(fc.picks.values()) + [p["value"] for p in fc.players.values()])
+    players = {pid: {**p, "fc_value": p["value"], "ktc_value": None} for pid, p in fc.players.items()}
+    mapped = unmapped = 0
+    for k in ktc:
+        if k["pick_label"]:
+            continue
+        sid = lookup_mfl.get(k.get("mflid") or "") or lookup_name.get((norm_name(k["name"]), k["pos"]))
+        if not sid:
+            unmapped += 1
+            continue
+        mapped += 1
+        kv = round(scale(k["value"]), 1)
+        if sid in players:
+            players[sid]["ktc_value"] = kv
+        else:
+            players[sid] = {"name": k["name"], "pos": k["pos"], "age": k.get("age"), "team": k.get("team"),
+                            "value": 0.0, "redraft": 0.0, "trend": None, "tier": None, "fc_value": None, "ktc_value": kv}
+    for p in players.values():
+        vals = [v for v in (p["fc_value"], p["ktc_value"]) if isinstance(v, (int, float))]
+        p["value"] = round(sum(vals) / len(vals), 1) if vals else 0.0
+        p["disagree"] = (len(vals) == 2 and abs(vals[0] - vals[1]) / max(p["value"], 1) > DISAGREE)
+
+    picks = dict(fc.picks)
+    ktc_picks = {k["pick_label"]: scale(k["value"]) for k in ktc if k["pick_label"]}
+    # KTC tiers every season; FantasyCalc only the next one. Generic "YYYY Nth" = KTC's Mid pick.
+    for label, v in list(ktc_picks.items()):
+        if label.endswith("(Mid)"):
+            ktc_picks.setdefault(label[: -len(" (Mid)")], v)
+    for label, v in ktc_picks.items():
+        picks[label] = round((picks[label] + v) / 2, 1) if label in picks else round(v, 1)
+
+    status = {"fantasycalc_players": len(fc.players), "ktc_players_mapped": mapped, "ktc_players_unmapped": unmapped,
+              "ktc_picks": len([k for k in ktc if k["pick_label"]])}
+    return Market(players, picks), status
+
+
+def parse_mfl_map(ids_csv_text: str) -> dict[str, str]:
+    """mfl_id -> sleeper_id from DynastyProcess db_playerids.csv."""
+    import csv
+    import io
+    out = {}
+    for r in csv.DictReader(io.StringIO(ids_csv_text or "")):
+        m, s = (r.get("mfl_id") or "").strip(), (r.get("sleeper_id") or "").strip()
+        if m and s and m != "NA" and s != "NA":
+            out[m] = s
+    return out

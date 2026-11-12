@@ -165,6 +165,9 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
                 "player_id": pid, "name": mp["name"], "pos": mp["pos"], "age": mp["age"], "nfl_team": mp["team"],
                 "owner": t.name, "owner_label": t.label, "owner_roster_id": rid,
                 "value": round(mp["value"]), "redraft": round(mp["redraft"]), "trend": mp.get("trend"),
+                "fc_value": round(mp["fc_value"]) if isinstance(mp.get("fc_value"), (int, float)) else None,
+                "ktc_value": round(mp["ktc_value"]) if isinstance(mp.get("ktc_value"), (int, float)) else None,
+                "disagree": bool(mp.get("disagree")),
                 "gain": round(gain), "motive": motive, "why": why,
                 "replaces": [(market.player(p) or {}).get("name") or p for p in replaced],
                 "ppg": round(ppg[pid], 1) if ppg and pid in ppg else None,
@@ -205,10 +208,13 @@ def season_ppg(get_url, season, scoring: dict, positions: dict[str, str]) -> dic
     return {}
 
 
-def build_report(client, snap: dict, fc_rows: list[dict]) -> dict:
-    """Everything the trades page shows. `snap` is this week's lineup snapshot (dict)."""
+def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] | None = None,
+                 ids_text: str | None = None) -> dict:
+    """Everything the trades page shows. `snap` is this week's lineup snapshot (dict).
+    ktc_rows: parsed KeepTradeCut values; when present, dynasty values are FantasyCalc and KTC averaged."""
     from datetime import datetime, timezone
-    from .market import build_profiles, parse_fantasycalc
+    from .consensus import norm_name
+    from .market import blend_ktc, build_profiles, parse_fantasycalc, parse_mfl_map
     lg = snap["league"]
     lid, season, week = lg["league_id"], int(snap["season"]), int(snap["week"])
     league = client.get(f"league/{lid}") or {}
@@ -222,6 +228,12 @@ def build_report(client, snap: dict, fc_rows: list[dict]) -> dict:
                    if t.get("type") == "trade" and t.get("status") == "complete"]
     market = parse_fantasycalc(fc_rows)
     sleeper_players = client.players()
+    value_sources = {"fantasycalc_players": len(market.players), "ktc": "unavailable"}
+    if ktc_rows:
+        names = {(norm_name(p.get("full_name") or ""), p.get("position")): pid for pid, p in sleeper_players.items()
+                 if p.get("position") in ("QB", "RB", "WR", "TE")}
+        market, value_sources = blend_ktc(market, fc_rows, ktc_rows, parse_mfl_map(ids_text or ""), names)
+        value_sources["ktc"] = "blended"
     positions = {pid: p.get("position") for pid, p in sleeper_players.items() if p.get("position") in ("QB", "RB", "WR", "TE")}
     positions.update({pid: p["pos"] for pid, p in market.players.items() if pid not in positions})
     slots = lg["starting_slots"]
@@ -252,4 +264,5 @@ def build_report(client, snap: dict, fc_rows: list[dict]) -> dict:
         "my_assets": [{k: a[k] for k in ("label", "kind", "value", "age", "pos")} for a in found["assets"][:12]],
         "teams": [team_row(t) for t in sorted(teams.values(), key=lambda t: t.record_rank)],
         "trades_this_season": len(trades),
+        "value_sources": value_sources,
     }

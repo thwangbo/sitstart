@@ -673,3 +673,70 @@ class MarketTests(unittest.TestCase):
         self.assertIn("2 weeks left", html)
         rep["targets"][0]["injury_status"] = "Questionable"
         self.assertIn("tag inj", render(rep))
+
+
+class KtcTests(unittest.TestCase):
+    HTML = ('<html><body><script type="application/json" id="ktc-players">'
+            + json.dumps([
+                {"playerName": "Vet QB", "position": "QB", "team": "AAA", "age": 33, "mflid": 111,
+                 "superflexValues": {"value": 6000}, "oneQBValues": {"value": 3000}},
+                {"playerName": "Young QB", "position": "QB", "team": "BBB", "age": 23, "mflid": 222,
+                 "superflexValues": {"value": 9000}, "oneQBValues": {"value": 5000}},
+                {"playerName": "Kid RB", "position": "RB", "team": "GGG", "age": 22, "mflid": 0,
+                 "superflexValues": {"value": 3000}, "oneQBValues": {"value": 3000}},
+                {"playerName": "Only In KTC", "position": "WR", "team": "HHH", "age": 21, "mflid": 999,
+                 "superflexValues": {"value": 500}, "oneQBValues": {"value": 500}},
+                {"playerName": "2027 Early 1st", "position": "RDP", "superflexValues": {"value": 7000}, "oneQBValues": {"value": 7000}},
+                {"playerName": "2028 Mid 1st", "position": "RDP", "superflexValues": {"value": 4000}, "oneQBValues": {"value": 4000}},
+                {"playerName": "Kicker", "position": "PK", "superflexValues": {"value": 100}},
+            ]) + '</script></body></html>')
+
+    def test_parse(self):
+        from sitstart.ktc import parse
+        rows = parse(self.HTML, superflex=True)
+        self.assertEqual(len(rows), 6)                       # kicker dropped
+        picks = {r["pick_label"]: r["value"] for r in rows if r["pick_label"]}
+        self.assertEqual(picks, {"2027 1st (Early)": 7000.0, "2028 1st (Mid)": 4000.0})
+        self.assertEqual(parse(self.HTML, superflex=False)[0]["value"], 3000.0)
+
+    def test_layout_change_raises(self):
+        from sitstart.ktc import parse
+        with self.assertRaises(ValueError):
+            parse("<html>nothing here</html>")
+
+    def test_rank_scaler_is_rank_for_rank(self):
+        from sitstart.market import rank_scaler
+        sc = rank_scaler([900, 800, 700, 600, 500], [100, 90, 80])
+        self.assertEqual(sc(900), 100)
+        self.assertEqual(sc(800), 90)
+        self.assertEqual(sc(850), 95)          # halfway between 1st and 2nd
+        self.assertAlmostEqual(sc(600), 80 * 600 / 700)   # deeper than the target list: tapered
+
+    def test_blend(self):
+        from sitstart.ktc import parse
+        from sitstart.market import blend_ktc, parse_fantasycalc
+        fc_rows = [dict(r) for r in MarketTests.FC]
+        fc_rows[0] = {**fc_rows[0], "player": {**fc_rows[0]["player"], "mflId": "111"}}
+        fc_rows[1] = {**fc_rows[1], "player": {**fc_rows[1]["player"], "mflId": "222"}}
+        fc = parse_fantasycalc(fc_rows)
+        m, status = blend_ktc(fc, fc_rows, parse(self.HTML), mfl_to_sleeper={"999": "w9"})
+        self.assertEqual(status["ktc_players_mapped"], 4)            # by MFL id (3) and by name (Kid RB)
+        yq = m.player("q2")
+        self.assertEqual(yq["fc_value"], 7000)
+        self.assertIsNotNone(yq["ktc_value"])
+        self.assertAlmostEqual(yq["value"], (yq["fc_value"] + yq["ktc_value"]) / 2, places=1)
+        self.assertEqual(m.redraft("q1"), 6000)                      # win-now stays FantasyCalc
+        self.assertIn("w9", m.players)                               # KTC-only player added
+        self.assertEqual(m.players["w9"]["fc_value"], None)
+        self.assertIn("2028 1st (Mid)", m.picks)
+        from sitstart.market import rank_scaler
+        sc = rank_scaler([k["value"] for k in parse(self.HTML)], list(fc.picks.values()) + [p["value"] for p in fc.players.values()])
+        self.assertAlmostEqual(m.pick_value("2027", 1, "Early"), round((5000 + sc(7000)) / 2, 1))   # averaged
+        self.assertAlmostEqual(m.pick_value("2028", 1), round((2200 + sc(4000)) / 2, 1))            # generic = KTC Mid
+
+    def test_unmapped_counted_not_crashing(self):
+        from sitstart.ktc import parse
+        from sitstart.market import blend_ktc, parse_fantasycalc
+        fc = parse_fantasycalc(MarketTests.FC)
+        m, status = blend_ktc(fc, MarketTests.FC, parse(self.HTML))
+        self.assertGreaterEqual(status["ktc_players_unmapped"], 1)    # "Only In KTC" has no match

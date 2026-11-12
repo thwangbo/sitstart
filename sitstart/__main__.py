@@ -60,11 +60,17 @@ def run_trades(client, snap, args) -> None:
     from .market import FC_URL
     from .trades import build_report
     from .trades_page import render as render_trades
+    lg = snap.league
+    ktc_rows = None
     try:
-        lg = snap.league
+        from . import ktc
+        ktc_rows = ktc.parse(ktc.fetch_html(lg["is_superflex"]), superflex=lg["is_superflex"])
+    except Exception as e:
+        print(f"Warning: KeepTradeCut values unavailable ({e}). Using FantasyCalc only.", file=sys.stderr)
+    try:
         url = FC_URL.format(qbs=2 if lg["is_superflex"] else 1, teams=lg["total_rosters"] or 12,
                             ppr=lg["scoring_summary"]["points_per_reception"])
-        report = build_report(client, snap.to_dict(), json.loads(fetch(url)))
+        report = build_report(client, snap.to_dict(), json.loads(fetch(url)), ktc_rows, load_ids_text())
     except Exception as e:
         print(f"Warning: trade targets not updated ({e})", file=sys.stderr)
         return
@@ -73,7 +79,11 @@ def run_trades(client, snap, args) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(render_trades(report), encoding="utf-8")
     me = report["me"]
+    vs = report.get("value_sources") or {}
     print(f"\nTrade targets: you're a {me['label']}; {len(report['targets'])} targets with offers. Wrote {out}")
+    print(f"  Values: FantasyCalc {vs.get('fantasycalc_players')} players; KTC {vs.get('ktc')}"
+          + (f" ({vs.get('ktc_players_mapped')} matched, {vs.get('ktc_players_unmapped')} unmatched, {vs.get('ktc_picks')} picks)"
+             if vs.get("ktc") == "blended" else ""))
     for t in report["targets"][:3]:
         print(f"  {t['name']} ({t['owner']}): offer " + ", ".join(a["label"] for a in t["offer"]["assets"]))
 

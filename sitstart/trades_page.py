@@ -55,6 +55,28 @@ def _deadline(rep: dict) -> str:
     return f"Trade deadline passed (Week {dl}). Targets are for the offseason."
 
 
+def _sources(t: dict) -> str:
+    fc, kt = t.get("fc_value"), t.get("ktc_value")
+    if fc is None and kt is None:
+        return ""
+    parts = []
+    if fc is not None:
+        parts.append(f"FC {_fmt(fc)}")
+    if kt is not None:
+        parts.append(f"KTC {_fmt(kt)}")
+    flag = ' <span class="tag inj">sources disagree</span>' if t.get("disagree") else ""
+    return f'<div class="sub small">{" &middot; ".join(parts)}</div>{flag}'
+
+
+def _values_note(rep: dict) -> str:
+    vs = rep.get("value_sources") or {}
+    if vs.get("ktc") == "blended":
+        return ("Market value = average of FantasyCalc (from real trades) and KeepTradeCut (crowd votes), "
+                "with KTC converted to FantasyCalc's scale by rank (KTC's 50th most valuable asset gets "
+                "FantasyCalc's 50th value). Win-now value is FantasyCalc's. ")
+    return "Market value = FantasyCalc (KeepTradeCut was unavailable this run). "
+
+
 def _target_rows(targets: list[dict]) -> str:
     rows = []
     for i, t in enumerate(targets, 1):
@@ -76,7 +98,7 @@ def _target_rows(targets: list[dict]) -> str:
             f'{_age(t["age"])}, {escape(t.get("nfl_team") or "FA")}</div></td>'
             f'<td>{escape(t["owner"])} {_tag(t["owner_label"])}<div class="sub small">{escape(t["why"])}</div></td>'
             f'<td><span class="gain">+{_fmt(t["gain"])}</span>{replaces}{ppg}</td>'
-            f'<td class="num">{_fmt(t["value"])}{trend_s}</td>'
+            f'<td class="num">{_fmt(t["value"])}{trend_s}{_sources(t)}</td>'
             f'<td class="offer">{offer}<div class="sub small">{o["ratio"]:.0%} of his value</div></td></tr>')
     return "".join(rows)
 
@@ -122,14 +144,14 @@ def render(rep: dict) -> str:
 <p class="chips">{needs}</p>
 <p class="sub">{lens}</p></section>
 <section class="card"><h2>Top targets</h2>{target_html}{oor_html}
-<p class="sub">Lineup gain and market value use FantasyCalc's Superflex half-PPR values (win-now and dynasty). Points per game are this season's, in your league scoring.
+<p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
 Offers total 100&ndash;120% of the player's market value. Expect to add a little when you send 2&ndash;3 pieces for one; managers pay a premium for the single best piece.</p></section>
 <section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
 <section class="card"><h2>League map</h2><table>
 <tr class="head"><td>Team</td><td class="num">Record</td><td>Lifecycle</td><td class="num">Win-now rank</td><td class="num">Dynasty rank</td>
 <td class="num hide-sm">Avg age</td><td class="num hide-sm">Youth</td><td class="hide-sm">1st and 2nd round picks</td></tr>{team_rows}</table>
 <p class="sub">Lifecycle combines standings, win-now value, dynasty value, roster age, the share of value in picks and players 24 or under, and this season's trades ({rep.get("trades_this_season", 0)} in the league).</p></section>
-<p class="sub">Market values: FantasyCalc (from real dynasty trades). League data: Sleeper.</p>
+<p class="sub">Market values: FantasyCalc and KeepTradeCut, Superflex. League data: Sleeper.</p>
 </main></body></html>
 """
 
