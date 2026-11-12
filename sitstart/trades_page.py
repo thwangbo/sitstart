@@ -22,7 +22,7 @@ td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-chil
 .pname{font-weight:600}tr.me td{font-weight:600}.small{font-size:12px}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
 .tag.contender{color:var(--accent)}.tag.middle{color:var(--sub)}.tag.rebuilder{color:var(--warn)}
-.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}.tag.core{color:var(--accent)}.reuse{margin-top:4px;max-width:260px}
+.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}.tag.core{color:var(--accent)}.offer .reuse{margin-top:4px;max-width:280px;white-space:normal}
 .offer div{white-space:nowrap}.gain{color:var(--good);font-weight:600}
 .chips span{display:inline-block;margin:2px 6px 2px 0}
 @media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}}
@@ -97,7 +97,9 @@ def _swing_rows(swings: list[dict]) -> str:
         o = x["offer"]
         gives = "".join(
             f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
-            + (' <span class="tag core">starter</span>' if a.get("core") else "") + '</div>' for a in o["assets"])
+            + (' <span class="tag core">starter</span>' if a.get("core") else "")
+            + (f' <span class="tag inj">{escape(a["injury_status"])}</span>' if a.get("injury_status") else "")
+            + '</div>' for a in o["assets"])
         starter = x["gives_starter"][0] if x.get("gives_starter") else {}
         ppg = ""
         if isinstance(x.get("ppg"), (int, float)):
@@ -121,7 +123,9 @@ def _target_rows(targets: list[dict]) -> str:
     rows = []
     for i, t in enumerate(targets, 1):
         o = t["offer"]
-        offer = "".join(f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span></div>' for a in o["assets"])
+        offer = "".join(f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
+                        + (f' <span class="tag inj">{escape(a["injury_status"])}</span>' if a.get("injury_status") else "")
+                        + '</div>' for a in o["assets"])
         ppg = ""
         if isinstance(t.get("ppg"), (int, float)):
             rep_ppg = [p for p in t.get("replaces_ppg") or [] if isinstance(p, (int, float))]

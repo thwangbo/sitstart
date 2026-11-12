@@ -358,6 +358,10 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
     found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable)
     for t in found["targets"] + found["out_of_reach"] + found["bigger_swings"]:
         t["injury_status"] = (sleeper_players.get(t["player_id"]) or {}).get("injury_status")
+        for offer in (t.get("offer"), t.get("alt_offer")):
+            for a in (offer or {}).get("assets", []):
+                if a.get("kind") == "player":
+                    a["injury_status"] = (sleeper_players.get(a["id"]) or {}).get("injury_status")
 
     def team_row(t):
         return {"roster_id": t.roster_id, "name": t.name, "wins": t.wins, "losses": t.losses,
