@@ -1,0 +1,43 @@
+{
+ "bytes": 2714805,
+ "playersArray": {
+  "count": 1,
+  "first": 2370370,
+  "context": "lendPositionalRank\":90,\"blendHistory\":[],\"blendOverallTier\":16,\"blendPositionalTier\":15},\"number\":89,\"teamLongName\":\"Dallas Cowboys\",\"birthday\":\"946270800\",\"draftYear\":2024,\"college\":\"Minnesota\",\"byeWeek\":14,\"injury\":{\"injuryCode\":1},\"mflid\":16647}]</script>\n<script>\n    var leagueType = 1;\n    var playersArray = JSON.parse(document.getElementById('ktc-players').textContent);\n    var oneQBSC = false;\n    var sfSC = false;\n    var oneQBPlayers = [{\"playerName\":\"Ja\\u0027Marr Chase\",\"playerID\":1004,\"slug\":\"ja-marr-chase-1004\",\"position\":\"WR\",\"positionID\":3,\"team\":\"CIN\",\"rookie\":false,\"age\":26.7,\"heightFeet\":6,\"heightInches\":0,\"weight\":205,\"seasonsExperience\":5,\"pickRound\":1,\"pickNum\":5,\"isFeatured\":false,\"isStartSitFeatured\":false,\"isTrending\":false,\"isDevyReturningToSchool\":false,\"isDevyYearDecrement\":false,\"oneQBValues\":{\"startSitValue\":0,\"overallTrend\":0,\"positionalTrend\":0,\"vftOverallTr"
+ },
+ "superflexValues": {
+  "count": 566,
+  "first": 7781,
+  "context": "[],\"overallTier\":1,\"positionalTier\":1,\"vftValue\":9811,\"vftRank\":1,\"vftPickRank\":1,\"vftPositionalRank\":1,\"vftHistory\":[],\"vftOverallTier\":1,\"vftPositionalTier\":1,\"blendValue\":9905,\"blendRank\":1,\"blendPickRank\":1,\"blendPositionalRank\":1,\"blendHistory\":[],\"blendOverallTier\":1,\"blendPositionalTier\":1},\"superflexValues\":{\"startSitValue\":0,\"overallTrend\":0,\"positionalTrend\":0,\"vftOverallTrend\":0,\"vftPositionalTrend\":0,\"blendOverallTrend\":0,\"blendPositionalTrend\":0,\"overall7DayTrend\":0,\"positional7DayTrend\":0,\"kept\":61978,\"traded\":48576,\"cut\":59077,\"diff\":0,\"isOutThisWeek\":false,\"tep\":{\"value\":9999,\"rank\":1,\"pickRank\":1,\"positionalRank\":1,\"history\":[],\"overallTier\":1,\"positionalTier\":1,\"vftValue\":9095,\"vftRank\":1,\"vftPickRank\":1,\"vftPositionalRank\":1,\"vftHistory\":[],\"vftOverallTier\":1,\"vftPositionalTier\":1,\"blendValue\":9547,\"blendRank\":1,\"blendPickRank\":1,\"blendPositionalRank\":1,\"blendHistory\":"
+ },
+ "oneQBValues": {
+  "count": 566,
+  "first": 5885,
+  "context": "bbs-1415\",\"position\":\"RB\",\"positionID\":2,\"team\":\"DET\",\"rookie\":false,\"age\":24.6,\"heightFeet\":5,\"heightInches\":9,\"weight\":202,\"seasonsExperience\":3,\"pickRound\":1,\"pickNum\":12,\"isFeatured\":false,\"isStartSitFeatured\":false,\"isTrending\":false,\"isDevyReturningToSchool\":false,\"isDevyYearDecrement\":false,\"oneQBValues\":{\"startSitValue\":0,\"overallTrend\":0,\"positionalTrend\":0,\"vftOverallTrend\":1,\"vftPositionalTrend\":1,\"blendOverallTrend\":1,\"blendPositionalTrend\":1,\"overall7DayTrend\":0,\"positional7DayTrend\":0,\"kept\":45569,\"traded\":26268,\"cut\":38358,\"diff\":0,\"isOutThisWeek\":false,\"tep\":{\"value\":9999,\"rank\":1,\"pickRank\":1,\"positionalRank\":1,\"history\":[],\"overallTier\":1,\"positionalTier\":1,\"vftValue\":9811,\"vftRank\":1,\"vftPickRank\":1,\"vftPositionalRank\":1,\"vftHistory\":[],\"vftOverallTier\":1,\"vftPositionalTier\":1,\"blendValue\":9905,\"blendRank\":1,\"blendPickRank\":1,\"blendPositionalRank\":1,\"blendHistory\":[],\""
+ },
+ "playerName": {
+  "count": 566,
+  "first": 5525,
+  "context": "reload\" href=\"/js/site.min.js?v=q_FrAXDmPCSBij8MDiPA1mxk_RQ17dn3TxS0QPcvRHk\" as=\"script\" />\n        <link rel=\"preconnect\" href=\"https://btloader.com/tag?o=5698917485248512&upapi=true&domain=keeptradecut.com\" as=\"script\"/>\n    \n\n</head>\n<body>\n    <script type=\"application/json\" id=\"ktc-players\">[{\"playerName\":\"Jahmyr Gibbs\",\"playerID\":1415,\"slug\":\"jahmyr-gibbs-1415\",\"position\":\"RB\",\"positionID\":2,\"team\":\"DET\",\"rookie\":false,\"age\":24.6,\"heightFeet\":5,\"heightInches\":9,\"weight\":202,\"seasonsExperience\":3,\"pickRound\":1,\"pickNum\":12,\"isFeatured\":false,\"isStartSitFeatured\":false,\"isTrending\":false,\"isDevyReturningToSchool\":false,\"isDevyYearDecrement\":false,\"oneQBValues\":{\"startSitValue\":0,\"overallTrend\":0,\"positionalTrend\":0,\"vftOverallTrend\":1,\"vftPositionalTrend\":1,\"blendOverallTrend\":1,\"blendPositionalTrend\":1,\"overall7DayTrend\":0,\"positional7DayTrend\":0,\"kept\":45569,\"traded\":26268,\"cut\":38"
+ },
+ "RDP": {
+  "count": 38,
+  "first": 1739,
+  "context": "adeCut\">\n    <meta property=\"og:locale\" content=\"en_US\">\n    <meta property=\"og:title\" content=\"Dynasty Rankings - KeepTradeCut\" />\n    <meta property=\"og:type\" content=\"website\" />\n    <meta property=\"og:url\" content=\"https://keeptradecut.com/dynasty-rankings?page=0&amp;filters=QB%7CWR%7CRB%7CTE%7CRDP&amp;format=2\" />\n\n        <meta property=\"og:image\" content=\"https://www.keeptradecut.com/assets/images/banners/og-img.jpg\">\n\n    <meta name=\"format-detection\" content=\"telephone=no\">\n\n    \n    \n    <!-- Raptive Head Tag Manual -->\n    <script data-no-optimize=\"1\" data-cfasync=\"false\">\n        (function (w, d) {\n            w.adthrive = w.adthrive || {};\n            w.adthrive.cmd = w.\n                adthrive.cmd || [];\n            w.adthrive.plugin = 'adthrive-ads-manual';\n            w.adthrive.host = 'ads.adthrive.com'; var s = d.createElement('script');\n            s.async = true;\n   "
+ },
+ "scripts_with_values": [
+  45,
+  156,
+  253,
+  464,
+  1979,
+  5473,
+  2370329,
+  2515576,
+  2541822,
+  2713868,
+  2713967,
+  2714087,
+  2714189
+ ]
+}
