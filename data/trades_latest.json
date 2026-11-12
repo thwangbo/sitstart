@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T19:19:48+00:00",
+ "generated_at": "2026-11-12T19:21:11+00:00",
  "season": 2026,
  "week": 10,
  "deadline_week": 12,
@@ -13,7 +13,7 @@
   "win_now_rank": 5,
   "dynasty_rank": 3,
   "age": 26.8,
-  "youth": 0.268,
+  "youth": 0.267,
   "label": "contender",
   "reasons": [
    "13-5, 4th in standings",
@@ -92,7 +92,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -107,8 +107,8 @@
       "core": false
      }
     ],
-    "total": 4810,
-    "ratio": 1.094,
+    "total": 4788,
+    "ratio": 1.089,
     "fit": 1.0
    },
    "shared": [
@@ -130,7 +130,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "2029-2-8",
@@ -189,7 +190,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -204,8 +205,8 @@
       "core": false
      }
     ],
-    "total": 3962,
-    "ratio": 1.1,
+    "total": 3942,
+    "ratio": 1.094,
     "fit": 0.8
    },
    "shared": [
@@ -242,14 +243,15 @@
       "id": "13394",
       "label": "Josh Cameron",
       "kind": "player",
-      "value": 462,
+      "value": 460,
       "age": 23.7,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 4196,
-    "ratio": 1.165,
+    "total": 4194,
+    "ratio": 1.164,
     "fit": 0.8
    },
    "injury_status": null
@@ -289,7 +291,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "5892",
@@ -298,7 +301,8 @@
       "value": 1324,
       "age": 29.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Questionable"
      },
      {
       "id": "3257",
@@ -307,7 +311,8 @@
       "value": 1216,
       "age": 33.9,
       "pos": "QB",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
     "total": 5300,
@@ -334,7 +339,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -343,10 +348,11 @@
       "id": "8136",
       "label": "Rachaad White",
       "kind": "player",
-      "value": 1340,
+      "value": 1338,
       "age": 27.8,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": null
      },
      {
       "id": "5022",
@@ -355,11 +361,12 @@
       "value": 1208,
       "age": 31.9,
       "pos": "TE",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 5164,
-    "ratio": 1.257,
+    "total": 5141,
+    "ratio": 1.251,
     "fit": 0.65
    },
    "injury_status": null
@@ -396,7 +403,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -420,8 +427,8 @@
       "core": false
      }
     ],
-    "total": 5586,
-    "ratio": 1.169,
+    "total": 5566,
+    "ratio": 1.165,
     "fit": 1.0
    },
    "shared": [
@@ -447,7 +454,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "2029-1-8",
@@ -483,11 +491,11 @@
    "owner": "Honolulu Blues",
    "owner_label": "middle",
    "owner_roster_id": 3,
-   "value": 2889,
+   "value": 2861,
    "redraft": 3918,
    "trend": 253,
    "fc_value": 2950,
-   "ktc_value": 2828,
+   "ktc_value": 2772,
    "disagree": false,
    "gain": 2096,
    "motive": 0.5,
@@ -522,7 +530,7 @@
      }
     ],
     "total": 3164,
-    "ratio": 1.095,
+    "ratio": 1.106,
     "fit": 0.8
    },
    "shared": [
@@ -549,11 +557,12 @@
       "value": 1008,
       "age": 25.4,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "IR"
      }
     ],
     "total": 3202,
-    "ratio": 1.108,
+    "ratio": 1.119,
     "fit": 0.8
    },
    "injury_status": null
@@ -567,11 +576,11 @@
    "owner": "Brock & Roll",
    "owner_label": "middle",
    "owner_roster_id": 7,
-   "value": 2486,
+   "value": 2462,
    "redraft": 3607,
    "trend": 341,
    "fc_value": 2739,
-   "ktc_value": 2233,
+   "ktc_value": 2185,
    "disagree": false,
    "gain": 1948,
    "motive": 0.5,
@@ -590,14 +599,14 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 2616,
-    "ratio": 1.052,
+    "total": 2595,
+    "ratio": 1.054,
     "fit": 0.8
    },
    "shared": [
@@ -609,26 +618,26 @@
    "alt_offer": {
     "assets": [
      {
-      "id": "2028-2-8",
-      "label": "2028 2nd",
+      "id": "2029-1-8",
+      "label": "2029 1st",
       "kind": "pick",
-      "value": 1540,
+      "value": 2194,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
+      "id": "2029-4-8",
+      "label": "2029 4th",
       "kind": "pick",
-      "value": 1346,
+      "value": 466,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 2887,
-    "ratio": 1.161,
+    "total": 2660,
+    "ratio": 1.08,
     "fit": 0.8
    },
    "injury_status": null
@@ -642,11 +651,11 @@
    "owner": "Brock & Roll",
    "owner_label": "middle",
    "owner_roster_id": 7,
-   "value": 3123,
+   "value": 3170,
    "redraft": 3745,
    "trend": 283,
    "fc_value": 3114,
-   "ktc_value": 3132,
+   "ktc_value": 3227,
    "disagree": false,
    "gain": 1923,
    "motive": 0.5,
@@ -665,7 +674,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -680,8 +689,8 @@
       "core": false
      }
     ],
-    "total": 3466,
-    "ratio": 1.11,
+    "total": 3446,
+    "ratio": 1.087,
     "fit": 0.8
    },
    "shared": [
@@ -712,7 +721,7 @@
      }
     ],
     "total": 3540,
-    "ratio": 1.134,
+    "ratio": 1.117,
     "fit": 0.8
    },
    "injury_status": null
@@ -749,14 +758,14 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 2616,
-    "ratio": 1.039,
+    "total": 2595,
+    "ratio": 1.03,
     "fit": 0.8
    },
    "shared": [
@@ -827,7 +836,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "2029-1-8",
@@ -845,7 +855,8 @@
       "value": 1216,
       "age": 33.9,
       "pos": "QB",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
     "total": 6168,
@@ -866,40 +877,7 @@
      "offers": 4
     }
    ],
-   "alt_offer": {
-    "assets": [
-     {
-      "id": "2028-1-8",
-      "label": "2028 1st",
-      "kind": "pick",
-      "value": 2616,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "12534",
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 2031,
-      "age": 24.4,
-      "pos": "RB",
-      "core": false
-     },
-     {
-      "id": "2028-2-8",
-      "label": "2028 2nd",
-      "kind": "pick",
-      "value": 1540,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 6188,
-    "ratio": 1.188,
-    "fit": 0.62
-   },
+   "alt_offer": null,
    "injury_status": null
   },
   {
@@ -937,7 +915,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "5892",
@@ -946,7 +925,8 @@
       "value": 1324,
       "age": 29.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Questionable"
      },
      {
       "id": "3257",
@@ -955,7 +935,8 @@
       "value": 1216,
       "age": 33.9,
       "pos": "QB",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
     "total": 5300,
@@ -982,7 +963,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -994,7 +975,8 @@
       "value": 2031,
       "age": 24.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "5022",
@@ -1003,11 +985,12 @@
       "value": 1208,
       "age": 31.9,
       "pos": "TE",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 5855,
-    "ratio": 1.314,
+    "total": 5834,
+    "ratio": 1.309,
     "fit": 0.67
    },
    "injury_status": null
@@ -1047,7 +1030,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "5892",
@@ -1056,7 +1040,8 @@
       "value": 1324,
       "age": 29.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Questionable"
      },
      {
       "id": "3257",
@@ -1065,7 +1050,8 @@
       "value": 1216,
       "age": 33.9,
       "pos": "QB",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
     "total": 5300,
@@ -1092,7 +1078,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -1104,7 +1090,8 @@
       "value": 2031,
       "age": 24.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "5022",
@@ -1113,11 +1100,12 @@
       "value": 1208,
       "age": 31.9,
       "pos": "TE",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 5855,
-    "ratio": 1.308,
+    "total": 5834,
+    "ratio": 1.303,
     "fit": 0.67
    },
    "injury_status": null
@@ -1154,7 +1142,7 @@
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -1169,8 +1157,8 @@
       "core": false
      }
     ],
-    "total": 4810,
-    "ratio": 1.178,
+    "total": 4788,
+    "ratio": 1.173,
     "fit": 1.0
    },
    "shared": [
@@ -1192,7 +1180,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "2028-2-8",
@@ -1207,13 +1196,14 @@
       "id": "13394",
       "label": "Josh Cameron",
       "kind": "player",
-      "value": 462,
+      "value": 460,
       "age": 23.7,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 4762,
+    "total": 4760,
     "ratio": 1.166,
     "fit": 0.65
    },
@@ -1317,11 +1307,11 @@
    "owner": "jaywah",
    "owner_label": "contender",
    "owner_roster_id": 11,
-   "value": 10385,
+   "value": 10464,
    "redraft": 10194,
    "trend": -90,
    "fc_value": 10385,
-   "ktc_value": 10385,
+   "ktc_value": 10544,
    "disagree": false,
    "gain": 8372,
    "motive": 0.2,
@@ -1402,7 +1392,8 @@
       "value": 7368,
       "age": 25.5,
       "pos": "WR",
-      "core": true
+      "core": true,
+      "injury_status": "Out"
      },
      {
       "id": "7525",
@@ -1411,7 +1402,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "2027-2-8",
@@ -1462,7 +1454,8 @@
       "value": 7368,
       "age": 25.5,
       "pos": "WR",
-      "core": true
+      "core": true,
+      "injury_status": "Out"
      },
      {
       "id": "2029-1-8",
@@ -1513,7 +1506,8 @@
       "value": 7368,
       "age": 25.5,
       "pos": "WR",
-      "core": true
+      "core": true,
+      "injury_status": "Out"
      },
      {
       "id": "2029-1-8",
@@ -1531,7 +1525,8 @@
       "value": 1324,
       "age": 29.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Questionable"
      }
     ],
     "total": 10886,
@@ -1548,9 +1543,9 @@
    "owner": "jaywah",
    "owner_label": "contender",
    "owner_roster_id": 11,
-   "value": 10385,
+   "value": 10464,
    "fc_value": 10385,
-   "ktc_value": 10385,
+   "ktc_value": 10544,
    "disagree": false,
    "motive": 0.2,
    "why": "jaywah is contending, so they'll want help now in return",
@@ -1573,13 +1568,14 @@
       "value": 7368,
       "age": 25.5,
       "pos": "WR",
-      "core": true
+      "core": true,
+      "injury_status": "Out"
      },
      {
       "id": "2028-1-8",
       "label": "2028 1st",
       "kind": "pick",
-      "value": 2616,
+      "value": 2595,
       "age": null,
       "pos": null,
       "core": false
@@ -1594,8 +1590,8 @@
       "core": false
      }
     ],
-    "total": 12178,
-    "ratio": 1.173,
+    "total": 12157,
+    "ratio": 1.162,
     "fit": 0.73
    }
   },
@@ -1633,7 +1629,8 @@
       "value": 3793,
       "age": 27.7,
       "pos": "WR",
-      "core": true
+      "core": true,
+      "injury_status": null
      },
      {
       "id": "7525",
@@ -1642,7 +1639,8 @@
       "value": 2759,
       "age": 28.0,
       "pos": "WR",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      },
      {
       "id": "12534",
@@ -1651,7 +1649,8 @@
       "value": 2031,
       "age": 24.4,
       "pos": "RB",
-      "core": false
+      "core": false,
+      "injury_status": "Out"
      }
     ],
     "total": 8583,
@@ -1671,7 +1670,7 @@
   {
    "label": "2028 1st",
    "kind": "pick",
-   "value": 2616.0,
+   "value": 2595.0,
    "age": null,
    "pos": null
   },
@@ -1713,7 +1712,7 @@
   {
    "label": "Rachaad White",
    "kind": "player",
-   "value": 1339.5,
+   "value": 1338.0,
    "age": 27.8,
    "pos": "RB"
   },
@@ -1756,7 +1755,7 @@
    "win_now_rank": 4,
    "dynasty_rank": 1,
    "age": 27.2,
-   "youth": 0.262,
+   "youth": 0.261,
    "label": "contender",
    "reasons": [
     "15-3, 1st in standings",
@@ -1825,7 +1824,7 @@
    "win_now_rank": 5,
    "dynasty_rank": 3,
    "age": 26.8,
-   "youth": 0.268,
+   "youth": 0.267,
    "label": "contender",
    "reasons": [
     "13-5, 4th in standings",
@@ -1874,7 +1873,7 @@
    "win_now_rank": 7,
    "dynasty_rank": 5,
    "age": 25.8,
-   "youth": 0.281,
+   "youth": 0.28,
    "label": "middle",
    "reasons": [
     "12-6, 6th in standings",
