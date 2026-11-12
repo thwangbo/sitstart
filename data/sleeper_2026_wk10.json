@@ -146,7 +146,7 @@
         "locked": false,
         "xfp": 15.25,
         "usage_trend": -3.6,
-        "stat_pts": 15.92,
+        "stat_pts": 15.94,
         "stat_adj": -0.15,
         "score_with_stats": 19.64
       },
@@ -180,7 +180,7 @@
         "locked": false,
         "xfp": 9.82,
         "usage_trend": null,
-        "stat_pts": 10.04,
+        "stat_pts": 10.05,
         "stat_adj": -0.128,
         "score_with_stats": 10.05
       },
@@ -214,7 +214,7 @@
         "locked": false,
         "xfp": 13.38,
         "usage_trend": 0.6,
-        "stat_pts": 13.97,
+        "stat_pts": 13.98,
         "stat_adj": -0.111,
         "score_with_stats": 13.98
       },
@@ -270,21 +270,21 @@
         "years_exp": 5,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 13.3,
-        "proj_pts_sleeper_half": 13.3,
+        "proj_pts": 13.18,
+        "proj_pts_sleeper_half": 13.19,
         "consensus_rank": "WR14",
         "expert_pts": 12.87,
-        "score": 13.09,
+        "score": 13.02,
         "bye": false,
         "opponent": "@ CLE",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
-        "implied_total": 23.0,
+        "implied_total": 22.5,
         "locked": false,
         "xfp": 7.23,
         "usage_trend": -3.3,
-        "stat_pts": 7.31,
+        "stat_pts": 7.24,
         "stat_adj": -0.15,
-        "score_with_stats": 11.13
+        "score_with_stats": 11.07
       },
       "empty": false,
       "locked": false,
@@ -341,8 +341,8 @@
         "proj_pts": 10.04,
         "proj_pts_sleeper_half": 10.05,
         "consensus_rank": "TE8",
-        "expert_pts": 9.35,
-        "score": 9.7,
+        "expert_pts": 9.28,
+        "score": 9.66,
         "bye": false,
         "opponent": "vs NE",
         "kickoff_utc": "2026-11-15T14:30:00+00:00",
@@ -350,9 +350,9 @@
         "locked": false,
         "xfp": 6.11,
         "usage_trend": 0.2,
-        "stat_pts": 6.72,
+        "stat_pts": 6.73,
         "stat_adj": -0.15,
-        "score_with_stats": 8.24
+        "score_with_stats": 8.21
       },
       "empty": false,
       "locked": false,
@@ -372,11 +372,11 @@
         "years_exp": 13,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 9.92,
-        "proj_pts_sleeper_half": 9.93,
+        "proj_pts": 10.0,
+        "proj_pts_sleeper_half": 9.97,
         "consensus_rank": "TE6",
-        "expert_pts": 9.92,
-        "score": 9.92,
+        "expert_pts": 10.0,
+        "score": 10.0,
         "bye": false,
         "opponent": "@ ATL",
         "kickoff_utc": "2026-11-15T18:00:00+00:00",
@@ -384,9 +384,9 @@
         "locked": false,
         "xfp": 9.57,
         "usage_trend": 1.8,
-        "stat_pts": 10.06,
-        "stat_adj": 0.014,
-        "score_with_stats": 10.06
+        "stat_pts": 10.07,
+        "stat_adj": 0.007,
+        "score_with_stats": 10.07
       },
       "empty": false,
       "locked": false,
@@ -691,11 +691,11 @@
       "bye": false,
       "opponent": "@ CLE",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
-      "implied_total": 23.0,
+      "implied_total": 22.5,
       "locked": false,
       "xfp": 4.66,
       "usage_trend": -2.1,
-      "stat_pts": 4.71,
+      "stat_pts": 4.66,
       "stat_adj": null,
       "score_with_stats": 0.81
     },
@@ -770,7 +770,7 @@
       "proj_pts": 5.53,
       "proj_pts_sleeper_half": 5.55,
       "consensus_rank": "TE36",
-      "expert_pts": 3.5,
+      "expert_pts": 3.51,
       "score": 4.52,
       "bye": false,
       "opponent": "vs SF",
@@ -779,9 +779,9 @@
       "locked": false,
       "xfp": 4.78,
       "usage_trend": 1.4,
-      "stat_pts": 5.15,
-      "stat_adj": 0.139,
-      "score_with_stats": 5.15
+      "stat_pts": 5.16,
+      "stat_adj": 0.142,
+      "score_with_stats": 5.16
     },
     {
       "player_id": "13394",
@@ -824,7 +824,7 @@
       "injury_status": null,
       "status": "Active",
       "proj_pts": 2.58,
-      "proj_pts_sleeper_half": 2.6,
+      "proj_pts_sleeper_half": 2.59,
       "consensus_rank": "WR78",
       "expert_pts": 3.41,
       "score": 3.0,
@@ -1003,7 +1003,7 @@
       "locked": false,
       "xfp": 19.48,
       "usage_trend": 8.4,
-      "stat_pts": 20.34,
+      "stat_pts": 20.36,
       "stat_adj": null,
       "score_with_stats": 0.0
     },
@@ -1072,11 +1072,11 @@
       "years_exp": 4,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 9.78,
-      "proj_pts_sleeper_half": 9.77,
+      "proj_pts": 9.8,
+      "proj_pts_sleeper_half": 9.81,
       "consensus_rank": "RB25",
       "expert_pts": 8.97,
-      "score": 9.38,
+      "score": 9.39,
       "bye": false,
       "opponent": "@ NYG",
       "kickoff_utc": "2026-11-13T01:15:00+00:00",
@@ -1084,9 +1084,9 @@
       "locked": false,
       "xfp": 9.33,
       "usage_trend": 2.0,
-      "stat_pts": 8.6,
+      "stat_pts": 8.61,
       "stat_adj": -0.083,
-      "score_with_stats": 8.6
+      "score_with_stats": 8.61
     },
     {
       "player_id": "8119",
@@ -1100,11 +1100,11 @@
       "years_exp": 4,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 5.98,
-      "proj_pts_sleeper_half": 6.0,
+      "proj_pts": 6.0,
+      "proj_pts_sleeper_half": 6.03,
       "consensus_rank": "WR57",
       "expert_pts": 5.46,
-      "score": 5.72,
+      "score": 5.73,
       "bye": false,
       "opponent": "vs KC",
       "kickoff_utc": "2026-11-15T18:00:00+00:00",
@@ -1112,9 +1112,9 @@
       "locked": false,
       "xfp": 4.87,
       "usage_trend": -2.1,
-      "stat_pts": 4.79,
+      "stat_pts": 4.8,
       "stat_adj": -0.15,
-      "score_with_stats": 4.86
+      "score_with_stats": 4.87
     }
   ],
   "taxi": [],
@@ -1143,7 +1143,7 @@
       "locked": false,
       "xfp": 4.99,
       "usage_trend": -1.5,
-      "stat_pts": 5.04,
+      "stat_pts": 5.05,
       "stat_adj": null,
       "score_with_stats": 0.0
     }
@@ -1202,21 +1202,21 @@
           "years_exp": 1,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 6.33,
-          "proj_pts_sleeper_half": 6.3,
+          "proj_pts": 6.27,
+          "proj_pts_sleeper_half": 6.25,
           "consensus_rank": "RB32",
-          "expert_pts": 7.62,
-          "score": 6.97,
+          "expert_pts": 7.69,
+          "score": 6.98,
           "bye": false,
           "opponent": "vs HOU",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
-          "implied_total": 18.5,
+          "implied_total": 18.0,
           "locked": false,
           "xfp": 8.39,
           "usage_trend": null,
-          "stat_pts": 7.64,
-          "stat_adj": 0.096,
-          "score_with_stats": 7.64
+          "stat_pts": 7.56,
+          "stat_adj": 0.083,
+          "score_with_stats": 7.56
         },
         "empty": false,
         "locked": false,
@@ -1248,9 +1248,9 @@
           "locked": false,
           "xfp": 8.65,
           "usage_trend": 0.2,
-          "stat_pts": 8.84,
-          "stat_adj": 0.113,
-          "score_with_stats": 8.84
+          "stat_pts": 8.85,
+          "stat_adj": 0.115,
+          "score_with_stats": 8.85
         },
         "empty": false,
         "locked": false,
@@ -1270,11 +1270,11 @@
           "years_exp": 2,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 5.73,
-          "proj_pts_sleeper_half": 5.71,
+          "proj_pts": 5.74,
+          "proj_pts_sleeper_half": 5.73,
           "consensus_rank": "WR64",
           "expert_pts": 4.47,
-          "score": 5.1,
+          "score": 5.11,
           "bye": false,
           "opponent": "@ ATL",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
@@ -1282,9 +1282,9 @@
           "locked": false,
           "xfp": 8.38,
           "usage_trend": 2.0,
-          "stat_pts": 8.81,
+          "stat_pts": 8.82,
           "stat_adj": 0.15,
-          "score_with_stats": 5.86
+          "score_with_stats": 5.88
         },
         "empty": false,
         "locked": false,
@@ -1341,8 +1341,8 @@
           "proj_pts": 7.57,
           "proj_pts_sleeper_half": 7.55,
           "consensus_rank": "WR30",
-          "expert_pts": 8.23,
-          "score": 7.9,
+          "expert_pts": 8.16,
+          "score": 7.87,
           "bye": false,
           "opponent": "vs BUF",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
@@ -1351,7 +1351,7 @@
           "xfp": 8.69,
           "usage_trend": 4.3,
           "stat_pts": 8.4,
-          "stat_adj": 0.063,
+          "stat_adj": 0.067,
           "score_with_stats": 8.4
         },
         "empty": false,
@@ -1372,21 +1372,21 @@
           "years_exp": 1,
           "injury_status": "Questionable",
           "status": "Active",
-          "proj_pts": 9.35,
-          "proj_pts_sleeper_half": 9.35,
+          "proj_pts": 9.28,
+          "proj_pts_sleeper_half": 9.25,
           "consensus_rank": "TE9",
           "expert_pts": 8.85,
-          "score": 9.1,
+          "score": 9.06,
           "bye": false,
           "opponent": "vs HOU",
           "kickoff_utc": "2026-11-15T18:00:00+00:00",
-          "implied_total": 18.5,
+          "implied_total": 18.0,
           "locked": false,
           "xfp": 6.39,
           "usage_trend": 2.2,
-          "stat_pts": 5.82,
+          "stat_pts": 5.76,
           "stat_adj": -0.15,
-          "score_with_stats": 7.73
+          "score_with_stats": 7.7
         },
         "empty": false,
         "locked": false,
@@ -1461,7 +1461,7 @@
         "flag": null
       }
     ],
-    "proj_total": 53.6
+    "proj_total": 53.5
   },
   "league_rosters": [
     {
@@ -2057,15 +2057,16 @@
     "consensus_players": 396,
     "consensus_scrape_date": "2026-11-12",
     "blend_weight": 0.5,
-    "stats_players": 517
+    "stats_players": 517,
+    "trades_page": true
   },
   "suggestion": {
     "actionable": false,
     "start": [],
     "sit": [],
     "slot_moves": [],
-    "current_total": 121.0,
-    "best_total": 121.0,
+    "current_total": 120.9,
+    "best_total": 120.9,
     "gain": 0.0,
     "lineup": [
       {
@@ -2129,8 +2130,8 @@
     "start": [],
     "sit": [],
     "slot_moves": [],
-    "current_total": 116.7,
-    "best_total": 116.7,
+    "current_total": 116.6,
+    "best_total": 116.6,
     "gain": 0.0,
     "lineup": [
       {
@@ -2272,5 +2273,5 @@
       "best": 171.94
     }
   ],
-  "generated_at": "2026-11-12T15:29:25+00:00"
+  "generated_at": "2026-11-12T17:38:11+00:00"
 }
