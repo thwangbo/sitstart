@@ -62,10 +62,10 @@ To re-run the backtest, go to **Actions**, then **Backtest**, then **Run workflo
 
 `.github/workflows/lineup.yml` runs the check four times a week:
 
-- Tuesday at 7:07 PM PT.
-- Thursday at 2:37 PM PT, before Thursday night kickoff.
-- Saturday at 7:07 PM PT.
-- Sunday at 8:40 AM PT, after early-game inactives post.
+- Tuesday midday and evening, plus Wednesday morning.
+- Thursday at 6:07 AM, 10:07 AM and 2:37 PM PT, before Thursday night kickoff.
+- Saturday at 11:07 AM and 7:07 PM PT.
+- Sunday at 1:10, 4:10, 6:40 and 8:40 AM PT. GitHub often starts scheduled runs hours late, so each check has earlier backups.
 
 Each run does three things:
 1. Publishes the results page to `https://thwangbo.github.io/sitstart/`.

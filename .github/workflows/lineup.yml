@@ -1,18 +1,32 @@
 # Runs the lineup check on a schedule, publishes the results page to GitHub Pages,
 # and sends a phone alert (ntfy) when a recommendation changes.
 #
-# Times are UTC. During standard time (Nov–Mar) Pacific = UTC-8:
-#   Tue 7:07 PM PT, Thu 2:37 PM PT (before Thursday night), Sat 7:07 PM PT,
-#   Sun 8:40 AM PT (after early-game inactives post). In Sep–Oct each lands an hour later.
-# The odd minutes dodge GitHub's busy top-of-the-hour queue.
+# GitHub doesn't guarantee schedule timing: in Nov 2026 runs started 4-8 hours late.
+# So each check has earlier backups; a late run still lands before it's needed.
+# Extra runs are free on a public repo and alerts only fire when something changes.
+#
+# Times are UTC. During standard time (Nov-Mar) Pacific = UTC-8; in Sep-Oct each lands an hour later.
 
 name: Lineup check
 
 on:
   schedule:
+    # Week rollover and report card: Tue 12:07 PM, Tue 7:07 PM, Wed 7:07 AM PT
+    - cron: "7 20 * * 2"
     - cron: "7 3 * * 3"
+    - cron: "7 15 * * 3"
+    # Before Thursday night kickoff (5:15 PM PT): Thu 6:07 AM, 10:07 AM, 2:37 PM PT
+    - cron: "7 14 * * 4"
+    - cron: "7 18 * * 4"
     - cron: "37 22 * * 4"
+    # Saturday injury designations: Sat 11:07 AM, 7:07 PM PT
+    - cron: "7 19 * * 6"
     - cron: "7 3 * * 0"
+    # Sunday before 10:00 AM PT kickoff: 1:10 AM, 4:10 AM, 6:40 AM, 8:40 AM PT.
+    # Only a run that starts after 8:30 AM PT sees the early-game inactives.
+    - cron: "10 9 * * 0"
+    - cron: "10 12 * * 0"
+    - cron: "40 14 * * 0"
     - cron: "40 16 * * 0"
   workflow_dispatch: {}
 
