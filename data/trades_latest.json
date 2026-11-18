@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-18T02:19:55+00:00",
+ "generated_at": "2026-11-18T11:29:23+00:00",
  "season": 2026,
- "week": 10,
+ "week": 11,
  "deadline_week": 12,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
  "me": {
@@ -13,7 +13,7 @@
   "win_now_rank": 7,
   "dynasty_rank": 3,
   "age": 26.9,
-  "youth": 0.239,
+  "youth": 0.241,
   "label": "contender",
   "reasons": [
    "14-6, 5th in standings",
@@ -33,33 +33,176 @@
   {
    "pos": "QB",
    "rank": 4,
-   "mine": 5548,
-   "league_avg": 3893,
+   "mine": 5324,
+   "league_avg": 3904,
    "need": false
   },
   {
    "pos": "RB",
    "rank": 7,
-   "mine": 2645,
-   "league_avg": 3110,
+   "mine": 2552,
+   "league_avg": 3218,
    "need": true
   },
   {
    "pos": "WR",
    "rank": 4,
-   "mine": 4524,
-   "league_avg": 2987,
+   "mine": 4520,
+   "league_avg": 2894,
    "need": false
   },
   {
    "pos": "TE",
-   "rank": 7,
-   "mine": 1607,
-   "league_avg": 2374,
+   "rank": 6,
+   "mine": 1509,
+   "league_avg": 2288,
    "need": true
   }
  ],
  "targets": [
+  {
+   "player_id": "7564",
+   "name": "Ja'Marr Chase",
+   "pos": "WR",
+   "age": 26.7,
+   "nfl_team": "CIN",
+   "owner": "Honolulu Blues",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 3,
+   "value": 8962,
+   "redraft": 9251,
+   "trend": 379,
+   "fc_value": 8962,
+   "ktc_value": 8962,
+   "disagree": false,
+   "gain": 7362,
+   "motive": 0.6,
+   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 18.0,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 4417,
+   "offer": {
+    "assets": [
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
+      "core": false,
+      "injury_status": "Out"
+     },
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2027-2-8",
+      "label": "2027 2nd (Mid)",
+      "kind": "pick",
+      "value": 1852,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 10519,
+    "ratio": 1.174,
+    "fit": 0.82
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
+     "offers": 8
+    },
+    {
+     "label": "2029 1st",
+     "offers": 6
+    },
+    {
+     "label": "2027 2nd (Mid)",
+     "offers": 4
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "11560",
+   "name": "Caleb Williams",
+   "pos": "QB",
+   "age": 25.0,
+   "nfl_team": "CHI",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 7739,
+   "redraft": 6037,
+   "trend": 708,
+   "fc_value": 7583,
+   "ktc_value": 7895,
+   "disagree": false,
+   "gain": 4148,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 19.2,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 2489,
+   "offer": {
+    "assets": [
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
+      "core": false,
+      "injury_status": "Out"
+     },
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 8666,
+    "ratio": 1.12,
+    "fit": 0.78
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
+     "offers": 8
+    },
+    {
+     "label": "2029 1st",
+     "offers": 6
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": null
+  },
   {
    "player_id": "3163",
    "name": "Jared Goff",
@@ -69,13 +212,13 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 3655,
-   "redraft": 4031,
-   "trend": 112,
-   "fc_value": 4076,
-   "ktc_value": 3234,
+   "value": 3624,
+   "redraft": 3772,
+   "trend": 213,
+   "fc_value": 4021,
+   "ktc_value": 3226,
    "disagree": false,
-   "gain": 2088,
+   "gain": 1883,
    "motive": 1.0,
    "why": "Honolulu Blues is rebuilding and he's 32",
    "replaces": [
@@ -85,14 +228,14 @@
    "replaces_ppg": [
     12.8
    ],
-   "score": 2088,
+   "score": 1883,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2162,
+      "value": 2192,
       "age": null,
       "pos": null,
       "core": false
@@ -101,14 +244,14 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1830,
+      "value": 1852,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 3992,
-    "ratio": 1.092,
+    "total": 4044,
+    "ratio": 1.116,
     "fit": 1.0
    },
    "shared": [
@@ -118,106 +261,338 @@
     },
     {
      "label": "2027 2nd (Mid)",
-     "offers": 6
+     "offers": 4
     }
    ],
    "alt_offer": {
     "assets": [
      {
-      "id": "12534",
-      "label": "Kyle Monangai",
+      "id": "9753",
+      "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 1922,
-      "age": 24.5,
+      "value": 1970,
+      "age": 25.9,
       "pos": "RB",
       "core": false,
-      "injury_status": "Out"
+      "injury_status": null
      },
      {
       "id": "2028-2-8",
       "label": "2028 2nd",
       "kind": "pick",
-      "value": 1534,
+      "value": 1536,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "2029-3-8",
-      "label": "2029 3rd",
+      "id": "2029-2-8",
+      "label": "2029 2nd",
       "kind": "pick",
-      "value": 840,
+      "value": 1381,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4296,
-    "ratio": 1.175,
-    "fit": 0.87
+    "total": 4886,
+    "ratio": 1.348,
+    "fit": 0.76
    },
    "injury_status": null
   },
   {
-   "player_id": "11584",
-   "name": "Bucky Irving",
-   "pos": "RB",
-   "age": 24.3,
-   "nfl_team": "TB",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 4454,
-   "redraft": 4916,
-   "trend": 878,
-   "fc_value": 4508,
-   "ktc_value": 4400,
+   "player_id": "7523",
+   "name": "Trevor Lawrence",
+   "pos": "QB",
+   "age": 27.1,
+   "nfl_team": "JAX",
+   "owner": "KPop Travis Hunter",
+   "owner_label": "middle",
+   "owner_roster_id": 10,
+   "value": 6260,
+   "redraft": 6771,
+   "trend": 451,
+   "fc_value": 6260,
+   "ktc_value": 6260,
    "disagree": false,
-   "gain": 2973,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "gain": 4882,
+   "motive": 0.35,
+   "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "replaces": [
     "Josh Jacobs"
    ],
-   "ppg": 16.5,
+   "ppg": 19.9,
    "replaces_ppg": [
     12.8
    ],
-   "score": 1784,
+   "score": 1709,
    "offer": {
     "assets": [
      {
-      "id": "7525",
-      "label": "DeVonta Smith",
+      "id": "11564",
+      "label": "Drake Maye",
       "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
+      "core": false,
+      "injury_status": "Out"
+     }
+    ],
+    "total": 6474,
+    "ratio": 1.034,
+    "fit": 0.8
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
+     "offers": 8
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "6770",
+   "name": "Joe Burrow",
+   "pos": "QB",
+   "age": 29.9,
+   "nfl_team": "CIN",
+   "owner": "simonyangpp",
+   "owner_label": "contender",
+   "owner_roster_id": 1,
+   "value": 7609,
+   "redraft": 10167,
+   "trend": 1546,
+   "fc_value": 7895,
+   "ktc_value": 7323,
+   "disagree": false,
+   "gain": 8278,
+   "motive": 0.2,
+   "why": "simonyangpp is contending, so they'll want help now in return",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 26.5,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 1656,
+   "offer": {
+    "assets": [
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
       "core": false,
       "injury_status": "Out"
      },
      {
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 1970,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "5022",
+      "label": "Dallas Goedert",
+      "kind": "player",
+      "value": 1162,
+      "age": 31.9,
+      "pos": "TE",
+      "core": false,
+      "injury_status": null
+     }
+    ],
+    "total": 9606,
+    "ratio": 1.263,
+    "fit": 0.66
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
+     "offers": 8
+    },
+    {
+     "label": "Zach Charbonnet",
+     "offers": 4
+    },
+    {
+     "label": "Dallas Goedert",
+     "offers": 3
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "8131",
+   "name": "Isaiah Likely",
+   "pos": "TE",
+   "age": 26.6,
+   "nfl_team": "NYG",
+   "owner": "Honolulu Blues",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 3,
+   "value": 3508,
+   "redraft": 3754,
+   "trend": 367,
+   "fc_value": 3474,
+   "ktc_value": 3541,
+   "disagree": false,
+   "gain": 2245,
+   "motive": 0.6,
+   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Travis Kelce"
+   ],
+   "ppg": 14.3,
+   "replaces_ppg": [
+    9.6
+   ],
+   "score": 1347,
+   "offer": {
+    "assets": [
+     {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2162,
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2027-2-8",
+      "label": "2027 2nd (Mid)",
+      "kind": "pick",
+      "value": 1852,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4858,
-    "ratio": 1.091,
-    "fit": 0.67
+    "total": 4044,
+    "ratio": 1.153,
+    "fit": 1.0
    },
    "shared": [
     {
-     "label": "DeVonta Smith",
+     "label": "2029 1st",
+     "offers": 6
+    },
+    {
+     "label": "2027 2nd (Mid)",
+     "offers": 4
+    }
+   ],
+   "alt_offer": {
+    "assets": [
+     {
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 1970,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "2029-2-8",
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1381,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "9225",
+      "label": "Tank Bigsby",
+      "kind": "player",
+      "value": 741,
+      "age": 24.2,
+      "pos": "RB",
+      "core": false,
+      "injury_status": "IR"
+     }
+    ],
+    "total": 4092,
+    "ratio": 1.166,
+    "fit": 0.66
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "6786",
+   "name": "CeeDee Lamb",
+   "pos": "WR",
+   "age": 27.6,
+   "nfl_team": "DAL",
+   "owner": "vipkraken",
+   "owner_label": "contender",
+   "owner_roster_id": 6,
+   "value": 6674,
+   "redraft": 8533,
+   "trend": 73,
+   "fc_value": 6621,
+   "ktc_value": 6728,
+   "disagree": false,
+   "gain": 6644,
+   "motive": 0.2,
+   "why": "vipkraken is contending, so they'll want help now in return",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 18.4,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 1329,
+   "offer": {
+    "assets": [
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
+      "core": false,
+      "injury_status": "Out"
+     },
+     {
+      "id": "9225",
+      "label": "Tank Bigsby",
+      "kind": "player",
+      "value": 741,
+      "age": 24.2,
+      "pos": "RB",
+      "core": false,
+      "injury_status": "IR"
+     }
+    ],
+    "total": 7216,
+    "ratio": 1.081,
+    "fit": 0.6
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
      "offers": 8
     },
     {
-     "label": "2029 1st",
-     "offers": 6
+     "label": "Tank Bigsby",
+     "offers": 2
     }
    ],
    "alt_offer": null,
@@ -232,13 +607,13 @@
    "owner": "vipkraken",
    "owner_label": "contender",
    "owner_roster_id": 6,
-   "value": 4396,
-   "redraft": 8417,
-   "trend": 396,
-   "fc_value": 4842,
-   "ktc_value": 3949,
+   "value": 4318,
+   "redraft": 8362,
+   "trend": 411,
+   "fc_value": 4614,
+   "ktc_value": 4021,
    "disagree": false,
-   "gain": 6474,
+   "gain": 6473,
    "motive": 0.2,
    "why": "vipkraken is contending, so they'll want help now in return",
    "replaces": [
@@ -252,52 +627,193 @@
    "offer": {
     "assets": [
      {
-      "id": "7525",
-      "label": "DeVonta Smith",
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "9753",
+      "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2695,
-      "age": 28.0,
+      "value": 1970,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "11630",
+      "label": "Roman Wilson",
+      "kind": "player",
+      "value": 1078,
+      "age": 25.4,
       "pos": "WR",
       "core": false,
-      "injury_status": "Out"
-     },
+      "injury_status": "IR"
+     }
+    ],
+    "total": 5240,
+    "ratio": 1.214,
+    "fit": 0.66
+   },
+   "shared": [
+    {
+     "label": "2029 1st",
+     "offers": 6
+    },
+    {
+     "label": "Zach Charbonnet",
+     "offers": 4
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "8151",
+   "name": "Kenneth Walker III",
+   "pos": "RB",
+   "age": 26.1,
+   "nfl_team": "KC",
+   "owner": "jaywah",
+   "owner_label": "contender",
+   "owner_roster_id": 11,
+   "value": 6576,
+   "redraft": 7935,
+   "trend": -408,
+   "fc_value": 6532,
+   "ktc_value": 6621,
+   "disagree": false,
+   "gain": 6046,
+   "motive": 0.2,
+   "why": "jaywah is contending, so they'll want help now in return",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 22.9,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 1209,
+   "offer": {
+    "assets": [
      {
-      "id": "5892",
-      "label": "David Montgomery",
+      "id": "11564",
+      "label": "Drake Maye",
       "kind": "player",
-      "value": 1274,
-      "age": 29.5,
-      "pos": "RB",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
       "core": false,
       "injury_status": "Out"
      },
      {
-      "id": "8136",
-      "label": "Rachaad White",
+      "id": "9225",
+      "label": "Tank Bigsby",
       "kind": "player",
-      "value": 1195,
-      "age": 27.9,
+      "value": 741,
+      "age": 24.2,
       "pos": "RB",
+      "core": false,
+      "injury_status": "IR"
+     }
+    ],
+    "total": 7216,
+    "ratio": 1.097,
+    "fit": 0.6
+   },
+   "shared": [
+    {
+     "label": "Drake Maye",
+     "offers": 8
+    },
+    {
+     "label": "Tank Bigsby",
+     "offers": 2
+    }
+   ],
+   "alt_offer": null,
+   "injury_status": "Questionable"
+  },
+  {
+   "player_id": "7547",
+   "name": "Amon-Ra St. Brown",
+   "pos": "WR",
+   "age": 27.1,
+   "nfl_team": "DET",
+   "owner": "jaywah",
+   "owner_label": "contender",
+   "owner_roster_id": 11,
+   "value": 7112,
+   "redraft": 7707,
+   "trend": 216,
+   "fc_value": 7121,
+   "ktc_value": 7103,
+   "disagree": false,
+   "gain": 5818,
+   "motive": 0.2,
+   "why": "jaywah is contending, so they'll want help now in return",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 16.8,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 1164,
+   "offer": {
+    "assets": [
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
+      "core": false,
+      "injury_status": "Out"
+     },
+     {
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 1970,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "5022",
+      "label": "Dallas Goedert",
+      "kind": "player",
+      "value": 1162,
+      "age": 31.9,
+      "pos": "TE",
       "core": false,
       "injury_status": null
      }
     ],
-    "total": 5164,
-    "ratio": 1.175,
-    "fit": 0.85
+    "total": 9606,
+    "ratio": 1.351,
+    "fit": 0.66
    },
    "shared": [
     {
-     "label": "DeVonta Smith",
+     "label": "Drake Maye",
      "offers": 8
     },
     {
-     "label": "David Montgomery",
-     "offers": 2
+     "label": "Zach Charbonnet",
+     "offers": 4
     },
     {
-     "label": "Rachaad White",
-     "offers": 2
+     "label": "Dallas Goedert",
+     "offers": 3
     }
    ],
    "alt_offer": null,
@@ -312,13 +828,13 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 3456,
-   "redraft": 4455,
-   "trend": -126,
-   "fc_value": 3442,
-   "ktc_value": 3469,
+   "value": 3472,
+   "redraft": 4150,
+   "trend": 34,
+   "fc_value": 3541,
+   "ktc_value": 3402,
    "disagree": false,
-   "gain": 2512,
+   "gain": 2261,
    "motive": 0.5,
    "why": "KPop Travis Hunter is in the middle and he's 27",
    "replaces": [
@@ -328,14 +844,14 @@
    "replaces_ppg": [
     12.8
    ],
-   "score": 1256,
+   "score": 1130,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2162,
+      "value": 2192,
       "age": null,
       "pos": null,
       "core": false
@@ -344,14 +860,14 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1830,
+      "value": 1852,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 3992,
-    "ratio": 1.155,
+    "total": 4044,
+    "ratio": 1.165,
     "fit": 0.8
    },
    "shared": [
@@ -361,749 +877,128 @@
     },
     {
      "label": "2027 2nd (Mid)",
-     "offers": 6
+     "offers": 4
     }
    ],
    "alt_offer": {
     "assets": [
      {
-      "id": "12534",
-      "label": "Kyle Monangai",
+      "id": "9753",
+      "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 1922,
-      "age": 24.5,
+      "value": 1970,
+      "age": 25.9,
       "pos": "RB",
       "core": false,
-      "injury_status": "Out"
+      "injury_status": null
      },
      {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
+      "id": "2027-3-6",
+      "label": "2027 3rd (Late) (from vipkraken)",
       "kind": "pick",
-      "value": 1360,
+      "value": 1068,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "9225",
-      "label": "Tank Bigsby",
-      "kind": "player",
-      "value": 758,
-      "age": 24.2,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "IR"
+      "id": "2028-3-5",
+      "label": "2028 3rd (from Coke Heads)",
+      "kind": "pick",
+      "value": 1027,
+      "age": null,
+      "pos": null,
+      "core": false
      }
     ],
-    "total": 4040,
-    "ratio": 1.169,
+    "total": 4064,
+    "ratio": 1.171,
     "fit": 0.8
    },
    "injury_status": null
   },
   {
-   "player_id": "8131",
-   "name": "Isaiah Likely",
+   "player_id": "11604",
+   "name": "Brock Bowers",
    "pos": "TE",
-   "age": 26.6,
-   "nfl_team": "NYG",
-   "owner": "Honolulu Blues",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 3,
-   "value": 3456,
-   "redraft": 3586,
-   "trend": 539,
-   "fc_value": 3456,
-   "ktc_value": 3456,
+   "age": 23.9,
+   "nfl_team": "LV",
+   "owner": "vipkraken",
+   "owner_label": "contender",
+   "owner_roster_id": 6,
+   "value": 7453,
+   "redraft": 6388,
+   "trend": -486,
+   "fc_value": 7323,
+   "ktc_value": 7583,
    "disagree": false,
-   "gain": 1979,
-   "motive": 0.6,
-   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
+   "gain": 4879,
+   "motive": 0.2,
+   "why": "vipkraken is contending, so they'll want help now in return",
    "replaces": [
     "Travis Kelce"
    ],
-   "ppg": 14.3,
+   "ppg": 15.6,
    "replaces_ppg": [
     9.6
    ],
-   "score": 1187,
+   "score": 976,
    "offer": {
     "assets": [
      {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2162,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 3992,
-    "ratio": 1.155,
-    "fit": 1.0
-   },
-   "shared": [
-    {
-     "label": "2029 1st",
-     "offers": 6
-    },
-    {
-     "label": "2027 2nd (Mid)",
-     "offers": 6
-    }
-   ],
-   "alt_offer": {
-    "assets": [
-     {
-      "id": "12534",
-      "label": "Kyle Monangai",
+      "id": "11564",
+      "label": "Drake Maye",
       "kind": "player",
-      "value": 1922,
-      "age": 24.5,
-      "pos": "RB",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
       "core": false,
       "injury_status": "Out"
      },
      {
-      "id": "2028-2-8",
-      "label": "2028 2nd",
-      "kind": "pick",
-      "value": 1534,
-      "age": null,
-      "pos": null,
-      "core": false
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 1970,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
      },
      {
-      "id": "13394",
-      "label": "Josh Cameron",
+      "id": "5022",
+      "label": "Dallas Goedert",
       "kind": "player",
-      "value": 634,
-      "age": 23.7,
-      "pos": "WR",
+      "value": 1162,
+      "age": 31.9,
+      "pos": "TE",
       "core": false,
       "injury_status": null
      }
     ],
-    "total": 4090,
-    "ratio": 1.183,
-    "fit": 0.86
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "9758",
-   "name": "C.J. Stroud",
-   "pos": "QB",
-   "age": 25.1,
-   "nfl_team": "HOU",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 4607,
-   "redraft": 3790,
-   "trend": 921,
-   "fc_value": 4891,
-   "ktc_value": 4323,
-   "disagree": false,
-   "gain": 1847,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 20.8,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 1108,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2029-3-8",
-      "label": "2029 3rd",
-      "kind": "pick",
-      "value": 840,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 5364,
-    "ratio": 1.164,
-    "fit": 0.7
+    "total": 9606,
+    "ratio": 1.289,
+    "fit": 0.66
    },
    "shared": [
     {
-     "label": "DeVonta Smith",
+     "label": "Drake Maye",
      "offers": 8
     },
     {
-     "label": "2027 2nd (Mid)",
-     "offers": 6
-    }
-   ],
-   "alt_offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "12519",
-   "name": "Luther Burden III",
-   "pos": "WR",
-   "age": 22.9,
-   "nfl_team": "CHI",
-   "owner": "Moonster",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 9,
-   "value": 4895,
-   "redraft": 3652,
-   "trend": 1480,
-   "fc_value": 4600,
-   "ktc_value": 5190,
-   "disagree": false,
-   "gain": 1709,
-   "motive": 0.6,
-   "why": "Moonster is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 12.4,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 1025,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2162,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 6688,
-    "ratio": 1.366,
-    "fit": 0.76
-   },
-   "shared": [
-    {
-     "label": "DeVonta Smith",
-     "offers": 8
+     "label": "Zach Charbonnet",
+     "offers": 4
     },
     {
-     "label": "2029 1st",
-     "offers": 6
-    },
-    {
-     "label": "2027 2nd (Mid)",
-     "offers": 6
+     "label": "Dallas Goedert",
+     "offers": 3
     }
    ],
    "alt_offer": null,
    "injury_status": "Questionable"
-  },
-  {
-   "player_id": "8137",
-   "name": "George Pickens",
-   "pos": "WR",
-   "age": 25.7,
-   "nfl_team": "DAL",
-   "owner": "Honolulu Blues",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 3,
-   "value": 3959,
-   "redraft": 3528,
-   "trend": -173,
-   "fc_value": 3842,
-   "ktc_value": 4076,
-   "disagree": false,
-   "gain": 1585,
-   "motive": 0.6,
-   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 13.6,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 951,
-   "offer": {
-    "assets": [
-     {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2162,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "13394",
-      "label": "Josh Cameron",
-      "kind": "player",
-      "value": 634,
-      "age": 23.7,
-      "pos": "WR",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 4626,
-    "ratio": 1.169,
-    "fit": 1.0
-   },
-   "shared": [
-    {
-     "label": "2029 1st",
-     "offers": 6
-    },
-    {
-     "label": "2027 2nd (Mid)",
-     "offers": 6
-    }
-   ],
-   "alt_offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
-      "kind": "pick",
-      "value": 1360,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "13394",
-      "label": "Josh Cameron",
-      "kind": "player",
-      "value": 634,
-      "age": 23.7,
-      "pos": "WR",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 4689,
-    "ratio": 1.184,
-    "fit": 0.66
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "8138",
-   "name": "James Cook III",
-   "pos": "RB",
-   "age": 27.2,
-   "nfl_team": "BUF",
-   "owner": "vipkraken",
-   "owner_label": "contender",
-   "owner_roster_id": 6,
-   "value": 5108,
-   "redraft": 6184,
-   "trend": -64,
-   "fc_value": 5201,
-   "ktc_value": 5014,
-   "disagree": false,
-   "gain": 4241,
-   "motive": 0.2,
-   "why": "vipkraken is contending, so they'll want help now in return",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 18.2,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 848,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "12534",
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 1922,
-      "age": 24.5,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
-      "kind": "pick",
-      "value": 1360,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 5978,
-    "ratio": 1.17,
-    "fit": 0.75
-   },
-   "shared": [
-    {
-     "label": "DeVonta Smith",
-     "offers": 8
-    },
-    {
-     "label": "Kyle Monangai",
-     "offers": 2
-    }
-   ],
-   "alt_offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "4046",
-   "name": "Patrick Mahomes",
-   "pos": "QB",
-   "age": 31.2,
-   "nfl_team": "KC",
-   "owner": "Hello My Lova",
-   "owner_label": "contender",
-   "owner_roster_id": 12,
-   "value": 5207,
-   "redraft": 6017,
-   "trend": -309,
-   "fc_value": 5711,
-   "ktc_value": 4703,
-   "disagree": false,
-   "gain": 4074,
-   "motive": 0.2,
-   "why": "Hello My Lova is contending, so they'll want help now in return",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 20.2,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 815,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "12534",
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 1922,
-      "age": 24.5,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "11625",
-      "label": "Adonai Mitchell",
-      "kind": "player",
-      "value": 1495,
-      "age": 24.1,
-      "pos": "WR",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 6112,
-    "ratio": 1.174,
-    "fit": 0.78
-   },
-   "shared": [
-    {
-     "label": "DeVonta Smith",
-     "offers": 8
-    },
-    {
-     "label": "Kyle Monangai",
-     "offers": 2
-    },
-    {
-     "label": "Adonai Mitchell",
-     "offers": 2
-    }
-   ],
-   "alt_offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "8167",
-   "name": "Christian Watson",
-   "pos": "WR",
-   "age": 27.5,
-   "nfl_team": "GB",
-   "owner": "simonyangpp",
-   "owner_label": "contender",
-   "owner_roster_id": 1,
-   "value": 4402,
-   "redraft": 5370,
-   "trend": 494,
-   "fc_value": 4436,
-   "ktc_value": 4368,
-   "disagree": false,
-   "gain": 3427,
-   "motive": 0.2,
-   "why": "simonyangpp is contending, so they'll want help now in return",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 15.8,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 685,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "5892",
-      "label": "David Montgomery",
-      "kind": "player",
-      "value": 1274,
-      "age": 29.5,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "8136",
-      "label": "Rachaad White",
-      "kind": "player",
-      "value": 1195,
-      "age": 27.9,
-      "pos": "RB",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 5164,
-    "ratio": 1.173,
-    "fit": 0.85
-   },
-   "shared": [
-    {
-     "label": "DeVonta Smith",
-     "offers": 8
-    },
-    {
-     "label": "David Montgomery",
-     "offers": 2
-    },
-    {
-     "label": "Rachaad White",
-     "offers": 2
-    }
-   ],
-   "alt_offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "6801",
-   "name": "Tee Higgins",
-   "pos": "WR",
-   "age": 27.8,
-   "nfl_team": "CIN",
-   "owner": "Hello My Lova",
-   "owner_label": "contender",
-   "owner_roster_id": 12,
-   "value": 4454,
-   "redraft": 5119,
-   "trend": 1077,
-   "fc_value": 4309,
-   "ktc_value": 4600,
-   "disagree": false,
-   "gain": 3176,
-   "motive": 0.2,
-   "why": "Hello My Lova is contending, so they'll want help now in return",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 16.1,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 635,
-   "offer": {
-    "assets": [
-     {
-      "id": "7525",
-      "label": "DeVonta Smith",
-      "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "11625",
-      "label": "Adonai Mitchell",
-      "kind": "player",
-      "value": 1495,
-      "age": 24.1,
-      "pos": "WR",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "11630",
-      "label": "Roman Wilson",
-      "kind": "player",
-      "value": 1016,
-      "age": 25.4,
-      "pos": "WR",
-      "core": false,
-      "injury_status": "IR"
-     }
-    ],
-    "total": 5206,
-    "ratio": 1.169,
-    "fit": 0.76
-   },
-   "shared": [
-    {
-     "label": "DeVonta Smith",
-     "offers": 8
-    },
-    {
-     "label": "Adonai Mitchell",
-     "offers": 2
-    }
-   ],
-   "alt_offer": null,
-   "injury_status": null
   }
  ],
  "out_of_reach": [
-  {
-   "player_id": "7564",
-   "name": "Ja'Marr Chase",
-   "pos": "WR",
-   "age": 26.7,
-   "nfl_team": "CIN",
-   "owner": "Honolulu Blues",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 3,
-   "value": 8898,
-   "redraft": 9377,
-   "trend": 357,
-   "fc_value": 8898,
-   "ktc_value": 8898,
-   "disagree": false,
-   "gain": 7434,
-   "motive": 0.6,
-   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Josh Jacobs"
-   ],
-   "ppg": 18.0,
-   "replaces_ppg": [
-    12.8
-   ],
-   "score": 4460,
-   "offer": null,
-   "injury_status": null
-  },
   {
    "player_id": "9488",
    "name": "Jaxon Smith-Njigba",
@@ -1113,13 +1008,13 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 10416,
-   "redraft": 10238,
-   "trend": 559,
-   "fc_value": 10239,
-   "ktc_value": 10593,
+   "value": 10352,
+   "redraft": 10358,
+   "trend": 501,
+   "fc_value": 10233,
+   "ktc_value": 10472,
    "disagree": false,
-   "gain": 8295,
+   "gain": 8469,
    "motive": 0.35,
    "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "replaces": [
@@ -1129,36 +1024,36 @@
    "replaces_ppg": [
     12.8
    ],
-   "score": 2903,
+   "score": 2964,
    "offer": null,
    "injury_status": null
   },
   {
-   "player_id": "11560",
-   "name": "Caleb Williams",
-   "pos": "QB",
-   "age": 25.0,
-   "nfl_team": "CHI",
+   "player_id": "11584",
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "age": 24.3,
+   "nfl_team": "TB",
    "owner": "WR U ",
    "owner_label": "rebuilder",
    "owner_roster_id": 2,
-   "value": 7671,
-   "redraft": 5968,
-   "trend": 626,
-   "fc_value": 7465,
-   "ktc_value": 7877,
+   "value": 4458,
+   "redraft": 4819,
+   "trend": 805,
+   "fc_value": 4378,
+   "ktc_value": 4539,
    "disagree": false,
-   "gain": 4025,
+   "gain": 2930,
    "motive": 0.6,
    "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
     "Josh Jacobs"
    ],
-   "ppg": 19.2,
+   "ppg": 16.5,
    "replaces_ppg": [
     12.8
    ],
-   "score": 2415,
+   "score": 1758,
    "offer": null,
    "injury_status": null
   },
@@ -1171,13 +1066,13 @@
    "owner": "Hello My Lova",
    "owner_label": "contender",
    "owner_roster_id": 12,
-   "value": 10416,
-   "redraft": 10672,
-   "trend": -326,
-   "fc_value": 10593,
-   "ktc_value": 10239,
+   "value": 10512,
+   "redraft": 10660,
+   "trend": -126,
+   "fc_value": 10790,
+   "ktc_value": 10233,
    "disagree": false,
-   "gain": 8729,
+   "gain": 8771,
    "motive": 0.2,
    "why": "Hello My Lova is contending, so they'll want help now in return",
    "replaces": [
@@ -1187,7 +1082,7 @@
    "replaces_ppg": [
     12.8
    ],
-   "score": 1746,
+   "score": 1754,
    "offer": null,
    "injury_status": null
   },
@@ -1200,13 +1095,13 @@
    "owner": "jaywah",
    "owner_label": "contender",
    "owner_roster_id": 11,
-   "value": 10387,
-   "redraft": 10295,
-   "trend": -512,
-   "fc_value": 10387,
-   "ktc_value": 10387,
+   "value": 10631,
+   "redraft": 10156,
+   "trend": -387,
+   "fc_value": 10472,
+   "ktc_value": 10790,
    "disagree": false,
-   "gain": 8352,
+   "gain": 8267,
    "motive": 0.2,
    "why": "jaywah is contending, so they'll want help now in return",
    "replaces": [
@@ -1216,126 +1111,41 @@
    "replaces_ppg": [
     12.8
    ],
-   "score": 1670,
+   "score": 1653,
+   "offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "9758",
+   "name": "C.J. Stroud",
+   "pos": "QB",
+   "age": 25.1,
+   "nfl_team": "HOU",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 4579,
+   "redraft": 4098,
+   "trend": 718,
+   "fc_value": 4902,
+   "ktc_value": 4256,
+   "disagree": false,
+   "gain": 2209,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Josh Jacobs"
+   ],
+   "ppg": 20.8,
+   "replaces_ppg": [
+    12.8
+   ],
+   "score": 1325,
    "offer": null,
    "injury_status": null
   }
  ],
  "bigger_swings": [
-  {
-   "player_id": "7564",
-   "name": "Ja'Marr Chase",
-   "pos": "WR",
-   "age": 26.7,
-   "nfl_team": "CIN",
-   "owner": "Honolulu Blues",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 3,
-   "value": 8898,
-   "fc_value": 8898,
-   "ktc_value": 8898,
-   "disagree": false,
-   "motive": 0.6,
-   "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
-   "ppg": 18.0,
-   "injury_status": null,
-   "net_gain": 7434,
-   "score": 4460,
-   "gives_starter": [
-    {
-     "name": "Drake Maye",
-     "ppg": 19.3
-    }
-   ],
-   "offer": {
-    "assets": [
-     {
-      "id": "11564",
-      "label": "Drake Maye",
-      "kind": "player",
-      "value": 6589,
-      "age": 24.2,
-      "pos": "QB",
-      "core": true,
-      "injury_status": "Out"
-     },
-     {
-      "id": "12534",
-      "label": "Kyle Monangai",
-      "kind": "player",
-      "value": 1922,
-      "age": 24.5,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 10342,
-    "ratio": 1.162,
-    "fit": 0.75
-   }
-  },
-  {
-   "player_id": "11560",
-   "name": "Caleb Williams",
-   "pos": "QB",
-   "age": 25.0,
-   "nfl_team": "CHI",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 7671,
-   "fc_value": 7465,
-   "ktc_value": 7877,
-   "disagree": false,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
-   "ppg": 19.2,
-   "injury_status": null,
-   "net_gain": 4025,
-   "score": 2415,
-   "gives_starter": [
-    {
-     "name": "Drake Maye",
-     "ppg": 19.3
-    }
-   ],
-   "offer": {
-    "assets": [
-     {
-      "id": "11564",
-      "label": "Drake Maye",
-      "kind": "player",
-      "value": 6589,
-      "age": 24.2,
-      "pos": "QB",
-      "core": true,
-      "injury_status": "Out"
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1830,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 8419,
-    "ratio": 1.098,
-    "fit": 0.77
-   }
-  },
   {
    "player_id": "9488",
    "name": "Jaxon Smith-Njigba",
@@ -1345,16 +1155,16 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 10416,
-   "fc_value": 10239,
-   "ktc_value": 10593,
+   "value": 10352,
+   "fc_value": 10233,
+   "ktc_value": 10472,
    "disagree": false,
    "motive": 0.35,
    "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "ppg": 22.4,
    "injury_status": null,
-   "net_gain": 5866,
-   "score": 2053,
+   "net_gain": 5967,
+   "score": 2088,
    "gives_starter": [
     {
      "name": "Puka Nacua",
@@ -1367,216 +1177,356 @@
       "id": "9493",
       "label": "Puka Nacua",
       "kind": "player",
-      "value": 7343,
+      "value": 7112,
       "age": 25.5,
       "pos": "WR",
       "core": true,
       "injury_status": "IR"
      },
      {
-      "id": "7525",
-      "label": "DeVonta Smith",
+      "id": "11564",
+      "label": "Drake Maye",
       "kind": "player",
-      "value": 2695,
-      "age": 28.0,
-      "pos": "WR",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
       "core": false,
       "injury_status": "Out"
+     }
+    ],
+    "total": 13586,
+    "ratio": 1.312,
+    "fit": 0.8
+   }
+  },
+  {
+   "player_id": "11584",
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "age": 24.3,
+   "nfl_team": "TB",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 4458,
+   "fc_value": 4378,
+   "ktc_value": 4539,
+   "disagree": false,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "ppg": 16.5,
+   "injury_status": null,
+   "net_gain": 2930,
+   "score": 1758,
+   "gives_starter": [
+    {
+     "name": "Sam LaPorta",
+     "ppg": 8.6
+    }
+   ],
+   "offer": {
+    "assets": [
+     {
+      "id": "10859",
+      "label": "Sam LaPorta",
+      "kind": "player",
+      "value": 2632,
+      "age": 25.9,
+      "pos": "TE",
+      "core": true,
+      "injury_status": null
      },
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2162,
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2029-4-8",
+      "label": "2029 4th",
+      "kind": "pick",
+      "value": 466,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 12200,
-    "ratio": 1.171,
-    "fit": 0.8
+    "total": 5290,
+    "ratio": 1.187,
+    "fit": 0.85
    }
   },
   {
-   "player_id": "7523",
-   "name": "Trevor Lawrence",
+   "player_id": "9758",
+   "name": "C.J. Stroud",
    "pos": "QB",
-   "age": 27.1,
-   "nfl_team": "JAX",
-   "owner": "KPop Travis Hunter",
-   "owner_label": "middle",
-   "owner_roster_id": 10,
-   "value": 6235,
-   "fc_value": 6235,
-   "ktc_value": 6235,
+   "age": 25.1,
+   "nfl_team": "HOU",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 4579,
+   "fc_value": 4902,
+   "ktc_value": 4256,
    "disagree": false,
-   "motive": 0.35,
-   "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
-   "ppg": 19.9,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "ppg": 20.8,
    "injury_status": null,
-   "net_gain": 4651,
-   "score": 1628,
+   "net_gain": 2209,
+   "score": 1325,
    "gives_starter": [
     {
-     "name": "Drake Maye",
-     "ppg": 19.3
+     "name": "Sam LaPorta",
+     "ppg": 8.6
     }
    ],
    "offer": {
     "assets": [
      {
-      "id": "11564",
-      "label": "Drake Maye",
+      "id": "10859",
+      "label": "Sam LaPorta",
       "kind": "player",
-      "value": 6589,
-      "age": 24.2,
-      "pos": "QB",
+      "value": 2632,
+      "age": 25.9,
+      "pos": "TE",
       "core": true,
-      "injury_status": "Out"
+      "injury_status": null
+     },
+     {
+      "id": "2027-2-8",
+      "label": "2027 2nd (Mid)",
+      "kind": "pick",
+      "value": 1852,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2029-3-8",
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 842,
+      "age": null,
+      "pos": null,
+      "core": false
      }
     ],
-    "total": 6589,
-    "ratio": 1.057,
-    "fit": 0.8
+    "total": 5326,
+    "ratio": 1.163,
+    "fit": 0.85
    }
   },
   {
-   "player_id": "6770",
-   "name": "Joe Burrow",
-   "pos": "QB",
-   "age": 29.9,
-   "nfl_team": "CIN",
-   "owner": "simonyangpp",
+   "player_id": "9509",
+   "name": "Bijan Robinson",
+   "pos": "RB",
+   "age": 24.8,
+   "nfl_team": "ATL",
+   "owner": "Brock & Roll",
    "owner_label": "contender",
-   "owner_roster_id": 1,
-   "value": 7622,
-   "fc_value": 7877,
-   "ktc_value": 7367,
+   "owner_roster_id": 7,
+   "value": 9266,
+   "fc_value": 9266,
+   "ktc_value": 9266,
    "disagree": false,
    "motive": 0.2,
-   "why": "simonyangpp is contending, so they'll want help now in return",
-   "ppg": 26.5,
+   "why": "Brock & Roll is contending, so they'll want help now in return",
+   "ppg": 18.0,
    "injury_status": null,
-   "net_gain": 7900,
-   "score": 1580,
+   "net_gain": 6157,
+   "score": 1231,
    "gives_starter": [
     {
-     "name": "Drake Maye",
-     "ppg": 19.3
+     "name": "DeVonta Smith",
+     "ppg": 14.0
     }
    ],
    "offer": {
     "assets": [
-     {
-      "id": "11564",
-      "label": "Drake Maye",
-      "kind": "player",
-      "value": 6589,
-      "age": 24.2,
-      "pos": "QB",
-      "core": true,
-      "injury_status": "Out"
-     },
      {
       "id": "7525",
       "label": "DeVonta Smith",
       "kind": "player",
-      "value": 2695,
+      "value": 2704,
       "age": 28.0,
       "pos": "WR",
+      "core": true,
+      "injury_status": "Questionable"
+     },
+     {
+      "id": "11564",
+      "label": "Drake Maye",
+      "kind": "player",
+      "value": 6474,
+      "age": 24.2,
+      "pos": "QB",
       "core": false,
       "injury_status": "Out"
+     },
+     {
+      "id": "2027-2-8",
+      "label": "2027 2nd (Mid)",
+      "kind": "pick",
+      "value": 1852,
+      "age": null,
+      "pos": null,
+      "core": false
      }
     ],
-    "total": 9284,
-    "ratio": 1.218,
-    "fit": 0.68
+    "total": 11031,
+    "ratio": 1.19,
+    "fit": 0.65
+   }
+  },
+  {
+   "player_id": "12519",
+   "name": "Luther Burden III",
+   "pos": "WR",
+   "age": 22.9,
+   "nfl_team": "CHI",
+   "owner": "Moonster",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 9,
+   "value": 5010,
+   "fc_value": 4850,
+   "ktc_value": 5169,
+   "disagree": false,
+   "motive": 0.6,
+   "why": "Moonster is rebuilding, but he's young, so expect to pay full price",
+   "ppg": 12.4,
+   "injury_status": null,
+   "net_gain": 2042,
+   "score": 1225,
+   "gives_starter": [
+    {
+     "name": "Sam LaPorta",
+     "ppg": 8.6
+    }
+   ],
+   "offer": {
+    "assets": [
+     {
+      "id": "10859",
+      "label": "Sam LaPorta",
+      "kind": "player",
+      "value": 2632,
+      "age": 25.9,
+      "pos": "TE",
+      "core": true,
+      "injury_status": null
+     },
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2192,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2028-3-5",
+      "label": "2028 3rd (from Coke Heads)",
+      "kind": "pick",
+      "value": 1027,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 5850,
+    "ratio": 1.168,
+    "fit": 0.87
    }
   }
  ],
  "my_assets": [
   {
-   "label": "DeVonta Smith",
+   "label": "Drake Maye",
    "kind": "player",
-   "value": 2695.0,
-   "age": 28.0,
-   "pos": "WR"
+   "value": 6474.5,
+   "age": 24.2,
+   "pos": "QB"
   },
   {
    "label": "2029 1st",
    "kind": "pick",
-   "value": 2162.5,
+   "value": 2192.0,
    "age": null,
    "pos": null
   },
   {
-   "label": "Kyle Monangai",
+   "label": "Zach Charbonnet",
    "kind": "player",
-   "value": 1922.5,
-   "age": 24.5,
+   "value": 1969.5,
+   "age": 25.9,
    "pos": "RB"
   },
   {
    "label": "2027 2nd (Mid)",
    "kind": "pick",
-   "value": 1830.0,
+   "value": 1852.5,
    "age": null,
    "pos": null
   },
   {
    "label": "2028 2nd",
    "kind": "pick",
-   "value": 1533.5,
+   "value": 1536.0,
    "age": null,
    "pos": null
-  },
-  {
-   "label": "Adonai Mitchell",
-   "kind": "player",
-   "value": 1495.0,
-   "age": 24.1,
-   "pos": "WR"
   },
   {
    "label": "2029 2nd",
    "kind": "pick",
-   "value": 1360.0,
+   "value": 1381.0,
    "age": null,
    "pos": null
   },
   {
-   "label": "David Montgomery",
-   "kind": "player",
-   "value": 1274.0,
-   "age": 29.5,
-   "pos": "RB"
-  },
-  {
    "label": "Rachaad White",
    "kind": "player",
-   "value": 1195.0,
+   "value": 1176.5,
    "age": 27.9,
    "pos": "RB"
   },
   {
-   "label": "Jacoby Brissett",
-   "kind": "player",
-   "value": 1180.5,
-   "age": 33.9,
-   "pos": "QB"
-  },
-  {
    "label": "Dallas Goedert",
    "kind": "player",
-   "value": 1141.0,
+   "value": 1162.5,
    "age": 31.9,
    "pos": "TE"
   },
   {
+   "label": "Roman Wilson",
+   "kind": "player",
+   "value": 1078.5,
+   "age": 25.4,
+   "pos": "WR"
+  },
+  {
    "label": "2027 3rd (Late) (from vipkraken)",
    "kind": "pick",
-   "value": 1059.0,
+   "value": 1068.0,
+   "age": null,
+   "pos": null
+  },
+  {
+   "label": "2028 3rd (from Coke Heads)",
+   "kind": "pick",
+   "value": 1027.0,
+   "age": null,
+   "pos": null
+  },
+  {
+   "label": "2028 3rd",
+   "kind": "pick",
+   "value": 1027.0,
    "age": null,
    "pos": null
   }
@@ -1591,7 +1541,7 @@
    "win_now_rank": 4,
    "dynasty_rank": 1,
    "age": 27.2,
-   "youth": 0.259,
+   "youth": 0.261,
    "label": "contender",
    "reasons": [
     "16-4, 1st in standings",
@@ -1618,7 +1568,7 @@
    "win_now_rank": 2,
    "dynasty_rank": 12,
    "age": 27.3,
-   "youth": 0.029,
+   "youth": 0.028,
    "label": "contender",
    "reasons": [
     "16-4, 2nd in standings",
@@ -1638,14 +1588,14 @@
    "win_now_rank": 1,
    "dynasty_rank": 8,
    "age": 27.8,
-   "youth": 0.214,
+   "youth": 0.215,
    "label": "contender",
    "reasons": [
     "15-5, 3rd in standings",
     "1st in win-now value",
     "has been trading for veterans",
     "value-weighted age 27.8",
-    "21% of value in picks and players 24 or under"
+    "22% of value in picks and players 24 or under"
    ],
    "picks": [
     "2029 2nd"
@@ -1684,7 +1634,7 @@
    "win_now_rank": 7,
    "dynasty_rank": 3,
    "age": 26.9,
-   "youth": 0.239,
+   "youth": 0.241,
    "label": "contender",
    "reasons": [
     "14-6, 5th in standings",
@@ -1709,7 +1659,7 @@
    "win_now_rank": 6,
    "dynasty_rank": 5,
    "age": 25.9,
-   "youth": 0.278,
+   "youth": 0.279,
    "label": "middle",
    "reasons": [
     "14-6, 6th in standings",
@@ -1733,7 +1683,7 @@
    "win_now_rank": 3,
    "dynasty_rank": 2,
    "age": 25.9,
-   "youth": 0.496,
+   "youth": 0.495,
    "label": "contender",
    "reasons": [
     "10-10, 7th in standings",
@@ -1786,7 +1736,7 @@
    "win_now_rank": 8,
    "dynasty_rank": 6,
    "age": 24.6,
-   "youth": 0.548,
+   "youth": 0.547,
    "label": "rebuilder",
    "reasons": [
     "5-15, 9th in standings",
@@ -1813,14 +1763,14 @@
    "win_now_rank": 10,
    "dynasty_rank": 4,
    "age": 24.2,
-   "youth": 0.604,
+   "youth": 0.606,
    "label": "rebuilder",
    "reasons": [
     "5-15, 10th in standings",
     "10th in win-now value",
     "has been trading for picks and young players",
     "value-weighted age 24.2",
-    "60% of value in picks and players 24 or under"
+    "61% of value in picks and players 24 or under"
    ],
    "picks": [
     "2027 1st (Early)",
@@ -1878,15 +1828,15 @@
    "record_rank": 12,
    "win_now_rank": 11,
    "dynasty_rank": 7,
-   "age": 24.3,
-   "youth": 0.886,
+   "age": 24.4,
+   "youth": 0.881,
    "label": "rebuilder",
    "reasons": [
     "1-19, 12th in standings",
     "11th in win-now value",
     "has been trading for picks and young players",
-    "value-weighted age 24.3",
-    "89% of value in picks and players 24 or under"
+    "value-weighted age 24.4",
+    "88% of value in picks and players 24 or under"
    ],
    "picks": [
     "2027 1st (Early) (from Goodbye My Lova)",
