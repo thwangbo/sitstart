@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from html import escape
 
+from . import pwa
 from .schedule import utc_to_pacific
 
 CSS = """
@@ -25,7 +26,14 @@ td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-chil
 .tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}.tag.core{color:var(--accent)}.offer .reuse{margin-top:4px;max-width:280px;white-space:normal}
 .offer div{white-space:nowrap}.gain{color:var(--good);font-weight:600}
 .chips span{display:inline-block;margin:2px 6px 2px 0}
-@media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}}
+@media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}main{padding:16px 10px 40px}.card{padding:12px}
+.ttable,.ttable tbody,.ttable tr,.ttable td{display:block;width:100%}
+.ttable tr.head{display:none}.ttable tr{border-top:1px solid var(--line);padding:10px 0}.ttable tr:first-child{border-top:none}
+.ttable td{border:none;padding:3px 0;text-align:left}.ttable td.num{text-align:left}.ttable td.num.sub{display:none}
+.ttable td:nth-last-child(3)::before{content:"Your lineup ";color:var(--sub);font-size:12px}
+.ttable td:nth-last-child(2)::before{content:"Market value ";color:var(--sub);font-size:12px}
+.ttable td:last-child::before{content:"Suggested offer";display:block;color:var(--sub);font-size:12px}
+.offer div{white-space:normal}.offer .reuse{max-width:none}td{white-space:normal}}
 """
 
 
@@ -163,7 +171,7 @@ def render(rep: dict) -> str:
             "You're rebuilding, so targets are young players ranked on dynasty value, "
             "weighted by how likely their manager is to sell.")
     targets = rep.get("targets") or []
-    target_html = (f'<table><tr class="head"><td></td><td>Player</td><td>Their team</td>'
+    target_html = (f'<table class="ttable"><tr class="head"><td></td><td>Player</td><td>Their team</td>'
                    f'<td>Your lineup gain</td><td class="num">Market value</td><td>Suggested offer</td></tr>'
                    f'{_target_rows(targets)}</table>') if targets else '<p class="sub">No upgrades found that your surplus can pay for.</p>'
     oor = rep.get("out_of_reach") or []
@@ -174,7 +182,7 @@ def render(rep: dict) -> str:
     swings_html = ""
     if swings:
         swings_html = ('<section class="card"><h2>Bigger swings <span class="sub">trades that include one of your starters</span></h2>'
-                       '<table><tr class="head"><td>Player</td><td>Their team</td><td>Your lineup, net</td>'
+                       '<table class="ttable"><tr class="head"><td>Player</td><td>Their team</td><td>Your lineup, net</td>'
                        '<td class="num">Market value</td><td>Suggested offer</td></tr>'
                        f'{_swing_rows(swings)}</table>'
                        '<p class="sub">For players your other assets can\'t reach. Each one sends a starter plus up to two '
@@ -191,7 +199,8 @@ def render(rep: dict) -> str:
         for t in rep["teams"])
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trade targets &middot; Week {rep["week"]}</title><style>{CSS}</style></head><body><main>
+<title>Trade targets &middot; Week {rep["week"]}</title>{pwa.HEAD}<style>{CSS}{pwa.CSS}</style></head><body><main>
+{pwa.appbar(rep.get("generated_at"))}
 <header><p><a href="./">&larr; Lineup</a></p><h1>Trade targets &middot; Week {rep["week"]}</h1>
 <p>{escape(_deadline(rep))} &middot; Updated {updated}</p></header>
 <section class="card accent"><h2>Your team: {_tag(me["label"])}</h2>
@@ -208,7 +217,7 @@ Offers total 100&ndash;120% of the player's market value, plus 8% for each extra
 <td class="num hide-sm">Avg age</td><td class="num hide-sm">Youth</td><td class="hide-sm">1st and 2nd round picks</td></tr>{team_rows}</table>
 <p class="sub">Lifecycle combines standings, win-now value, dynasty value, roster age, the share of value in picks and players 24 or under, and this season's trades ({rep.get("trades_this_season", 0)} in the league).</p></section>
 <p class="sub">Market values: FantasyCalc and KeepTradeCut, Superflex. League data: Sleeper.</p>
-</main></body></html>
+</main>{pwa.SCRIPT}</body></html>
 """
 
 

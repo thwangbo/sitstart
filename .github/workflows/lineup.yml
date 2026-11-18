@@ -59,6 +59,7 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           PAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          ACTIONS_URL: https://github.com/${{ github.repository }}/actions/workflows/lineup.yml
         run: >
           python -m sitstart
           --username "${{ vars.SLEEPER_USERNAME || 'thwangbo' }}"

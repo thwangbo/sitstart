@@ -74,10 +74,15 @@ def core_players(me: Team, market: Market, slots: list[str], positions: dict[str
     """Players you shouldn't trade away for help elsewhere:
     - your best lineup at full health (season-long win-now values)
     - the best lineup without your currently injured players, i.e. who's filling in for them
+    - injured players worth at least as much as your weakest starter (an injured star isn't surplus)
     - anyone in `protect` (this week's recommended lineup)"""
     healthy = [p for p in me.players if p not in (unavailable or set())]
     fill_ins = best_win_now(healthy, slots, market, positions) if slots else []
-    return set(me.starters) | set(fill_ins) | set(protect or ())
+    # Injured players lose win-now value and can drop out of "your best lineup", but an injured
+    # star isn't surplus: keep any injured player worth at least as much as your weakest starter.
+    floor = min((market.value(p) for p in fill_ins or me.starters), default=float("inf"))
+    injured_core = {p for p in (unavailable or set()) if p in me.players and market.value(p) >= floor}
+    return set(me.starters) | set(fill_ins) | set(protect or ()) | injured_core
 
 
 def my_assets(me: Team, market: Market, positions: dict[str, str], protect: set[str] | None = None,

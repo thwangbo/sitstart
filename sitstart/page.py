@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from html import escape
 
+from . import pwa
 from .schedule import utc_to_pacific
 from .sleeper import card_value
 
@@ -120,8 +121,8 @@ def _report_card(grades: list[dict]) -> str:
         return f"{v:.1f}" if isinstance(v, (int, float)) else "&ndash;"
     rows = "".join(
         f'<tr class="{"bt" if g.get("source") == "backtest" else ""}"><td>Week {g["week"]}</td>'
-        f'<td>{cell(g.get("you"))}</td><td>{cell(g.get("app"))}</td><td>{cell(g.get("sleeper"))}</td>'
-        f'<td>{cell(g.get("stats"))}</td><td>{cell(g.get("best"))}</td></tr>'
+        f'<td>{cell(g.get("you"))}</td><td>{cell(g.get("app"))}</td><td class="rc-sl">{cell(g.get("sleeper"))}</td>'
+        f'<td class="rc-st">{cell(g.get("stats"))}</td><td>{cell(g.get("best"))}</td></tr>'
         for g in sorted(grades, key=lambda g: -g["week"]))
     tot = lambda k: sum(g.get(k) or 0 for g in grades)
     has_stats = [g for g in grades if isinstance(g.get("stats"), (int, float))]
@@ -135,9 +136,9 @@ def _report_card(grades: list[dict]) -> str:
             if stats_streak(grades) else
             "Gray rows are backtest weeks (before the app existed, no injury info). The stats view is shadow-only.") + same
     return ('<section class="card"><h2>Report card</h2><table class="grades">'
-            '<tr class="head"><td>Week</td><td>You</td><td>App</td><td>Sleeper only</td><td>Stats view</td><td>Best possible</td></tr>'
+            '<tr class="head"><td>Week</td><td>You</td><td>App</td><td class="rc-sl">Sleeper only</td><td class="rc-st">Stats view</td><td>Best possible</td></tr>'
             f'{rows}<tr class="total"><td>Season</td><td>{tot("you"):.1f}</td><td>{tot("app"):.1f}</td>'
-            f'<td>{tot("sleeper"):.1f}</td><td>{stats_tot}</td><td>{tot("best"):.1f}</td></tr></table>'
+            f'<td class="rc-sl">{tot("sleeper"):.1f}</td><td class="rc-st">{stats_tot}</td><td>{tot("best"):.1f}</td></tr></table>'
             f'<p class="sub">Points your lineup scored under each approach. {note}</p></section>')
 
 
@@ -195,7 +196,7 @@ def render(snap: dict) -> str:
     byes = ", ".join(ds.get("bye_teams") or []) or "none"
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lineup &middot; Week {snap["week"]}</title>
+<title>Lineup &middot; Week {snap["week"]}</title>{pwa.HEAD}
 <style>
 :root{{--bg:#f7f6f3;--card:#fff;--ink:#1d1d1b;--sub:#6b6a66;--line:#e6e4de;--accent:#2f5bd3;--good:#1f7a4d;--warn:#a86400;--bad:#b3261e}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#151514;--card:#1f1f1d;--ink:#ecebe7;--sub:#a3a29d;--line:#33322f;--accent:#7f9cf5;--good:#5cc28f;--warn:#e0a84a;--bad:#f08a80}}}}
@@ -217,9 +218,10 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 .verb{{font-weight:700;width:56px}}.verb.start{{color:var(--good)}}.verb.sit{{color:var(--bad)}}
 .total td{{font-weight:700;border-top:2px solid var(--line)}}.head td{{color:var(--sub);font-size:12px;border-top:none;padding-top:0}}
 .game .when{{display:block;font-size:12px}}
-@media (max-width:640px){{.game,.xp,.st{{display:none}}.slot{{width:64px}}td{{padding:7px 5px}}}}.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
+@media (max-width:640px){{.game,.xp,.st,.rc-sl,.rc-st{{display:none}}main{{padding:16px 10px 40px}}.card{{padding:12px}}.slot{{width:auto;font-size:11px;white-space:normal}}td{{padding:7px 4px;white-space:normal}}.tag{{font-size:11px;padding:0 5px}}.num{{white-space:nowrap}}}}.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
 .grades td{{text-align:right;font-variant-numeric:tabular-nums}}.grades td:first-child{{text-align:left}}.grades .bt td{{color:var(--sub)}}
-</style></head><body><main>
+{pwa.CSS}</style></head><body><main>
+{pwa.appbar(snap.get("generated_at"))}
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
 <p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}{' &middot; <a href="trades.html">Trade targets &rarr;</a>' if ds.get("trades_page") else ""}</p></header>
 <div class="grid">
@@ -235,5 +237,5 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 <section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td class="game">Game (PT)</td><td class="xp">Experts</td><td class="st">Stats</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
 <p class="sub">{escape(_blend_note(ds))}</p>
 <p class="sub">Projections: Sleeper ({escape(str(ds.get("projections_source")))}, {ds.get("projections_count")} players). Byes: {escape(byes)}. Kickoff times are Pacific.</p>
-</main></body></html>
+</main>{pwa.SCRIPT}</body></html>
 """

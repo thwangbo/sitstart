@@ -848,3 +848,54 @@ class QbGuardTests(unittest.TestCase):
         backup = {"kind": "player", "id": "q3", "label": "Backup QB", "pos": "QB", "age": 28, "value": 1500, "redraft": 2000}
         self.assertFalse(qb_safe(me, m, [backup], "RB"))                   # would make it worse
         self.assertTrue(qb_safe(me, m, [backup], "QB"))                    # QB comes back
+
+
+class PwaTests(unittest.TestCase):
+    def test_pages_are_installable_and_have_appbar(self):
+        from sitstart.page import render
+        from sitstart.trades_page import render as render_trades
+        snap = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY).to_dict()
+        for html in (render(snap),):
+            self.assertIn('rel="manifest" href="manifest.webmanifest"', html)
+            self.assertIn('id="reload"', html)
+            self.assertIn('data-ts="' + snap["generated_at"], html)
+            self.assertIn("visibilitychange", html)
+
+    def test_refresh_link_only_when_configured(self):
+        import os
+        from sitstart.pwa import appbar
+        os.environ.pop("ACTIONS_URL", None)
+        self.assertNotIn("Run a refresh", appbar("2026-11-18T19:00:00+00:00"))
+        os.environ["ACTIONS_URL"] = "https://github.com/x/y/actions/workflows/lineup.yml"
+        try:
+            self.assertIn('href="https://github.com/x/y/actions/workflows/lineup.yml"', appbar(None))
+        finally:
+            os.environ.pop("ACTIONS_URL", None)
+
+    def test_static_files_written(self):
+        from sitstart.pwa import write_static
+        with tempfile.TemporaryDirectory() as d:
+            files = write_static(d)
+            names = {f.name for f in files}
+            self.assertIn("manifest.webmanifest", names)
+            m = json.loads(Path(d, "manifest.webmanifest").read_text())
+            self.assertEqual(m["display"], "standalone")
+            self.assertEqual({i["sizes"] for i in m["icons"]}, {"192x192", "512x512"})
+            self.assertTrue(any(i["purpose"] == "maskable" for i in m["icons"]))
+            for i in m["icons"]:
+                self.assertTrue(Path(d, i["src"]).exists())
+
+
+class InjuredCoreTests(unittest.TestCase):
+    def test_injured_star_stays_core_but_injured_depth_does_not(self):
+        from sitstart.trades import core_players
+        m, pos, teams = MarketTests().teams()
+        me = teams[1]
+        # Young QB (value 7000) is hurt: still core. A hurt depth piece worth less than the
+        # weakest starter (300 vs 1200) is not.
+        m.players["x9"] = {"name": "Depth WR", "pos": "WR", "age": 26, "team": "ZZZ", "value": 300.0,
+                           "redraft": 200.0, "trend": None, "tier": None}
+        me.players.append("x9")
+        core = core_players(me, m, MarketTests.SLOTS, pos, unavailable={"q2", "x9"})
+        self.assertIn("q2", core)
+        self.assertNotIn("x9", core)

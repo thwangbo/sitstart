@@ -165,6 +165,8 @@ def main(argv=None) -> int:
         html_path = Path(args.html)
         html_path.parent.mkdir(parents=True, exist_ok=True)
         html_path.write_text(render(snap.to_dict()), encoding="utf-8")
+        from .pwa import write_static
+        write_static(html_path.parent)
         print(f"Wrote {html_path}")
 
     if args.trades:
