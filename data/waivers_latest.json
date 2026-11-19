@@ -1,0 +1,522 @@
+{
+ "generated_at": "2026-11-19T05:30:47+00:00",
+ "season": "2026",
+ "week": 11,
+ "league_name": "11 Beginners and 1 Pro Dynasty League",
+ "budget": 100,
+ "my_left": 64,
+ "weeks_left": 7,
+ "others_left": [
+  100,
+  93,
+  92,
+  75,
+  71,
+  59,
+  53,
+  0,
+  0,
+  0,
+  0
+ ],
+ "teams_out_of_faab": 4,
+ "daily_waivers": true,
+ "min_bid": 0,
+ "market": {
+  "claims": 72,
+  "won_at_zero": 45,
+  "contested": 22,
+  "median_contested_bid": 2.0,
+  "median_runner_up": 0.0,
+  "max_bid": 86
+ },
+ "drop": {
+  "player_id": "4098",
+  "name": "Kareem Hunt",
+  "value": 0
+ },
+ "adds": [
+  {
+   "player_id": "12541",
+   "name": "Dont'e Thornton Jr.",
+   "pos": "WR",
+   "nfl_team": "LV",
+   "age": 23,
+   "injury_status": null,
+   "proj": 0.7,
+   "score": 0.7,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 163,
+   "consensus_rank": null,
+   "hot": null,
+   "value": 41,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "3 of 8 similar claims drew competing bids; $0 beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.38,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Van Jefferson",
+      "week": 9,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.7
+     },
+     {
+      "name": "Jahdae Walker",
+      "week": 6,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.6
+     },
+     {
+      "name": "Jordan Whittington",
+      "week": 6,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 0.8
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "11593",
+   "name": "Brevyn Spann-Ford",
+   "pos": "TE",
+   "nfl_team": "DAL",
+   "age": 26,
+   "injury_status": null,
+   "proj": 6.2,
+   "score": 5.6,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 148,
+   "consensus_rank": "TE25",
+   "hot": null,
+   "value": 37,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.25,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "John Bates",
+      "week": 2,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.8
+     },
+     {
+      "name": "Brevyn Spann-Ford",
+      "week": 9,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.6
+     },
+     {
+      "name": "Brycen Tremayne",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 6.2
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "11597",
+   "name": "Theo Johnson",
+   "pos": "TE",
+   "nfl_team": "NYG",
+   "age": 25,
+   "injury_status": null,
+   "proj": 2.7,
+   "score": 2.2,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 120,
+   "consensus_rank": "TE48",
+   "hot": null,
+   "value": 30,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.12,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Darnell Washington",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 2.6
+     },
+     {
+      "name": "Tommy Tremble",
+      "week": 2,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.0
+     },
+     {
+      "name": "Jeremy Ruckert",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.1
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "11439",
+   "name": "Jaleel McLaughlin",
+   "pos": "RB",
+   "nfl_team": "CLE",
+   "age": 26,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 112,
+   "consensus_rank": null,
+   "hot": null,
+   "value": 28,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.12,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Robert Henry Jr.",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "Joe Mixon",
+      "week": 4,
+      "bid": 20,
+      "runner_up": 0,
+      "proj": 0.0
+     },
+     {
+      "name": "Roman Hemby",
+      "week": 5,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.0
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "12700",
+   "name": "Gavin Bartholomew",
+   "pos": "TE",
+   "nfl_team": "MIN",
+   "age": 23,
+   "injury_status": null,
+   "proj": 1.8,
+   "score": 2.2,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 114,
+   "consensus_rank": "TE38",
+   "hot": 22,
+   "value": 28,
+   "bid": {
+    "bid": 1,
+    "aggressive": 11,
+    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.25,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Sam Roush",
+      "week": 7,
+      "bid": 4,
+      "runner_up": null,
+      "proj": 1.8
+     },
+     {
+      "name": "Ben Sinnott",
+      "week": 3,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 1.9
+     },
+     {
+      "name": "Josh Cuevas",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.4
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "13415",
+   "name": "Haynes King",
+   "pos": "QB",
+   "nfl_team": "CAR",
+   "age": 25,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 112,
+   "consensus_rank": null,
+   "hot": null,
+   "value": 28,
+   "bid": {
+    "bid": 14,
+    "aggressive": 20,
+    "reason": "5 of 8 similar claims drew competing bids; $13 beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.62,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Tanner McKee",
+      "week": 5,
+      "bid": 1,
+      "runner_up": 0,
+      "proj": 0.0
+     },
+     {
+      "name": "Joe Fagnano",
+      "week": 8,
+      "bid": 25,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "DJ Uiagalelei",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 13,
+      "proj": 0.0
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "3286",
+   "name": "Demarcus Robinson",
+   "pos": "WR",
+   "nfl_team": "SF",
+   "age": 32,
+   "injury_status": null,
+   "proj": 1.6,
+   "score": 2.4,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 107,
+   "consensus_rank": "WR72",
+   "hot": null,
+   "value": 27,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "3 of 8 similar claims drew competing bids; $0 beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.38,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Jordan Watkins",
+      "week": 3,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.2
+     },
+     {
+      "name": "John Metchie III",
+      "week": 7,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.2
+     },
+     {
+      "name": "Darius Cooper",
+      "week": 3,
+      "bid": 1,
+      "runner_up": null,
+      "proj": 1.9
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "11616",
+   "name": "Jacob Cowing",
+   "pos": "WR",
+   "nfl_team": "SF",
+   "age": 25,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.6,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 103,
+   "consensus_rank": "WR104",
+   "hot": null,
+   "value": 26,
+   "bid": {
+    "bid": 1,
+    "aggressive": 2,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.12,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Brandin Cooks",
+      "week": 2,
+      "bid": 13,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "CJ Williams",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "Harrison Wallace III",
+      "week": 9,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.0
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "13404",
+   "name": "Garrett Nussmeier",
+   "pos": "QB",
+   "nfl_team": "KC",
+   "age": 24,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 97,
+   "consensus_rank": "QB59",
+   "hot": null,
+   "value": 24,
+   "bid": {
+    "bid": 14,
+    "aggressive": 20,
+    "reason": "5 of 8 similar claims drew competing bids; $13 beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.62,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Tanner McKee",
+      "week": 5,
+      "bid": 1,
+      "runner_up": 0,
+      "proj": 0.0
+     },
+     {
+      "name": "Joe Fagnano",
+      "week": 8,
+      "bid": 25,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "DJ Uiagalelei",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 13,
+      "proj": 0.0
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "10214",
+   "name": "Davis Allen",
+   "pos": "TE",
+   "nfl_team": "LAR",
+   "age": 25,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 80,
+   "consensus_rank": null,
+   "hot": null,
+   "value": 20,
+   "bid": {
+    "bid": 17,
+    "aggressive": 25,
+    "reason": "3 of 8 similar claims drew competing bids; $16 beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "contested_share": 0.38,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Zach Ertz",
+      "week": 2,
+      "bid": 86,
+      "runner_up": 16,
+      "proj": 0.0
+     },
+     {
+      "name": "Erick All Jr.",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "Jack Endries",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 0.4
+     }
+    ]
+   }
+  }
+ ],
+ "streamers": [],
+ "free_agents_checked": 65
+}

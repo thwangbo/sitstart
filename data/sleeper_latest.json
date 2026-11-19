@@ -134,11 +134,11 @@
         "years_exp": 10,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 12.0,
-        "proj_pts_sleeper_half": 12.0,
+        "proj_pts": 11.97,
+        "proj_pts_sleeper_half": 11.94,
         "consensus_rank": "QB18",
         "expert_pts": 15.94,
-        "score": 13.97,
+        "score": 13.96,
         "bye": false,
         "opponent": "@ CAR",
         "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -146,9 +146,9 @@
         "locked": false,
         "xfp": 19.19,
         "usage_trend": -8.7,
-        "stat_pts": 18.33,
+        "stat_pts": 18.31,
         "stat_adj": 0.15,
-        "score_with_stats": 16.07
+        "score_with_stats": 16.05
       },
       "empty": false,
       "locked": false,
@@ -168,10 +168,10 @@
         "years_exp": 4,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 13.36,
-        "proj_pts_sleeper_half": 13.35,
+        "proj_pts": 13.37,
+        "proj_pts_sleeper_half": 13.36,
         "consensus_rank": "RB6",
-        "expert_pts": 17.06,
+        "expert_pts": 17.05,
         "score": 15.21,
         "bye": false,
         "opponent": "@ PHI",
@@ -180,7 +180,7 @@
         "locked": false,
         "xfp": 12.01,
         "usage_trend": 0.4,
-        "stat_pts": 11.6,
+        "stat_pts": 11.59,
         "stat_adj": -0.15,
         "score_with_stats": 12.93
       },
@@ -225,32 +225,32 @@
     {
       "slot": "WR",
       "player": {
-        "player_id": "5045",
-        "name": "Courtland Sutton",
+        "player_id": "7525",
+        "name": "DeVonta Smith",
         "position": "WR",
         "fantasy_positions": [
           "WR"
         ],
-        "team": "DEN",
-        "age": 31,
-        "years_exp": 8,
-        "injury_status": null,
+        "team": "PHI",
+        "age": 28,
+        "years_exp": 5,
+        "injury_status": "Questionable",
         "status": "Active",
-        "proj_pts": 6.61,
-        "proj_pts_sleeper_half": 6.64,
-        "consensus_rank": "WR41",
-        "expert_pts": 7.01,
-        "score": 6.81,
+        "proj_pts": 10.25,
+        "proj_pts_sleeper_half": 10.27,
+        "consensus_rank": "WR58",
+        "expert_pts": 4.87,
+        "score": 7.56,
         "bye": false,
-        "opponent": "vs LV",
+        "opponent": "vs PIT",
         "kickoff_utc": "2026-11-22T21:25:00+00:00",
-        "implied_total": 25.2,
+        "implied_total": 16.5,
         "locked": false,
-        "xfp": 9.76,
-        "usage_trend": 4.3,
-        "stat_pts": 10.34,
+        "xfp": 14.21,
+        "usage_trend": -1.3,
+        "stat_pts": 12.29,
         "stat_adj": 0.15,
-        "score_with_stats": 7.83
+        "score_with_stats": 8.69
       },
       "empty": false,
       "locked": false,
@@ -273,7 +273,7 @@
         "proj_pts": 13.66,
         "proj_pts_sleeper_half": 13.67,
         "consensus_rank": "WR9",
-        "expert_pts": 12.72,
+        "expert_pts": 12.71,
         "score": 13.19,
         "bye": false,
         "opponent": "vs IND",
@@ -282,9 +282,9 @@
         "locked": false,
         "xfp": 12.47,
         "usage_trend": 5.9,
-        "stat_pts": 13.98,
-        "stat_adj": 0.06,
-        "score_with_stats": 13.98
+        "stat_pts": 13.97,
+        "stat_adj": 0.059,
+        "score_with_stats": 13.97
       },
       "empty": false,
       "locked": false,
@@ -316,7 +316,7 @@
         "locked": false,
         "xfp": 12.68,
         "usage_trend": 2.4,
-        "stat_pts": 11.74,
+        "stat_pts": 11.73,
         "stat_adj": 0.15,
         "score_with_stats": 8.67
       },
@@ -350,7 +350,7 @@
         "locked": false,
         "xfp": 7.26,
         "usage_trend": -1.3,
-        "stat_pts": 8.14,
+        "stat_pts": 8.13,
         "stat_adj": -0.15,
         "score_with_stats": 8.73
       },
@@ -372,11 +372,11 @@
         "years_exp": 1,
         "injury_status": null,
         "status": "Active",
-        "proj_pts": 8.01,
-        "proj_pts_sleeper_half": 8.09,
+        "proj_pts": 8.07,
+        "proj_pts_sleeper_half": 8.1,
         "consensus_rank": "RB24",
-        "expert_pts": 8.27,
-        "score": 8.14,
+        "expert_pts": 8.31,
+        "score": 8.19,
         "bye": false,
         "opponent": "vs NO",
         "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -384,9 +384,9 @@
         "locked": false,
         "xfp": 14.93,
         "usage_trend": 8.8,
-        "stat_pts": 17.41,
+        "stat_pts": 17.38,
         "stat_adj": 0.15,
-        "score_with_stats": 9.36
+        "score_with_stats": 9.42
       },
       "empty": false,
       "locked": false,
@@ -418,7 +418,7 @@
         "locked": false,
         "xfp": 9.2,
         "usage_trend": 7.1,
-        "stat_pts": 7.97,
+        "stat_pts": 7.96,
         "stat_adj": -0.15,
         "score_with_stats": 9.62
       },
@@ -496,18 +496,18 @@
       "years_exp": 0,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 1.7,
-      "proj_pts_sleeper_half": 1.72,
+      "proj_pts": 1.69,
+      "proj_pts_sleeper_half": 1.71,
       "consensus_rank": "TE47",
-      "expert_pts": 1.79,
-      "score": 1.75,
+      "expert_pts": 1.88,
+      "score": 1.78,
       "bye": false,
       "opponent": "@ CAR",
       "kickoff_utc": "2026-11-22T18:00:00+00:00",
       "implied_total": 20.5,
       "locked": false,
       "stat_adj": null,
-      "score_with_stats": 1.75
+      "score_with_stats": 1.78
     },
     {
       "player_id": "13322",
@@ -521,7 +521,7 @@
       "years_exp": 0,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 2.17,
+      "proj_pts": 2.16,
       "proj_pts_sleeper_half": 2.16,
       "consensus_rank": "TE53",
       "expert_pts": 1.31,
@@ -533,7 +533,7 @@
       "locked": false,
       "xfp": 1.91,
       "usage_trend": -1.2,
-      "stat_pts": 2.23,
+      "stat_pts": 2.22,
       "stat_adj": 0.15,
       "score_with_stats": 2.0
     },
@@ -619,6 +619,34 @@
       "score_with_stats": 0.0
     },
     {
+      "player_id": "5045",
+      "name": "Courtland Sutton",
+      "position": "WR",
+      "fantasy_positions": [
+        "WR"
+      ],
+      "team": "DEN",
+      "age": 31,
+      "years_exp": 8,
+      "injury_status": null,
+      "status": "Active",
+      "proj_pts": 6.61,
+      "proj_pts_sleeper_half": 6.64,
+      "consensus_rank": "WR41",
+      "expert_pts": 7.01,
+      "score": 6.81,
+      "bye": false,
+      "opponent": "vs LV",
+      "kickoff_utc": "2026-11-22T21:25:00+00:00",
+      "implied_total": 25.2,
+      "locked": false,
+      "xfp": 9.76,
+      "usage_trend": 4.3,
+      "stat_pts": 10.33,
+      "stat_adj": 0.15,
+      "score_with_stats": 7.83
+    },
+    {
       "player_id": "8150",
       "name": "Kyren Williams",
       "position": "RB",
@@ -694,7 +722,7 @@
       "bye": false,
       "opponent": "vs MIN",
       "kickoff_utc": "2026-11-23T01:20:00+00:00",
-      "implied_total": 24.2,
+      "implied_total": 24.8,
       "locked": false,
       "stat_adj": null,
       "score_with_stats": 0.0
@@ -711,7 +739,7 @@
       "years_exp": 0,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 2.05,
+      "proj_pts": 2.04,
       "proj_pts_sleeper_half": 2.04,
       "consensus_rank": "RB58",
       "expert_pts": 2.04,
@@ -739,8 +767,8 @@
       "years_exp": 0,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 3.2,
-      "proj_pts_sleeper_half": 3.21,
+      "proj_pts": 3.21,
+      "proj_pts_sleeper_half": 3.22,
       "consensus_rank": "WR74",
       "expert_pts": 3.14,
       "score": 3.17,
@@ -751,7 +779,7 @@
       "locked": false,
       "xfp": 4.06,
       "usage_trend": -0.9,
-      "stat_pts": 4.39,
+      "stat_pts": 4.38,
       "stat_adj": 0.15,
       "score_with_stats": 3.65
     },
@@ -768,7 +796,7 @@
       "injury_status": null,
       "status": "Active",
       "proj_pts": 2.43,
-      "proj_pts_sleeper_half": 2.42,
+      "proj_pts_sleeper_half": 2.43,
       "consensus_rank": "WR70",
       "expert_pts": 3.31,
       "score": 2.87,
@@ -779,7 +807,7 @@
       "locked": false,
       "xfp": 4.67,
       "usage_trend": 0.8,
-      "stat_pts": 4.43,
+      "stat_pts": 4.42,
       "stat_adj": 0.15,
       "score_with_stats": 3.3
     },
@@ -810,34 +838,6 @@
       "stat_pts": 7.56,
       "stat_adj": null,
       "score_with_stats": 0.0
-    },
-    {
-      "player_id": "7525",
-      "name": "DeVonta Smith",
-      "position": "WR",
-      "fantasy_positions": [
-        "WR"
-      ],
-      "team": "PHI",
-      "age": 28,
-      "years_exp": 5,
-      "injury_status": "Questionable",
-      "status": "Active",
-      "proj_pts": 10.26,
-      "proj_pts_sleeper_half": 10.28,
-      "consensus_rank": "WR58",
-      "expert_pts": 4.89,
-      "score": 7.57,
-      "bye": false,
-      "opponent": "vs PIT",
-      "kickoff_utc": "2026-11-22T21:25:00+00:00",
-      "implied_total": 16.5,
-      "locked": false,
-      "xfp": 14.21,
-      "usage_trend": -1.3,
-      "stat_pts": 12.31,
-      "stat_adj": 0.15,
-      "score_with_stats": 8.71
     },
     {
       "player_id": "11655",
@@ -880,7 +880,7 @@
       "injury_status": null,
       "status": "Active",
       "proj_pts": 7.97,
-      "proj_pts_sleeper_half": 7.97,
+      "proj_pts_sleeper_half": 7.96,
       "consensus_rank": "TE17",
       "expert_pts": 6.46,
       "score": 7.21,
@@ -963,21 +963,21 @@
       "years_exp": 7,
       "injury_status": null,
       "status": "Active",
-      "proj_pts": 7.22,
-      "proj_pts_sleeper_half": 7.26,
+      "proj_pts": 7.3,
+      "proj_pts_sleeper_half": 7.32,
       "consensus_rank": "WR22",
-      "expert_pts": 10.26,
-      "score": 8.74,
+      "expert_pts": 10.25,
+      "score": 8.78,
       "bye": false,
       "opponent": "vs MIN",
       "kickoff_utc": "2026-11-23T01:20:00+00:00",
-      "implied_total": 24.2,
+      "implied_total": 24.8,
       "locked": false,
       "xfp": 6.09,
       "usage_trend": -2.1,
-      "stat_pts": 6.32,
+      "stat_pts": 6.39,
       "stat_adj": -0.15,
-      "score_with_stats": 7.43
+      "score_with_stats": 7.46
     },
     {
       "player_id": "10859",
@@ -1075,8 +1075,8 @@
       "proj_pts": 7.51,
       "proj_pts_sleeper_half": 7.48,
       "consensus_rank": "RB25",
-      "expert_pts": 8.01,
-      "score": 7.76,
+      "expert_pts": 8.07,
+      "score": 7.79,
       "bye": false,
       "opponent": "vs CIN",
       "kickoff_utc": "2026-11-24T01:15:00+00:00",
@@ -1084,9 +1084,9 @@
       "locked": false,
       "xfp": 8.42,
       "usage_trend": -5.0,
-      "stat_pts": 8.69,
-      "stat_adj": 0.12,
-      "score_with_stats": 8.69
+      "stat_pts": 8.68,
+      "stat_adj": 0.114,
+      "score_with_stats": 8.68
     },
     {
       "player_id": "8119",
@@ -1143,7 +1143,7 @@
       "locked": false,
       "xfp": 5.01,
       "usage_trend": -1.6,
-      "stat_pts": 4.84,
+      "stat_pts": 4.83,
       "stat_adj": 0.15,
       "score_with_stats": 2.39
     }
@@ -1168,11 +1168,11 @@
           "years_exp": 3,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 18.27,
-          "proj_pts_sleeper_half": 18.29,
+          "proj_pts": 18.24,
+          "proj_pts_sleeper_half": 18.22,
           "consensus_rank": "QB13",
           "expert_pts": 16.99,
-          "score": 17.63,
+          "score": 17.61,
           "bye": false,
           "opponent": "vs BAL",
           "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -1180,9 +1180,9 @@
           "locked": false,
           "xfp": 18.03,
           "usage_trend": 7.1,
-          "stat_pts": 18.21,
+          "stat_pts": 18.19,
           "stat_adj": 0.033,
-          "score_with_stats": 18.21
+          "score_with_stats": 18.19
         },
         "empty": false,
         "locked": false,
@@ -1202,11 +1202,11 @@
           "years_exp": 1,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 15.21,
-          "proj_pts_sleeper_half": 15.22,
+          "proj_pts": 15.19,
+          "proj_pts_sleeper_half": 15.2,
           "consensus_rank": "RB17",
           "expert_pts": 13.11,
-          "score": 14.16,
+          "score": 14.15,
           "bye": false,
           "opponent": "vs JAX",
           "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -1214,9 +1214,9 @@
           "locked": false,
           "xfp": 11.53,
           "usage_trend": 3.5,
-          "stat_pts": 10.93,
+          "stat_pts": 10.92,
           "stat_adj": -0.15,
-          "score_with_stats": 12.04
+          "score_with_stats": 12.03
         },
         "empty": false,
         "locked": false,
@@ -1236,8 +1236,8 @@
           "years_exp": 2,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 4.27,
-          "proj_pts_sleeper_half": 4.29,
+          "proj_pts": 4.28,
+          "proj_pts_sleeper_half": 4.3,
           "consensus_rank": "RB41",
           "expert_pts": 5.35,
           "score": 4.81,
@@ -1271,7 +1271,7 @@
           "injury_status": "Questionable",
           "status": "Active",
           "proj_pts": 8.67,
-          "proj_pts_sleeper_half": 8.68,
+          "proj_pts_sleeper_half": 8.67,
           "consensus_rank": "WR18",
           "expert_pts": 10.77,
           "score": 9.72,
@@ -1316,7 +1316,7 @@
           "locked": false,
           "xfp": 12.59,
           "usage_trend": 3.1,
-          "stat_pts": 11.38,
+          "stat_pts": 11.37,
           "stat_adj": 0.15,
           "score_with_stats": 9.35
         },
@@ -1406,11 +1406,11 @@
           "years_exp": 2,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 10.68,
-          "proj_pts_sleeper_half": 10.7,
+          "proj_pts": 10.63,
+          "proj_pts_sleeper_half": 10.63,
           "consensus_rank": "WR27",
           "expert_pts": 8.63,
-          "score": 9.66,
+          "score": 9.63,
           "bye": false,
           "opponent": "vs BAL",
           "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -1418,9 +1418,9 @@
           "locked": false,
           "xfp": 8.33,
           "usage_trend": 3.5,
-          "stat_pts": 8.41,
-          "stat_adj": -0.129,
-          "score_with_stats": 8.41
+          "stat_pts": 8.4,
+          "stat_adj": -0.128,
+          "score_with_stats": 8.4
         },
         "empty": false,
         "locked": false,
@@ -1440,11 +1440,11 @@
           "years_exp": 1,
           "injury_status": null,
           "status": "Active",
-          "proj_pts": 16.95,
-          "proj_pts_sleeper_half": 16.92,
+          "proj_pts": 16.85,
+          "proj_pts_sleeper_half": 16.87,
           "consensus_rank": "QB15",
           "expert_pts": 16.66,
-          "score": 16.8,
+          "score": 16.76,
           "bye": false,
           "opponent": "@ DAL",
           "kickoff_utc": "2026-11-22T18:00:00+00:00",
@@ -1452,16 +1452,16 @@
           "locked": false,
           "xfp": 17.89,
           "usage_trend": 6.4,
-          "stat_pts": 18.27,
-          "stat_adj": 0.087,
-          "score_with_stats": 18.26
+          "stat_pts": 18.25,
+          "stat_adj": 0.089,
+          "score_with_stats": 18.25
         },
         "empty": false,
         "locked": false,
         "flag": null
       }
     ],
-    "proj_total": 92.4
+    "proj_total": 92.3
   },
   "league_rosters": [
     {
@@ -2060,7 +2060,8 @@
     "consensus_scrape_date": "2026-11-18",
     "blend_weight": 0.5,
     "stats_players": 532,
-    "trades_page": true
+    "trades_page": true,
+    "waivers_page": true
   },
   "suggestion": {
     "actionable": true,
@@ -2075,31 +2076,31 @@
       {
         "player_id": "5872",
         "name": "Deebo Samuel Sr.",
-        "proj_pts": 8.7,
-        "value": 8.7,
+        "proj_pts": 8.8,
+        "value": 8.8,
         "injury_status": null
       }
     ],
     "sit": [
       {
-        "player_id": "5045",
-        "name": "Courtland Sutton",
-        "proj_pts": 6.8,
-        "value": 6.8,
-        "injury_status": null
+        "player_id": "7525",
+        "name": "DeVonta Smith",
+        "proj_pts": 7.6,
+        "value": 6.4,
+        "injury_status": "Questionable"
       },
       {
         "player_id": "12534",
         "name": "Kyle Monangai",
-        "proj_pts": 8.1,
-        "value": 8.1,
+        "proj_pts": 8.2,
+        "value": 8.2,
         "injury_status": null
       }
     ],
     "slot_moves": [],
-    "current_total": 97.8,
+    "current_total": 97.4,
     "best_total": 101.3,
-    "gain": 3.5,
+    "gain": 3.8,
     "lineup": [
       {
         "slot": "QB",
@@ -2158,9 +2159,25 @@
     ]
   },
   "stats_view": {
-    "actionable": false,
-    "start": [],
-    "sit": [],
+    "actionable": true,
+    "start": [
+      {
+        "player_id": "5045",
+        "name": "Courtland Sutton",
+        "proj_pts": 7.8,
+        "value": 7.8,
+        "injury_status": null
+      }
+    ],
+    "sit": [
+      {
+        "player_id": "7525",
+        "name": "DeVonta Smith",
+        "proj_pts": 8.7,
+        "value": 7.4,
+        "injury_status": "Questionable"
+      }
+    ],
     "slot_moves": [
       [
         "RB",
@@ -2171,9 +2188,9 @@
         "Kyle Monangai"
       ]
     ],
-    "current_total": 96.8,
-    "best_total": 96.8,
-    "gain": 0.0,
+    "current_total": 96.4,
+    "best_total": 96.9,
+    "gain": 0.4,
     "lineup": [
       {
         "slot": "QB",
@@ -2323,5 +2340,5 @@
       "best": 92.82
     }
   ],
-  "generated_at": "2026-11-18T22:33:08+00:00"
+  "generated_at": "2026-11-19T05:30:38+00:00"
 }
