@@ -1,0 +1,54 @@
+# One-off data collection. Safe to delete.
+name: Probe
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lineup-check
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Collect
+        run: |
+          mkdir -p probe
+          python - <<'PY'
+          import json, urllib.request
+          get = lambda u: json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "sitstart"}), timeout=60).read() or "null")
+          B = "https://api.sleeper.app/v1"
+          user = get(f"{B}/user/thwangbo")
+          lg = next(l for l in get(f"{B}/user/{user['user_id']}/leagues/nfl/2026") if "SUPER_FLEX" in (l.get("roster_positions") or []))
+          lid = lg["league_id"]
+          st = lg["settings"]
+          tx = {}
+          for wk in range(1, 13):
+              rows = get(f"{B}/league/{lid}/transactions/{wk}") or []
+              tx[wk] = [t for t in rows if t.get("type") in ("waiver", "free_agent")]
+          out = {
+              "waiver_settings": {k: st.get(k) for k in st if "waiver" in k or k in ("daily_waivers", "daily_waivers_hour", "daily_waivers_days", "playoff_week_start", "trade_deadline", "type")},
+              "budgets": [{"roster_id": r["roster_id"], "owner_id": r["owner_id"], **{k: v for k, v in (r.get("settings") or {}).items() if "waiver" in k}} for r in get(f"{B}/league/{lid}/rosters")],
+              "state": get(f"{B}/state/nfl"),
+              "transactions": tx,
+              "trending_add": get(f"{B}/players/nfl/trending/add?lookback_hours=48&limit=30"),
+          }
+          json.dump(out, open("probe/waivers.json", "w"), indent=1)
+          print({wk: (len(v), sum(1 for t in v if t.get("status") == "failed")) for wk, v in tx.items()})
+          PY
+      - name: Save
+        run: |
+          git config user.name "lineup-bot"
+          git config user.email "lineup-bot@users.noreply.github.com"
+          git add probe
+          git commit -m "Probe waivers" || echo "No changes"
+          git pull --rebase
+          git push
