@@ -78,6 +78,8 @@ def render(rep: dict) -> str:
     adds_html = (f'<table class="ttable wtable">{head}{_rows(adds, "adds")}</table>' if adds
                  else '<p class="sub">Nobody on the wire improves your lineup for the rest of the season or is worth '
                       'stashing. That\'s normal in a league this deep.</p>')
+    adds_note = ('<p class="sub">Ranked on how much your best lineup improves for the rest of the season (win-now '
+                 'market value), plus stash value for players who could matter beyond this year.</p>') if adds else ""
     rest = rep.get("rest") or []
     rest_html = ""
     if rest:
@@ -108,9 +110,7 @@ def render(rep: dict) -> str:
 <section class="card accent"><h2>Your FAAB</h2><p>{budget_line}</p><p class="sub">{econ}</p>{drop_line}
 <p class="sub">Waivers run {"daily" if rep.get("daily_waivers") else "weekly"}. If Sleeper shows a player as a free agent
 (no waiver clock), just add him; no bid needed.</p></section>
-<section class="card"><h2>Season adds</h2>{adds_html}
-<p class="sub">Ranked on how much your best lineup improves for the rest of the season (win-now market value), plus
-stash value for players who could matter beyond this year.</p></section>
+<section class="card"><h2>Season adds</h2>{adds_html}{adds_note}</section>
 <section class="card"><h2>This week's streamers</h2>{str_html}
 <p class="sub">Points added to this week's best lineup, using the same Score as your lineup page.</p></section>
 {rest_html}
