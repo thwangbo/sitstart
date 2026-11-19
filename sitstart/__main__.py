@@ -54,7 +54,25 @@ def load_consensus(client, schedule, ids_text):
     return map_to_sleeper(ecr, ids, client.players())
 
 
-def run_trades(client, snap, args) -> None:
+def run_waivers(client, snap, args, ctx, consensus) -> None:
+    """Waiver targets and FAAB bids. Never fails the weekly run."""
+    from .waivers import build_waiver_report
+    from .waivers_page import render as render_waivers
+    try:
+        rep = build_waiver_report(client, snap.to_dict(), ctx, consensus, args.expert_weight)
+    except Exception as e:
+        print(f"Warning: waiver targets not updated ({e})", file=sys.stderr)
+        return
+    Path(args.out, "waivers_latest.json").write_text(json.dumps(rep, indent=1, default=str), encoding="utf-8")
+    out = Path(args.waivers)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_waivers(rep), encoding="utf-8")
+    print(f"\nWaivers: ${rep['my_left']} FAAB left; {len(rep['adds'])} season adds, {len(rep['streamers'])} streamers. Wrote {out}")
+    for r in (rep["adds"][:3] + rep["streamers"][:2]):
+        print(f"  {r['name']} ({r['pos']}, {r['nfl_team']}): bid ${r['bid']['bid']} (up to ${r['bid']['aggressive']})")
+
+
+def run_trades(client, snap, args, consensus=None) -> None:
     """v2 trade finder. Never fails the weekly run."""
     from .consensus import fetch
     from .market import FC_URL
@@ -70,7 +88,8 @@ def run_trades(client, snap, args) -> None:
     try:
         url = FC_URL.format(qbs=2 if lg["is_superflex"] else 1, teams=lg["total_rosters"] or 12,
                             ppr=lg["scoring_summary"]["points_per_reception"])
-        report = build_report(client, snap.to_dict(), json.loads(fetch(url)), ktc_rows, load_ids_text())
+        report, ctx = build_report(client, snap.to_dict(), json.loads(fetch(url)), ktc_rows, load_ids_text(),
+                                   return_context=True)
     except Exception as e:
         print(f"Warning: trade targets not updated ({e})", file=sys.stderr)
         return
@@ -84,6 +103,8 @@ def run_trades(client, snap, args) -> None:
     print(f"  Values: FantasyCalc {vs.get('fantasycalc_players')} players; KTC {vs.get('ktc')}"
           + (f" ({vs.get('ktc_players_mapped')} matched, {vs.get('ktc_players_unmapped')} unmatched, {vs.get('ktc_picks')} picks)"
              if vs.get("ktc") == "blended" else ""))
+    if getattr(args, "waivers", None):
+        run_waivers(client, snap, args, ctx, consensus)
     for t in report["targets"][:3]:
         print(f"  {t['name']} ({t['owner']}): offer " + ", ".join(a["label"] for a in t["offer"]["assets"]))
 
@@ -101,6 +122,7 @@ def main(argv=None) -> int:
                     help="Weight on expert consensus in the score, 0-1 (default 0.5, from the Weeks 1-9 backtest)")
     ap.add_argument("--no-stats", action="store_true", help="Skip the advanced-stats view")
     ap.add_argument("--html", help="Also write the results page to this path, e.g. site/index.html")
+    ap.add_argument("--waivers", help="Also write the waivers page to this path (needs --trades), e.g. site/waivers.html")
     ap.add_argument("--trades", help="Also write the trade-targets page to this path, e.g. site/trades.html")
     ap.add_argument("--notify", action="store_true",
                     help="Send a phone alert via ntfy when something changes (topic from NTFY_TOPIC)")
@@ -156,6 +178,8 @@ def main(argv=None) -> int:
 
     if args.trades:
         snap.data_status["trades_page"] = True
+        if args.waivers:
+            snap.data_status["waivers_page"] = True
     path = save_snapshot(snap, args.out)
     print(format_summary(snap))
     print(f"\nSaved {path}")
@@ -170,7 +194,7 @@ def main(argv=None) -> int:
         print(f"Wrote {html_path}")
 
     if args.trades:
-        run_trades(client, snap, args)
+        run_trades(client, snap, args, consensus)
 
     if args.notify:
         from .notify import alert_key, build_alert, send

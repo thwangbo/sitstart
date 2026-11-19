@@ -223,7 +223,7 @@ tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:
 {pwa.CSS}</style></head><body><main>
 {pwa.appbar(snap.get("generated_at"))}
 <header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
-<p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}{' &middot; <a href="trades.html">Trade targets &rarr;</a>' if ds.get("trades_page") else ""}</p></header>
+<p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}{' &middot; <a href="trades.html">Trade targets &rarr;</a>' if ds.get("trades_page") else ""}{' &middot; <a href="waivers.html">Waivers &rarr;</a>' if ds.get("waivers_page") else ""}</p></header>
 <div class="grid">
 <div>
 {_suggestion_block(snap.get("suggestion"))}

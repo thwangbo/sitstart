@@ -322,7 +322,7 @@ def season_ppg(get_url, season, scoring: dict, positions: dict[str, str]) -> dic
 
 
 def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] | None = None,
-                 ids_text: str | None = None) -> dict:
+                 ids_text: str | None = None, return_context: bool = False):
     """Everything the trades page shows. `snap` is this week's lineup snapshot (dict).
     ktc_rows: parsed KeepTradeCut values; when present, dynasty values are FantasyCalc and KTC averaged."""
     from datetime import datetime, timezone
@@ -374,7 +374,7 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
                 "age": t.age, "youth": t.youth, "label": t.label, "reasons": t.reasons,
                 "picks": [p["label"] + (f" (from {p['from']})" if p.get("from") else "") for p in t.picks
                           if p["round"] <= 2]}
-    return {
+    report = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "season": season, "week": week, "deadline_week": settings.get("trade_deadline"),
         "league_name": lg["name"], "me": team_row(me),
@@ -385,3 +385,8 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
         "trades_this_season": len(trades),
         "value_sources": value_sources,
     }
+    if return_context:
+        ctx = {"market": market, "teams": teams, "me": me, "positions": positions, "players": sleeper_players,
+               "slots": slots, "core": core_players(me, market, slots, positions, protect, unavailable)}
+        return report, ctx
+    return report

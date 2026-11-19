@@ -201,7 +201,7 @@ def render(rep: dict) -> str:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trade targets &middot; Week {rep["week"]}</title>{pwa.HEAD}<style>{CSS}{pwa.CSS}</style></head><body><main>
 {pwa.appbar(rep.get("generated_at"))}
-<header><p><a href="./">&larr; Lineup</a></p><h1>Trade targets &middot; Week {rep["week"]}</h1>
+<header><p><a href="./">&larr; Lineup</a> &middot; <a href="waivers.html">Waivers</a></p><h1>Trade targets &middot; Week {rep["week"]}</h1>
 <p>{escape(_deadline(rep))} &middot; Updated {updated}</p></header>
 <section class="card accent"><h2>Your team: {_tag(me["label"])}</h2>
 <p class="sub">{escape("; ".join(me["reasons"]))}.</p>

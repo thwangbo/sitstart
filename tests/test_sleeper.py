@@ -899,3 +899,97 @@ class InjuredCoreTests(unittest.TestCase):
         core = core_players(me, m, MarketTests.SLOTS, pos, unavailable={"q2", "x9"})
         self.assertIn("q2", core)
         self.assertNotIn("x9", core)
+
+
+class WaiverTests(unittest.TestCase):
+    TX = [
+        # Week 3: contested. Winner $25 over $10 and $1; a roster-full failure doesn't count.
+        {"type": "waiver", "status": "complete", "leg": 3, "roster_ids": [7], "adds": {"p1": 7}, "settings": {"waiver_bid": 25}},
+        {"type": "waiver", "status": "failed", "leg": 3, "roster_ids": [2], "adds": {"p1": 2}, "settings": {"waiver_bid": 10},
+         "metadata": {"notes": "This player was claimed by another owner."}},
+        {"type": "waiver", "status": "failed", "leg": 3, "roster_ids": [3], "adds": {"p1": 3}, "settings": {"waiver_bid": 1},
+         "metadata": {"notes": "This player was claimed by another owner."}},
+        {"type": "waiver", "status": "failed", "leg": 3, "roster_ids": [4], "adds": {"p1": 4}, "settings": {"waiver_bid": 40},
+         "metadata": {"notes": "Unfortunately, your roster will have too many players after this transaction."}},
+        # Week 4: uncontested $0
+        {"type": "waiver", "status": "complete", "leg": 4, "roster_ids": [5], "adds": {"p2": 5}, "settings": {"waiver_bid": 0}},
+        # Week 1 (preseason) and free-agent adds are ignored by the summary
+        {"type": "waiver", "status": "complete", "leg": 1, "roster_ids": [5], "adds": {"p3": 5}, "settings": {"waiver_bid": 50}},
+        {"type": "free_agent", "status": "complete", "leg": 4, "roster_ids": [6], "adds": {"p4": 6}},
+    ]
+
+    def test_parse_claims(self):
+        from sitstart.waivers import parse_claims
+        cl = {c.player_id: c for c in parse_claims(self.TX)}
+        self.assertEqual((cl["p1"].bid, cl["p1"].runner_up, cl["p1"].bidders), (25, 10, 3))
+        self.assertIsNone(cl["p2"].runner_up)
+        self.assertNotIn("p4", cl)
+
+    def test_market_summary_skips_week_1(self):
+        from sitstart.waivers import market_summary, parse_claims
+        m = market_summary(parse_claims(self.TX))
+        self.assertEqual((m["claims"], m["won_at_zero"], m["contested"], m["max_bid"]), (2, 1, 1, 25))
+
+    def history(self, contested_bids):
+        from sitstart.waivers import Claim
+        h = []
+        for i, (bid, runner) in enumerate(contested_bids):
+            h.append({"claim": Claim(5, f"x{i}", 1, bid, runner, 2 if runner is not None else 1),
+                      "proj": 10.0, "pos": "RB", "name": f"Guy {i}"})
+        return h
+
+    def test_uncontested_comparables_bid_one_dollar(self):
+        from sitstart.waivers import comparables, recommend_bid
+        comps = comparables(10.0, "RB", self.history([(0, None)] * 7 + [(4, 2)]))
+        b = recommend_bid(comps, hot=False, my_left=64, others_left=[100, 0, 0], weeks_left=7)
+        self.assertEqual(b["bid"], 1)
+        self.assertEqual(b["teams_can_outbid"], 1)
+
+    def test_contested_comparables_price_off_runner_up(self):
+        from sitstart.waivers import comparables, recommend_bid
+        comps = comparables(10.0, "RB", self.history([(30, 8), (20, 12), (15, 4), (9, 2), (0, None)]))
+        b = recommend_bid(comps, hot=False, my_left=64, others_left=[100], weeks_left=7)
+        self.assertEqual(b["bid"], 9)            # runner-ups 2,4,8,12 -> 75th pct 8, +$1
+        self.assertGreaterEqual(b["aggressive"], b["bid"])
+        self.assertEqual(len(b["examples"]), 3)
+
+    def test_bid_capped_to_keep_money(self):
+        from sitstart.waivers import comparables, recommend_bid
+        comps = comparables(10.0, "RB", self.history([(60, 50), (55, 45), (50, 40)]))
+        b = recommend_bid(comps, hot=False, my_left=20, others_left=[100], weeks_left=7)
+        self.assertTrue(b["capped"])
+        self.assertEqual(b["bid"], 7)            # 35% of $20
+        self.assertLessEqual(b["aggressive"], 20)
+
+    def test_comparables_prefer_similar_projection_and_position(self):
+        from sitstart.waivers import Claim, comparables
+        h = [{"claim": Claim(5, "a", 1, 1, None, 1), "proj": 10.0, "pos": "WR", "name": "WR10"},
+             {"claim": Claim(5, "b", 1, 1, None, 1), "proj": 9.0, "pos": "RB", "name": "RB9"},
+             {"claim": Claim(5, "c", 1, 1, None, 1), "proj": 3.0, "pos": "RB", "name": "RB3"}]
+        self.assertEqual([x["name"] for x in comparables(10.0, "RB", h, k=2)], ["RB9", "WR10"])
+
+    def test_week_gain_and_drop_candidate(self):
+        from sitstart.waivers import drop_candidate, week_gain
+        snap = build_snapshot(FakeClient(ROUTES, proj=PROJ_APP), "tim", schedule=make_schedule(), now=FRIDAY).to_dict()
+        star = {"player_id": "fa1", "name": "FA QB", "position": "QB", "fantasy_positions": ["QB"], "team": "SEA",
+                "injury_status": None, "score": 25.0, "proj_pts": 25.0}
+        self.assertGreater(week_gain(snap, star), 0)   # fills the empty Superflex
+        m, _, _ = MarketTests().teams()
+        d = drop_candidate(snap, m, core=set())
+        self.assertIn(d["name"], {c["name"] for c in snap["bench"]})
+
+    def test_page_renders(self):
+        from sitstart.waivers_page import render
+        row = {"player_id": "fa1", "name": "FA RB", "pos": "RB", "nfl_team": "SEA", "age": 24, "injury_status": None,
+               "proj": 11.2, "score": 10.8, "week_gain": 2.5, "ros_gain": 900, "dynasty": 1500, "consensus_rank": "RB30",
+               "hot": 4, "value": 1275,
+               "bid": {"bid": 9, "aggressive": 15, "reason": "x", "capped": False, "cap": 22, "contested_share": 0.5,
+                       "teams_can_outbid": 3, "examples": [{"name": "Guy", "week": 5, "bid": 12, "runner_up": 8, "proj": 10.0}]}}
+        rep = {"generated_at": "2026-11-18T20:00:00+00:00", "week": 11, "budget": 100, "my_left": 64, "weeks_left": 7,
+               "others_left": [100, 93, 0], "teams_out_of_faab": 1, "daily_waivers": True, "min_bid": 0,
+               "market": {"claims": 80, "won_at_zero": 50, "contested": 25, "median_contested_bid": 4.0,
+                          "median_runner_up": 1.0, "max_bid": 86},
+               "drop": {"player_id": "d", "name": "Bench Guy", "value": 120}, "adds": [row], "streamers": []}
+        html = render(rep)
+        for s in ("FA RB", "$9", "trending #4", "Bench Guy", "You have <b>$64</b>", "beat $8"):
+            self.assertIn(s, html)

@@ -40,6 +40,7 @@ MANIFEST = {
     "shortcuts": [
         {"name": "Lineup", "url": "./", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
         {"name": "Trade targets", "url": "./trades.html", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+        {"name": "Waivers", "url": "./waivers.html", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
     ],
 }
 
