@@ -993,3 +993,21 @@ class WaiverTests(unittest.TestCase):
         html = render(rep)
         for s in ("FA RB", "$9", "trending #4", "Bench Guy", "You have <b>$64</b>", "beat $8"):
             self.assertIn(s, html)
+
+
+class WaiverValueCapTests(unittest.TestCase):
+    def test_value_cap_overrides_league_competition(self):
+        from sitstart.waivers import comparables, recommend_bid
+        comps = comparables(0.0, "QB", WaiverTests().history([(30, 13), (20, 12), (15, 14), (9, 2)]))
+        b = recommend_bid(comps, hot=False, my_left=64, others_left=[100], weeks_left=7,
+                          max_bid=1, max_reason="Depth only.")
+        self.assertEqual((b["bid"], b["aggressive"]), (1, 1))
+        self.assertTrue(b["value_capped"])
+        self.assertTrue(b["reason"].startswith("Depth only."))
+
+    def test_zero_runner_up_wording(self):
+        from sitstart.waivers import comparables, recommend_bid
+        comps = comparables(5.0, "WR", WaiverTests().history([(3, 0), (2, 0), (1, 0), (0, None)]))
+        b = recommend_bid(comps, hot=False, my_left=64, others_left=[100], weeks_left=7)
+        self.assertEqual(b["bid"], 1)
+        self.assertIn("$1 should win", b["reason"])

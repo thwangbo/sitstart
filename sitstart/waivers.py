@@ -34,6 +34,7 @@ K_COMPS = 8
 MIN_PROJ = 2.0
 MAX_ADDS = 10
 MAX_STREAMERS = 6
+STASH_VALUE = 500          # dynasty market value worth holding even if he won't start this year
 
 
 # --------------------------------------------------------------------------- #
@@ -96,8 +97,10 @@ def comparables(proj: float, pos: str | None, history: list[dict], k: int = K_CO
     return sorted(history, key=dist)[:k]
 
 
-def recommend_bid(comps: list[dict], hot: bool, my_left: int, others_left: list[int], weeks_left: int) -> dict:
-    """Recommended and aggressive bid, with the reasoning."""
+def recommend_bid(comps: list[dict], hot: bool, my_left: int, others_left: list[int], weeks_left: int,
+                  max_bid: int | None = None, max_reason: str | None = None) -> dict:
+    """Recommended and aggressive bid, with the reasoning. `max_bid` caps it by how much the
+    player is worth to you (league competition alone shouldn't push a bid up)."""
     if not comps:
         bid, aggressive, reason = 1, 3, "No comparable claims yet; $1 beats every $0 bid."
         contested_share = None
@@ -111,7 +114,8 @@ def recommend_bid(comps: list[dict], hot: bool, my_left: int, others_left: list[
             bid = max(1, p75 + 1)
             aggressive = max(bid + 1, wins[len(wins) // 2])
             reason = (f"{len(contested)} of {len(comps)} similar claims drew competing bids; "
-                      f"${p75} beat 3 in 4 of the runners-up.")
+                      + (f"${p75} or less was enough to beat 3 in 4 of the runners-up." if p75 > 0
+                         else "most runners-up bid $0, so $1 should win."))
         else:
             bid, aggressive = 1, 2 if not contested else max(2, max(c.runner_up for c in contested) + 1)
             reason = (f"Only {len(contested)} of {len(comps)} similar claims drew a competing bid. "
@@ -119,8 +123,15 @@ def recommend_bid(comps: list[dict], hot: bool, my_left: int, others_left: list[
     cap = max(1, int(my_left * (0.5 if weeks_left <= 3 else 0.35)))
     capped = bid > cap
     bid, aggressive = min(bid, cap, my_left), min(aggressive, my_left)
+    value_capped = False
+    if max_bid is not None and bid > max_bid:
+        bid, aggressive, value_capped = max_bid, max_bid, True
+        reason = (max_reason or "Capped by his value to you.") + " " + reason
+    elif max_bid is not None:
+        aggressive = min(aggressive, max(max_bid, bid))
     can_outbid = sum(1 for b in others_left if b > bid)
-    return {"bid": bid, "aggressive": max(bid, aggressive), "reason": reason, "capped": capped, "cap": cap,
+    return {"bid": bid, "aggressive": max(bid, aggressive), "reason": reason, "capped": capped and not value_capped,
+            "cap": cap, "value_capped": value_capped,
             "contested_share": round(contested_share, 2) if contested_share is not None else None,
             "teams_can_outbid": can_outbid,
             "examples": [{"name": h["name"], "week": h["claim"].leg, "bid": h["claim"].bid,
@@ -227,24 +238,37 @@ def build_waiver_report(client, snap: dict, ctx: dict, consensus: dict | None, w
         new = best_win_now(me.players + [pid], ctx["slots"], market, positions)
         ros_gain = max(0.0, sum(market.redraft(p) for p in new) - me.win_now)
         value = ros_gain + lens_stash * market.value(pid)
-        if value <= 0 and gain_wk <= 0.2:
+        if value <= 0 and gain_wk <= 0.2 and (P.get(pid) or 0) < MIN_PROJ:
             continue
         comps = comparables(P.get(pid) or 0.0, sp.get("position"), history)
-        bid = recommend_bid(comps, hot=pid in hot_rank and hot_rank[pid] <= 15, my_left=left.get(my_rid, 0),
-                            others_left=others_left, weeks_left=weeks_left)
+        my_left = left.get(my_rid, 0)
+        if ros_gain > 0 or gain_wk >= 0.5:
+            tier, cap_by_value, cap_why = "add", None, None
+        elif market.value(pid) >= STASH_VALUE:
+            tier = "add"
+            cap_by_value = max(1, int(0.10 * my_left))
+            cap_why = f"Stash only (won't start for you yet), so no more than 10% of your budget."
+        else:
+            tier, cap_by_value, cap_why = "depth", 1, "He wouldn't start for you and has little trade value, so $1 at most."
+        bid = recommend_bid(comps, hot=pid in hot_rank and hot_rank[pid] <= 15, my_left=my_left,
+                            others_left=others_left, weeks_left=weeks_left, max_bid=cap_by_value, max_reason=cap_why)
         rows.append({"player_id": pid, "name": sp.get("full_name") or pid, "pos": sp.get("position"),
                      "nfl_team": sp.get("team"), "age": sp.get("age"), "injury_status": sp.get("injury_status"),
                      "proj": round(P.get(pid) or 0.0, 1), "score": round(score, 1), "week_gain": gain_wk,
                      "ros_gain": round(ros_gain), "dynasty": round(market.value(pid)),
-                     "consensus_rank": None, "hot": hot_rank.get(pid), "value": round(value), "bid": bid})
+                     "consensus_rank": None, "hot": hot_rank.get(pid), "value": round(value), "tier": tier, "bid": bid})
     for r in rows:
         c = (consensus or {}).get(r["player_id"])
         r["consensus_rank"] = f"{c['pos']}{c['rank']}" if c else None
 
-    adds = sorted([r for r in rows if r["value"] > 0], key=lambda r: -r["value"])[:MAX_ADDS]
+    adds = sorted([r for r in rows if r["tier"] == "add" and (r["ros_gain"] > 0 or r["dynasty"] >= STASH_VALUE)],
+                  key=lambda r: -r["value"])[:MAX_ADDS]
     shown = {r["player_id"] for r in adds}
     streamers = sorted([r for r in rows if r["week_gain"] >= 0.5 and r["player_id"] not in shown],
                        key=lambda r: -r["week_gain"])[:MAX_STREAMERS]
+    shown |= {r["player_id"] for r in streamers}
+    rest = sorted([r for r in rows if r["player_id"] not in shown],
+                  key=lambda r: -(r["dynasty"] + 100 * r["proj"]))[:8]
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "season": season, "week": week, "league_name": lg["name"],
@@ -253,5 +277,5 @@ def build_waiver_report(client, snap: dict, ctx: dict, consensus: dict | None, w
         "daily_waivers": bool(st.get("daily_waivers")), "min_bid": int(st.get("waiver_bid_min") or 0),
         "market": market_summary(claims),
         "drop": drop_candidate(snap, market, ctx.get("core") or set()),
-        "adds": adds, "streamers": streamers, "free_agents_checked": len(free),
+        "adds": adds, "streamers": streamers, "rest": rest, "free_agents_checked": len(free),
     }

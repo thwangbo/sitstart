@@ -76,7 +76,22 @@ def render(rep: dict) -> str:
     adds = rep.get("adds") or []
     streamers = rep.get("streamers") or []
     adds_html = (f'<table class="ttable wtable">{head}{_rows(adds, "adds")}</table>' if adds
-                 else '<p class="sub">No free agent improves your lineup or has real stash value right now.</p>')
+                 else '<p class="sub">Nobody on the wire improves your lineup for the rest of the season or is worth '
+                      'stashing. That\'s normal in a league this deep.</p>')
+    rest = rep.get("rest") or []
+    rest_html = ""
+    if rest:
+        items = "".join(
+            f'<tr><td><span class="pname">{escape(r["name"])}</span>'
+            + (f' <span class="tag inj">{escape(r["injury_status"])}</span>' if r.get("injury_status") else "")
+            + f'<div class="sub small">{escape(r["pos"] or "")}, {escape(r.get("nfl_team") or "FA")}</div></td>'
+            f'<td class="num">{r["proj"]:.1f}</td><td class="num">{_fmt(r["dynasty"])}</td>'
+            f'<td class="num">${r["bid"]["bid"]}</td></tr>' for r in rest)
+        rest_html = ('<section class="card"><h2>Best of the rest <span class="sub">depth only</span></h2>'
+                     '<table><tr class="head"><td>Player</td><td class="num">Proj this week</td>'
+                     '<td class="num">Market value</td><td class="num">Bid</td></tr>'
+                     f'{items}</table><p class="sub">None of these would start for you. Worth a $1 claim only to cover '
+                     'an injury or bye.</p></section>')
     str_html = (f'<table class="ttable wtable">{head}{_rows(streamers, "streamers")}</table>' if streamers
                 else '<p class="sub">No free agent beats your current starters this week.</p>')
     extra_css = (".big{font-size:20px;font-weight:700}.tag.hot{color:var(--accent)}.bid{min-width:240px}"
@@ -98,9 +113,11 @@ def render(rep: dict) -> str:
 stash value for players who could matter beyond this year.</p></section>
 <section class="card"><h2>This week's streamers</h2>{str_html}
 <p class="sub">Points added to this week's best lineup, using the same Score as your lineup page.</p></section>
+{rest_html}
 <section class="card"><h2>How bids are priced</h2><p class="sub">Each bid comes from your league's own claims this season.
 For every target, the app finds past claims on players with a similar projection that week, same position preferred,
 and bids $1 more than what beat 3 in 4 of the runners-up. When similar claims usually went uncontested, $1 is enough,
-because it beats every $0 bid regardless of waiver order. Bids never exceed a cap that keeps money for the weeks left.</p></section>
+because it beats every $0 bid regardless of waiver order. Bids are also capped by what the player is worth to you:
+$1 for depth, 10% of your budget for a stash, and a share of what's left for the weeks remaining.</p></section>
 </main>{pwa.SCRIPT}</body></html>
 """
