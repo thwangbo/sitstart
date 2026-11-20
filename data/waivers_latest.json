@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-20T00:33:39+00:00",
+ "generated_at": "2026-11-20T03:41:48+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -49,10 +49,10 @@
    "score": 5.8,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 176,
+   "dynasty": 156,
    "consensus_rank": "TE24",
    "hot": null,
-   "value": 44,
+   "value": 39,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -99,10 +99,10 @@
    "score": 2.4,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 144,
+   "dynasty": 134,
    "consensus_rank": "TE45",
    "hot": null,
-   "value": 36,
+   "value": 34,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -189,56 +189,6 @@
    }
   },
   {
-   "player_id": "12700",
-   "name": "Gavin Bartholomew",
-   "pos": "TE",
-   "nfl_team": "MIN",
-   "age": 23,
-   "injury_status": null,
-   "proj": 1.8,
-   "score": 2.0,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 155,
-   "consensus_rank": "TE41",
-   "hot": 19,
-   "value": 39,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.25,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Sam Roush",
-      "week": 7,
-      "bid": 4,
-      "runner_up": null,
-      "proj": 1.8
-     },
-     {
-      "name": "Ben Sinnott",
-      "week": 3,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 1.9
-     },
-     {
-      "name": "Josh Cuevas",
-      "week": 8,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 1.4
-     }
-    ]
-   }
-  },
-  {
    "player_id": "7812",
    "name": "Simi Fehoko",
    "pos": "WR",
@@ -284,6 +234,56 @@
       "bid": 0,
       "runner_up": 0,
       "proj": 2.8
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "12700",
+   "name": "Gavin Bartholomew",
+   "pos": "TE",
+   "nfl_team": "MIN",
+   "age": 23,
+   "injury_status": null,
+   "proj": 1.8,
+   "score": 2.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 126,
+   "consensus_rank": "TE41",
+   "hot": 19,
+   "value": 32,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.25,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Sam Roush",
+      "week": 7,
+      "bid": 4,
+      "runner_up": null,
+      "proj": 1.8
+     },
+     {
+      "name": "Ben Sinnott",
+      "week": 3,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 1.9
+     },
+     {
+      "name": "Josh Cuevas",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.4
      }
     ]
    }
@@ -389,44 +389,44 @@
    }
   },
   {
-   "player_id": "3286",
-   "name": "Demarcus Robinson",
+   "player_id": "8917",
+   "name": "KaVontae Turpin",
    "pos": "WR",
-   "nfl_team": "SF",
-   "age": 32,
+   "nfl_team": "DAL",
+   "age": 30,
    "injury_status": null,
-   "proj": 1.6,
-   "score": 2.2,
+   "proj": 2.3,
+   "score": 2.0,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 82,
-   "consensus_rank": "WR78",
+   "dynasty": 8,
+   "consensus_rank": "WR93",
    "hot": null,
-   "value": 21,
+   "value": 2,
    "tier": "depth",
    "bid": {
     "bid": 1,
     "aggressive": 1,
-    "reason": "3 of 8 similar claims drew competing bids; most runners-up bid $0, so $1 should win.",
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 3 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
     "capped": false,
     "cap": 22,
-    "value_capped": false,
+    "value_capped": true,
     "contested_share": 0.38,
     "teams_can_outbid": 7,
     "examples": [
      {
-      "name": "Jordan Watkins",
+      "name": "Jacob Cowing",
       "week": 3,
       "bid": 0,
       "runner_up": null,
-      "proj": 1.2
+      "proj": 2.3
      },
      {
-      "name": "John Metchie III",
-      "week": 7,
-      "bid": 0,
+      "name": "Calvin Ridley",
+      "week": 5,
+      "bid": 4,
       "runner_up": null,
-      "proj": 1.2
+      "proj": 2.2
      },
      {
       "name": "Darius Cooper",
