@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-19T22:06:12+00:00",
+ "generated_at": "2026-11-20T00:33:39+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -46,13 +46,13 @@
    "age": 26,
    "injury_status": null,
    "proj": 6.2,
-   "score": 5.6,
+   "score": 5.8,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 188,
-   "consensus_rank": "TE25",
+   "dynasty": 176,
+   "consensus_rank": "TE24",
    "hot": null,
-   "value": 47,
+   "value": 44,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -96,13 +96,13 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.7,
-   "score": 2.2,
+   "score": 2.4,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 148,
-   "consensus_rank": "TE48",
+   "dynasty": 144,
+   "consensus_rank": "TE45",
    "hot": null,
-   "value": 37,
+   "value": 36,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -146,11 +146,11 @@
    "age": 30,
    "injury_status": null,
    "proj": 3.7,
-   "score": 2.8,
+   "score": 2.9,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "TE45",
+   "consensus_rank": "TE44",
    "hot": null,
    "value": 0,
    "tier": "depth",
@@ -196,13 +196,13 @@
    "age": 23,
    "injury_status": null,
    "proj": 1.8,
-   "score": 2.2,
+   "score": 2.0,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 162,
-   "consensus_rank": "TE40",
-   "hot": 20,
-   "value": 40,
+   "dynasty": 155,
+   "consensus_rank": "TE41",
+   "hot": 19,
+   "value": 39,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -272,17 +272,17 @@
       "proj": 2.9
      },
      {
-      "name": "Reggie Virgil",
-      "week": 9,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 3.4
-     },
-     {
       "name": "Treylon Burks",
       "week": 4,
       "bid": 0,
       "runner_up": null,
+      "proj": 2.8
+     },
+     {
+      "name": "Cody White",
+      "week": 4,
+      "bid": 0,
+      "runner_up": 0,
       "proj": 2.8
      }
     ]
@@ -300,7 +300,7 @@
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "RB72",
+   "consensus_rank": "RB70",
    "hot": null,
    "value": 0,
    "tier": "depth",
@@ -349,10 +349,10 @@
    "score": 1.9,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 35,
-   "consensus_rank": "WR99",
+   "dynasty": 30,
+   "consensus_rank": "WR100",
    "hot": null,
-   "value": 9,
+   "value": 8,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -396,13 +396,13 @@
    "age": 32,
    "injury_status": null,
    "proj": 1.6,
-   "score": 2.4,
+   "score": 2.2,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 98,
-   "consensus_rank": "WR71",
+   "dynasty": 82,
+   "consensus_rank": "WR78",
    "hot": null,
-   "value": 25,
+   "value": 21,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -439,5 +439,5 @@
    }
   }
  ],
- "free_agents_checked": 63
+ "free_agents_checked": 62
 }

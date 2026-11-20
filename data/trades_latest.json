@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-19T22:06:10+00:00",
+ "generated_at": "2026-11-20T00:33:34+00:00",
  "season": 2026,
  "week": 11,
  "deadline_week": 12,
@@ -33,29 +33,29 @@
   {
    "pos": "QB",
    "rank": 5,
-   "mine": 4725,
-   "league_avg": 3929,
+   "mine": 4818,
+   "league_avg": 3978,
    "need": false
   },
   {
    "pos": "RB",
    "rank": 8,
-   "mine": 2418,
-   "league_avg": 3178,
+   "mine": 2452,
+   "league_avg": 3241,
    "need": true
   },
   {
    "pos": "WR",
    "rank": 4,
-   "mine": 4343,
-   "league_avg": 2860,
+   "mine": 4464,
+   "league_avg": 2896,
    "need": false
   },
   {
    "pos": "TE",
    "rank": 6,
-   "mine": 1589,
-   "league_avg": 2157,
+   "mine": 1606,
+   "league_avg": 2208,
    "need": true
   }
  ],
@@ -69,13 +69,13 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 3572,
-   "redraft": 4010,
-   "trend": -250,
-   "fc_value": 3765,
-   "ktc_value": 3379,
+   "value": 3538,
+   "redraft": 3990,
+   "trend": -314,
+   "fc_value": 3701,
+   "ktc_value": 3374,
    "disagree": false,
-   "gain": 2145,
+   "gain": 2160,
    "motive": 1.0,
    "why": "Honolulu Blues is rebuilding and he's 32",
    "replaces": [
@@ -85,14 +85,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 2145,
+   "score": 2160,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -101,14 +101,14 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4076,
-    "ratio": 1.141,
+    "total": 4052,
+    "ratio": 1.145,
     "fit": 1.0
    },
    "shared": [
@@ -127,7 +127,7 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
@@ -137,7 +137,7 @@
       "id": "2028-2-8",
       "label": "2028 2nd",
       "kind": "pick",
-      "value": 1516,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
@@ -146,93 +146,16 @@
       "id": "2029-2-8",
       "label": "2029 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4913,
-    "ratio": 1.375,
-    "fit": 0.75
+    "total": 4908,
+    "ratio": 1.387,
+    "fit": 0.76
    },
-   "injury_status": null
-  },
-  {
-   "player_id": "11584",
-   "name": "Bucky Irving",
-   "pos": "RB",
-   "age": 24.3,
-   "nfl_team": "TB",
-   "owner": "WR U ",
-   "owner_label": "rebuilder",
-   "owner_roster_id": 2,
-   "value": 4385,
-   "redraft": 5049,
-   "trend": 820,
-   "fc_value": 4482,
-   "ktc_value": 4288,
-   "disagree": false,
-   "gain": 3184,
-   "motive": 0.6,
-   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 16.5,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 1910,
-   "offer": {
-    "assets": [
-     {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2195,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2028-2-8",
-      "label": "2028 2nd",
-      "kind": "pick",
-      "value": 1516,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
-      "kind": "pick",
-      "value": 1388,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 5098,
-    "ratio": 1.163,
-    "fit": 1.0
-   },
-   "shared": [
-    {
-     "label": "2029 1st",
-     "offers": 9
-    },
-    {
-     "label": "2028 2nd",
-     "offers": 3
-    },
-    {
-     "label": "2029 2nd",
-     "offers": 2
-    }
-   ],
-   "alt_offer": null,
    "injury_status": null
   },
   {
@@ -244,13 +167,13 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 3714,
-   "redraft": 4033,
-   "trend": 689,
-   "fc_value": 3714,
-   "ktc_value": 3714,
+   "value": 3668,
+   "redraft": 4223,
+   "trend": 685,
+   "fc_value": 3710,
+   "ktc_value": 3627,
    "disagree": false,
-   "gain": 2444,
+   "gain": 2617,
    "motive": 0.6,
    "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -260,14 +183,14 @@
    "replaces_ppg": [
     9.6
    ],
-   "score": 1466,
+   "score": 1570,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -276,14 +199,14 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4076,
-    "ratio": 1.097,
+    "total": 4052,
+    "ratio": 1.104,
     "fit": 1.0
    },
    "shared": [
@@ -302,7 +225,7 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
@@ -312,7 +235,7 @@
       "id": "2028-2-8",
       "label": "2028 2nd",
       "kind": "pick",
-      "value": 1516,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
@@ -321,15 +244,15 @@
       "id": "2029-2-8",
       "label": "2029 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4913,
-    "ratio": 1.323,
-    "fit": 0.75
+    "total": 4908,
+    "ratio": 1.338,
+    "fit": 0.76
    },
    "injury_status": null
   },
@@ -342,13 +265,13 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 3619,
-   "redraft": 3920,
-   "trend": 107,
-   "fc_value": 3726,
-   "ktc_value": 3512,
+   "value": 3566,
+   "redraft": 4247,
+   "trend": 8,
+   "fc_value": 3627,
+   "ktc_value": 3504,
    "disagree": false,
-   "gain": 2055,
+   "gain": 2417,
    "motive": 0.5,
    "why": "KPop Travis Hunter is in the middle and he's 27",
    "replaces": [
@@ -358,14 +281,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1028,
+   "score": 1208,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -374,14 +297,14 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4076,
-    "ratio": 1.126,
+    "total": 4052,
+    "ratio": 1.136,
     "fit": 0.8
    },
    "shared": [
@@ -400,33 +323,34 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
       "injury_status": null
      },
      {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
+      "id": "2028-2-8",
+      "label": "2028 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "2029-3-8",
-      "label": "2029 3rd",
-      "kind": "pick",
-      "value": 846,
-      "age": null,
-      "pos": null,
-      "core": false
+      "id": "13394",
+      "label": "Josh Cameron",
+      "kind": "player",
+      "value": 656,
+      "age": 23.7,
+      "pos": "WR",
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 4243,
-    "ratio": 1.172,
+    "total": 4176,
+    "ratio": 1.171,
     "fit": 0.8
    },
    "injury_status": null
@@ -440,13 +364,13 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 4204,
-   "redraft": 3564,
-   "trend": 417,
-   "fc_value": 4256,
-   "ktc_value": 4153,
+   "value": 4140,
+   "redraft": 3639,
+   "trend": 307,
+   "fc_value": 4147,
+   "ktc_value": 4134,
    "disagree": false,
-   "gain": 1699,
+   "gain": 1809,
    "motive": 0.6,
    "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -456,14 +380,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1019,
+   "score": 1085,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -472,7 +396,7 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
@@ -481,14 +405,14 @@
       "id": "2029-3-8",
       "label": "2029 3rd",
       "kind": "pick",
-      "value": 846,
+      "value": 842,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4922,
-    "ratio": 1.171,
+    "total": 4894,
+    "ratio": 1.182,
     "fit": 1.0
    },
    "shared": [
@@ -499,6 +423,10 @@
     {
      "label": "2027 2nd (Mid)",
      "offers": 5
+    },
+    {
+     "label": "2029 3rd",
+     "offers": 2
     }
    ],
    "alt_offer": null,
@@ -513,13 +441,13 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 3057,
-   "redraft": 3476,
-   "trend": -429,
-   "fc_value": 3205,
-   "ktc_value": 2909,
+   "value": 3060,
+   "redraft": 3598,
+   "trend": -417,
+   "fc_value": 3217,
+   "ktc_value": 2904,
    "disagree": false,
-   "gain": 1611,
+   "gain": 1768,
    "motive": 0.5,
    "why": "KPop Travis Hunter is in the middle and he's 27",
    "replaces": [
@@ -529,14 +457,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 806,
+   "score": 884,
    "offer": {
     "assets": [
      {
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
@@ -545,14 +473,14 @@
       "id": "2028-2-8",
       "label": "2028 2nd",
       "kind": "pick",
-      "value": 1516,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 3396,
-    "ratio": 1.111,
+    "total": 3389,
+    "ratio": 1.107,
     "fit": 0.8
    },
    "shared": [
@@ -562,7 +490,7 @@
     },
     {
      "label": "2028 2nd",
-     "offers": 3
+     "offers": 2
     }
    ],
    "alt_offer": {
@@ -571,7 +499,7 @@
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -580,15 +508,124 @@
       "id": "2029-2-8",
       "label": "2029 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 3582,
-    "ratio": 1.172,
+    "total": 3568,
+    "ratio": 1.166,
     "fit": 0.8
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "3294",
+   "name": "Dak Prescott",
+   "pos": "QB",
+   "age": 33.3,
+   "nfl_team": "DAL",
+   "owner": "Brock & Roll",
+   "owner_label": "contender",
+   "owner_roster_id": 7,
+   "value": 3661,
+   "redraft": 4967,
+   "trend": 18,
+   "fc_value": 4089,
+   "ktc_value": 3233,
+   "disagree": false,
+   "gain": 3137,
+   "motive": 0.2,
+   "why": "Brock & Roll is contending, so they'll want help now in return",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 20.8,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 627,
+   "offer": {
+    "assets": [
+     {
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 2002,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "5022",
+      "label": "Dallas Goedert",
+      "kind": "player",
+      "value": 1172,
+      "age": 31.9,
+      "pos": "TE",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "8136",
+      "label": "Rachaad White",
+      "kind": "player",
+      "value": 1122,
+      "age": 27.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     }
+    ],
+    "total": 4296,
+    "ratio": 1.173,
+    "fit": 0.79
+   },
+   "shared": [
+    {
+     "label": "Zach Charbonnet",
+     "offers": 4
+    },
+    {
+     "label": "Dallas Goedert",
+     "offers": 2
+    }
+   ],
+   "alt_offer": {
+    "assets": [
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2182,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2028-3-5",
+      "label": "2028 3rd (from Coke Heads)",
+      "kind": "pick",
+      "value": 1037,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2028-3-8",
+      "label": "2028 3rd",
+      "kind": "pick",
+      "value": 1037,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 4256,
+    "ratio": 1.162,
+    "fit": 0.55
    },
    "injury_status": null
   },
@@ -601,13 +638,13 @@
    "owner": "simonyangpp",
    "owner_label": "contender",
    "owner_roster_id": 1,
-   "value": 4280,
-   "redraft": 4962,
-   "trend": 222,
-   "fc_value": 4274,
-   "ktc_value": 4287,
+   "value": 4232,
+   "redraft": 4837,
+   "trend": 121,
+   "fc_value": 4175,
+   "ktc_value": 4289,
    "disagree": false,
-   "gain": 3097,
+   "gain": 3007,
    "motive": 0.2,
    "why": "simonyangpp is contending, so they'll want help now in return",
    "replaces": [
@@ -617,14 +654,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 619,
+   "score": 601,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -633,24 +670,24 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
       "injury_status": null
      },
      {
-      "id": "9225",
-      "label": "Tank Bigsby",
+      "id": "11292",
+      "label": "Tommy DeVito",
       "kind": "player",
-      "value": 770,
-      "age": 24.2,
-      "pos": "RB",
+      "value": 732,
+      "age": 28.3,
+      "pos": "QB",
       "core": false,
-      "injury_status": "IR"
+      "injury_status": null
      }
     ],
-    "total": 4975,
+    "total": 4916,
     "ratio": 1.162,
     "fit": 0.66
    },
@@ -664,215 +701,11 @@
      "offers": 4
     },
     {
-     "label": "Tank Bigsby",
+     "label": "Tommy DeVito",
      "offers": 2
     }
    ],
    "alt_offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "3294",
-   "name": "Dak Prescott",
-   "pos": "QB",
-   "age": 33.3,
-   "nfl_team": "DAL",
-   "owner": "Brock & Roll",
-   "owner_label": "contender",
-   "owner_roster_id": 7,
-   "value": 3612,
-   "redraft": 4741,
-   "trend": -32,
-   "fc_value": 4039,
-   "ktc_value": 3184,
-   "disagree": false,
-   "gain": 2876,
-   "motive": 0.2,
-   "why": "Brock & Roll is contending, so they'll want help now in return",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 20.8,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 575,
-   "offer": {
-    "assets": [
-     {
-      "id": "9753",
-      "label": "Zach Charbonnet",
-      "kind": "player",
-      "value": 2010,
-      "age": 25.9,
-      "pos": "RB",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "5022",
-      "label": "Dallas Goedert",
-      "kind": "player",
-      "value": 1157,
-      "age": 31.9,
-      "pos": "TE",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "5045",
-      "label": "Courtland Sutton",
-      "kind": "player",
-      "value": 1042,
-      "age": 31.1,
-      "pos": "WR",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 4209,
-    "ratio": 1.165,
-    "fit": 0.76
-   },
-   "shared": [
-    {
-     "label": "Zach Charbonnet",
-     "offers": 4
-    },
-    {
-     "label": "Dallas Goedert",
-     "offers": 2
-    }
-   ],
-   "alt_offer": {
-    "assets": [
-     {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2195,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1880,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 4076,
-    "ratio": 1.128,
-    "fit": 0.55
-   },
-   "injury_status": null
-  },
-  {
-   "player_id": "7594",
-   "name": "Chuba Hubbard",
-   "pos": "RB",
-   "age": 27.4,
-   "nfl_team": "CAR",
-   "owner": "simonyangpp",
-   "owner_label": "contender",
-   "owner_roster_id": 1,
-   "value": 3298,
-   "redraft": 4386,
-   "trend": 270,
-   "fc_value": 3392,
-   "ktc_value": 3205,
-   "disagree": false,
-   "gain": 2521,
-   "motive": 0.2,
-   "why": "simonyangpp is contending, so they'll want help now in return",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 18.4,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 504,
-   "offer": {
-    "assets": [
-     {
-      "id": "9753",
-      "label": "Zach Charbonnet",
-      "kind": "player",
-      "value": 2010,
-      "age": 25.9,
-      "pos": "RB",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "5022",
-      "label": "Dallas Goedert",
-      "kind": "player",
-      "value": 1157,
-      "age": 31.9,
-      "pos": "TE",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "9225",
-      "label": "Tank Bigsby",
-      "kind": "player",
-      "value": 770,
-      "age": 24.2,
-      "pos": "RB",
-      "core": false,
-      "injury_status": "IR"
-     }
-    ],
-    "total": 3937,
-    "ratio": 1.194,
-    "fit": 0.76
-   },
-   "shared": [
-    {
-     "label": "Zach Charbonnet",
-     "offers": 4
-    },
-    {
-     "label": "Dallas Goedert",
-     "offers": 2
-    },
-    {
-     "label": "Tank Bigsby",
-     "offers": 2
-    }
-   ],
-   "alt_offer": {
-    "assets": [
-     {
-      "id": "2029-1-8",
-      "label": "2029 1st",
-      "kind": "pick",
-      "value": 2195,
-      "age": null,
-      "pos": null,
-      "core": false
-     },
-     {
-      "id": "2029-2-8",
-      "label": "2029 2nd",
-      "kind": "pick",
-      "value": 1388,
-      "age": null,
-      "pos": null,
-      "core": false
-     }
-    ],
-    "total": 3582,
-    "ratio": 1.086,
-    "fit": 0.55
-   },
    "injury_status": null
   },
   {
@@ -884,13 +717,13 @@
    "owner": "WR U ",
    "owner_label": "rebuilder",
    "owner_roster_id": 2,
-   "value": 3972,
-   "redraft": 2667,
-   "trend": -900,
-   "fc_value": 3805,
-   "ktc_value": 4138,
+   "value": 3940,
+   "redraft": 2815,
+   "trend": -914,
+   "fc_value": 3792,
+   "ktc_value": 4089,
    "disagree": false,
-   "gain": 802,
+   "gain": 985,
    "motive": 0.6,
    "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -900,14 +733,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 481,
+   "score": 591,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -916,7 +749,7 @@
       "id": "2029-2-8",
       "label": "2029 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
@@ -925,24 +758,20 @@
       "id": "2028-3-5",
       "label": "2028 3rd (from Coke Heads)",
       "kind": "pick",
-      "value": 1032,
+      "value": 1037,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4615,
-    "ratio": 1.162,
+    "total": 4606,
+    "ratio": 1.169,
     "fit": 1.0
    },
    "shared": [
     {
      "label": "2029 1st",
      "offers": 9
-    },
-    {
-     "label": "2029 2nd",
-     "offers": 2
     }
    ],
    "alt_offer": {
@@ -951,33 +780,33 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
       "injury_status": null
      },
      {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
+      "id": "2028-2-8",
+      "label": "2028 2nd",
       "kind": "pick",
-      "value": 1880,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "2028-3-5",
-      "label": "2028 3rd (from Coke Heads)",
+      "id": "2029-2-8",
+      "label": "2029 2nd",
       "kind": "pick",
-      "value": 1032,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 4922,
-    "ratio": 1.239,
+    "total": 4908,
+    "ratio": 1.246,
     "fit": 0.76
    },
    "injury_status": null
@@ -991,13 +820,13 @@
    "owner": "Goodbye My Lova",
    "owner_label": "rebuilder",
    "owner_roster_id": 4,
-   "value": 3322,
-   "redraft": 2645,
-   "trend": 1430,
-   "fc_value": 3240,
-   "ktc_value": 3405,
+   "value": 3349,
+   "redraft": 2792,
+   "trend": 1390,
+   "fc_value": 3201,
+   "ktc_value": 3497,
    "disagree": false,
-   "gain": 780,
+   "gain": 962,
    "motive": 0.6,
    "why": "Goodbye My Lova is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -1007,14 +836,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 468,
+   "score": 577,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -1023,14 +852,14 @@
       "id": "2028-2-8",
       "label": "2028 2nd",
       "kind": "pick",
-      "value": 1516,
+      "value": 1519,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 3711,
-    "ratio": 1.117,
+    "total": 3700,
+    "ratio": 1.105,
     "fit": 1.0
    },
    "shared": [
@@ -1040,7 +869,7 @@
     },
     {
      "label": "2028 2nd",
-     "offers": 3
+     "offers": 2
     }
    ],
    "alt_offer": {
@@ -1049,7 +878,7 @@
       "id": "2027-2-8",
       "label": "2027 2nd (Mid)",
       "kind": "pick",
-      "value": 1880,
+      "value": 1870,
       "age": null,
       "pos": null,
       "core": false
@@ -1058,25 +887,125 @@
       "id": "2029-2-8",
       "label": "2029 2nd",
       "kind": "pick",
-      "value": 1388,
+      "value": 1387,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "11292",
-      "label": "Tommy DeVito",
+      "id": "13394",
+      "label": "Josh Cameron",
       "kind": "player",
-      "value": 594,
-      "age": 28.3,
-      "pos": "QB",
+      "value": 656,
+      "age": 23.7,
+      "pos": "WR",
       "core": false,
       "injury_status": null
      }
     ],
-    "total": 3862,
-    "ratio": 1.163,
-    "fit": 0.95
+    "total": 3912,
+    "ratio": 1.168,
+    "fit": 1.0
+   },
+   "injury_status": null
+  },
+  {
+   "player_id": "7594",
+   "name": "Chuba Hubbard",
+   "pos": "RB",
+   "age": 27.4,
+   "nfl_team": "CAR",
+   "owner": "simonyangpp",
+   "owner_label": "contender",
+   "owner_roster_id": 1,
+   "value": 3288,
+   "redraft": 4663,
+   "trend": 252,
+   "fc_value": 3374,
+   "ktc_value": 3201,
+   "disagree": false,
+   "gain": 2833,
+   "motive": 0.2,
+   "why": "simonyangpp is contending, so they'll want help now in return",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 18.4,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 567,
+   "offer": {
+    "assets": [
+     {
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 2002,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "5022",
+      "label": "Dallas Goedert",
+      "kind": "player",
+      "value": 1172,
+      "age": 31.9,
+      "pos": "TE",
+      "core": false,
+      "injury_status": null
+     },
+     {
+      "id": "13394",
+      "label": "Josh Cameron",
+      "kind": "player",
+      "value": 656,
+      "age": 23.7,
+      "pos": "WR",
+      "core": false,
+      "injury_status": null
+     }
+    ],
+    "total": 3829,
+    "ratio": 1.165,
+    "fit": 0.77
+   },
+   "shared": [
+    {
+     "label": "Zach Charbonnet",
+     "offers": 4
+    },
+    {
+     "label": "Dallas Goedert",
+     "offers": 2
+    }
+   ],
+   "alt_offer": {
+    "assets": [
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2182,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2029-2-8",
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1387,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 3568,
+    "ratio": 1.085,
+    "fit": 0.55
    },
    "injury_status": null
   },
@@ -1089,13 +1018,13 @@
    "owner": "vipkraken",
    "owner_label": "contender",
    "owner_roster_id": 6,
-   "value": 4115,
-   "redraft": 3937,
-   "trend": -1630,
-   "fc_value": 4245,
-   "ktc_value": 3985,
+   "value": 4182,
+   "redraft": 4200,
+   "trend": -1546,
+   "fc_value": 4329,
+   "ktc_value": 4036,
    "disagree": false,
-   "gain": 2072,
+   "gain": 2370,
    "motive": 0.2,
    "why": "vipkraken is contending, so they'll want help now in return",
    "replaces": [
@@ -1105,14 +1034,14 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 414,
+   "score": 474,
    "offer": {
     "assets": [
      {
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
@@ -1121,7 +1050,7 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
@@ -1131,15 +1060,15 @@
       "id": "11292",
       "label": "Tommy DeVito",
       "kind": "player",
-      "value": 594,
+      "value": 732,
       "age": 28.3,
       "pos": "QB",
       "core": false,
       "injury_status": null
      }
     ],
-    "total": 4798,
-    "ratio": 1.166,
+    "total": 4916,
+    "ratio": 1.175,
     "fit": 0.66
    },
    "shared": [
@@ -1150,9 +1079,101 @@
     {
      "label": "Zach Charbonnet",
      "offers": 4
+    },
+    {
+     "label": "Tommy DeVito",
+     "offers": 2
     }
    ],
    "alt_offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "12481",
+   "name": "Cam Skattebo",
+   "pos": "RB",
+   "age": 24.8,
+   "nfl_team": "NYG",
+   "owner": "Coke Heads",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 5,
+   "value": 2751,
+   "redraft": 2571,
+   "trend": 588,
+   "fc_value": 2984,
+   "ktc_value": 2518,
+   "disagree": false,
+   "gain": 741,
+   "motive": 0.6,
+   "why": "Coke Heads is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 11.3,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 445,
+   "offer": {
+    "assets": [
+     {
+      "id": "2029-1-8",
+      "label": "2029 1st",
+      "kind": "pick",
+      "value": 2182,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2029-3-8",
+      "label": "2029 3rd",
+      "kind": "pick",
+      "value": 842,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 3024,
+    "ratio": 1.099,
+    "fit": 1.0
+   },
+   "shared": [
+    {
+     "label": "2029 1st",
+     "offers": 9
+    },
+    {
+     "label": "2029 3rd",
+     "offers": 2
+    }
+   ],
+   "alt_offer": {
+    "assets": [
+     {
+      "id": "2027-2-8",
+      "label": "2027 2nd (Mid)",
+      "kind": "pick",
+      "value": 1870,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2029-2-8",
+      "label": "2029 2nd",
+      "kind": "pick",
+      "value": 1387,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 3257,
+    "ratio": 1.184,
+    "fit": 1.0
+   },
    "injury_status": null
   }
  ],
@@ -1166,13 +1187,13 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 9028,
-   "redraft": 9485,
-   "trend": 904,
-   "fc_value": 9118,
-   "ktc_value": 8937,
+   "value": 9132,
+   "redraft": 9590,
+   "trend": 917,
+   "fc_value": 9132,
+   "ktc_value": 9132,
    "disagree": false,
-   "gain": 7620,
+   "gain": 7760,
    "motive": 0.6,
    "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -1182,7 +1203,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 4572,
+   "score": 4656,
    "offer": null,
    "injury_status": null
   },
@@ -1195,13 +1216,13 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 10370,
-   "redraft": 10111,
-   "trend": 710,
-   "fc_value": 10301,
-   "ktc_value": 10439,
+   "value": 10393,
+   "redraft": 9922,
+   "trend": 816,
+   "fc_value": 10406,
+   "ktc_value": 10380,
    "disagree": false,
-   "gain": 8246,
+   "gain": 8092,
    "motive": 0.35,
    "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "replaces": [
@@ -1211,7 +1232,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 2886,
+   "score": 2832,
    "offer": null,
    "injury_status": null
   },
@@ -1224,13 +1245,13 @@
    "owner": "WR U ",
    "owner_label": "rebuilder",
    "owner_roster_id": 2,
-   "value": 7790,
-   "redraft": 5616,
-   "trend": 436,
-   "fc_value": 7535,
-   "ktc_value": 8046,
+   "value": 7774,
+   "redraft": 5864,
+   "trend": 454,
+   "fc_value": 7553,
+   "ktc_value": 7996,
    "disagree": false,
-   "gain": 3751,
+   "gain": 4034,
    "motive": 0.6,
    "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
    "replaces": [
@@ -1240,7 +1261,36 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 2251,
+   "score": 2420,
+   "offer": null,
+   "injury_status": null
+  },
+  {
+   "player_id": "11584",
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "age": 24.3,
+   "nfl_team": "TB",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 4374,
+   "redraft": 5040,
+   "trend": 716,
+   "fc_value": 4378,
+   "ktc_value": 4370,
+   "disagree": false,
+   "gain": 3210,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "replaces": [
+    "Saquon Barkley"
+   ],
+   "ppg": 16.5,
+   "replaces_ppg": [
+    7.9
+   ],
+   "score": 1926,
    "offer": null,
    "injury_status": null
   },
@@ -1253,13 +1303,13 @@
    "owner": "Hello My Lova",
    "owner_label": "contender",
    "owner_roster_id": 12,
-   "value": 10584,
-   "redraft": 10774,
-   "trend": 141,
-   "fc_value": 10867,
-   "ktc_value": 10301,
+   "value": 10724,
+   "redraft": 10841,
+   "trend": -2,
+   "fc_value": 10724,
+   "ktc_value": 10724,
    "disagree": false,
-   "gain": 8909,
+   "gain": 9011,
    "motive": 0.2,
    "why": "Hello My Lova is contending, so they'll want help now in return",
    "replaces": [
@@ -1269,36 +1319,7 @@
    "replaces_ppg": [
     7.9
    ],
-   "score": 1782,
-   "offer": null,
-   "injury_status": null
-  },
-  {
-   "player_id": "6770",
-   "name": "Joe Burrow",
-   "pos": "QB",
-   "age": 29.9,
-   "nfl_team": "CIN",
-   "owner": "simonyangpp",
-   "owner_label": "contender",
-   "owner_roster_id": 1,
-   "value": 7686,
-   "redraft": 10556,
-   "trend": 1640,
-   "fc_value": 8046,
-   "ktc_value": 7327,
-   "disagree": false,
-   "gain": 8691,
-   "motive": 0.2,
-   "why": "simonyangpp is contending, so they'll want help now in return",
-   "replaces": [
-    "Saquon Barkley"
-   ],
-   "ppg": 26.5,
-   "replaces_ppg": [
-    7.9
-   ],
-   "score": 1738,
+   "score": 1802,
    "offer": null,
    "injury_status": null
   }
@@ -1313,16 +1334,16 @@
    "owner": "Honolulu Blues",
    "owner_label": "rebuilder",
    "owner_roster_id": 3,
-   "value": 9028,
-   "fc_value": 9118,
-   "ktc_value": 8937,
+   "value": 9132,
+   "fc_value": 9132,
+   "ktc_value": 9132,
    "disagree": false,
    "motive": 0.6,
    "why": "Honolulu Blues is rebuilding, but he's young, so expect to pay full price",
    "ppg": 18.0,
    "injury_status": null,
-   "net_gain": 7620,
-   "score": 4572,
+   "net_gain": 7760,
+   "score": 4656,
    "gives_starter": [
     {
      "name": "Drake Maye",
@@ -1335,7 +1356,7 @@
       "id": "11564",
       "label": "Drake Maye",
       "kind": "player",
-      "value": 6480,
+      "value": 6524,
       "age": 24.2,
       "pos": "QB",
       "core": true,
@@ -1345,24 +1366,25 @@
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
      },
      {
-      "id": "2027-2-8",
-      "label": "2027 2nd (Mid)",
-      "kind": "pick",
-      "value": 1880,
-      "age": null,
-      "pos": null,
-      "core": false
+      "id": "9753",
+      "label": "Zach Charbonnet",
+      "kind": "player",
+      "value": 2002,
+      "age": 25.9,
+      "pos": "RB",
+      "core": false,
+      "injury_status": null
      }
     ],
-    "total": 10556,
-    "ratio": 1.169,
-    "fit": 0.82
+    "total": 10707,
+    "ratio": 1.172,
+    "fit": 0.71
    }
   },
   {
@@ -1374,16 +1396,16 @@
    "owner": "WR U ",
    "owner_label": "rebuilder",
    "owner_roster_id": 2,
-   "value": 7790,
-   "fc_value": 7535,
-   "ktc_value": 8046,
+   "value": 7774,
+   "fc_value": 7553,
+   "ktc_value": 7996,
    "disagree": false,
    "motive": 0.6,
    "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
    "ppg": 19.2,
    "injury_status": null,
-   "net_gain": 3751,
-   "score": 2251,
+   "net_gain": 4034,
+   "score": 2420,
    "gives_starter": [
     {
      "name": "Drake Maye",
@@ -1396,7 +1418,7 @@
       "id": "11564",
       "label": "Drake Maye",
       "kind": "player",
-      "value": 6480,
+      "value": 6524,
       "age": 24.2,
       "pos": "QB",
       "core": true,
@@ -1406,15 +1428,76 @@
       "id": "2029-1-8",
       "label": "2029 1st",
       "kind": "pick",
-      "value": 2195,
+      "value": 2182,
       "age": null,
       "pos": null,
       "core": false
      }
     ],
-    "total": 8675,
-    "ratio": 1.114,
+    "total": 8705,
+    "ratio": 1.12,
     "fit": 0.78
+   }
+  },
+  {
+   "player_id": "11584",
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "age": 24.3,
+   "nfl_team": "TB",
+   "owner": "WR U ",
+   "owner_label": "rebuilder",
+   "owner_roster_id": 2,
+   "value": 4374,
+   "fc_value": 4378,
+   "ktc_value": 4370,
+   "disagree": false,
+   "motive": 0.6,
+   "why": "WR U  is rebuilding, but he's young, so expect to pay full price",
+   "ppg": 16.5,
+   "injury_status": null,
+   "net_gain": 3210,
+   "score": 1926,
+   "gives_starter": [
+    {
+     "name": "Sam LaPorta",
+     "ppg": 8.6
+    }
+   ],
+   "offer": {
+    "assets": [
+     {
+      "id": "10859",
+      "label": "Sam LaPorta",
+      "kind": "player",
+      "value": 2586,
+      "age": 25.9,
+      "pos": "TE",
+      "core": true,
+      "injury_status": null
+     },
+     {
+      "id": "2028-2-8",
+      "label": "2028 2nd",
+      "kind": "pick",
+      "value": 1519,
+      "age": null,
+      "pos": null,
+      "core": false
+     },
+     {
+      "id": "2027-3-6",
+      "label": "2027 3rd (Late) (from vipkraken)",
+      "kind": "pick",
+      "value": 1094,
+      "age": null,
+      "pos": null,
+      "core": false
+     }
+    ],
+    "total": 5198,
+    "ratio": 1.188,
+    "fit": 0.85
    }
   },
   {
@@ -1426,16 +1509,16 @@
    "owner": "simonyangpp",
    "owner_label": "contender",
    "owner_roster_id": 1,
-   "value": 7686,
-   "fc_value": 8046,
-   "ktc_value": 7327,
+   "value": 7640,
+   "fc_value": 7996,
+   "ktc_value": 7284,
    "disagree": false,
    "motive": 0.2,
    "why": "simonyangpp is contending, so they'll want help now in return",
    "ppg": 26.5,
    "injury_status": null,
-   "net_gain": 8691,
-   "score": 1738,
+   "net_gain": 8756,
+   "score": 1751,
    "gives_starter": [
     {
      "name": "Drake Maye",
@@ -1448,7 +1531,7 @@
       "id": "11564",
       "label": "Drake Maye",
       "kind": "player",
-      "value": 6480,
+      "value": 6524,
       "age": 24.2,
       "pos": "QB",
       "core": true,
@@ -1458,26 +1541,26 @@
       "id": "9753",
       "label": "Zach Charbonnet",
       "kind": "player",
-      "value": 2010,
+      "value": 2002,
       "age": 25.9,
       "pos": "RB",
       "core": false,
       "injury_status": null
      },
      {
-      "id": "8136",
-      "label": "Rachaad White",
+      "id": "5045",
+      "label": "Courtland Sutton",
       "kind": "player",
-      "value": 1116,
-      "age": 27.9,
-      "pos": "RB",
+      "value": 1018,
+      "age": 31.1,
+      "pos": "WR",
       "core": false,
       "injury_status": null
      }
     ],
-    "total": 9605,
-    "ratio": 1.25,
-    "fit": 0.66
+    "total": 9544,
+    "ratio": 1.249,
+    "fit": 0.65
    }
   },
   {
@@ -1489,16 +1572,16 @@
    "owner": "KPop Travis Hunter",
    "owner_label": "middle",
    "owner_roster_id": 10,
-   "value": 6195,
-   "fc_value": 6195,
-   "ktc_value": 6195,
+   "value": 6287,
+   "fc_value": 6287,
+   "ktc_value": 6287,
    "disagree": false,
    "motive": 0.35,
    "why": "KPop Travis Hunter is in the middle; he's young enough that they'll want a premium",
    "ppg": 19.9,
    "injury_status": null,
-   "net_gain": 4309,
-   "score": 1508,
+   "net_gain": 4459,
+   "score": 1561,
    "gives_starter": [
     {
      "name": "Drake Maye",
@@ -1511,79 +1594,16 @@
       "id": "11564",
       "label": "Drake Maye",
       "kind": "player",
-      "value": 6480,
+      "value": 6524,
       "age": 24.2,
       "pos": "QB",
       "core": true,
       "injury_status": "Out"
      }
     ],
-    "total": 6480,
-    "ratio": 1.046,
+    "total": 6524,
+    "ratio": 1.038,
     "fit": 0.8
-   }
-  },
-  {
-   "player_id": "6786",
-   "name": "CeeDee Lamb",
-   "pos": "WR",
-   "age": 27.6,
-   "nfl_team": "DAL",
-   "owner": "vipkraken",
-   "owner_label": "contender",
-   "owner_roster_id": 6,
-   "value": 7027,
-   "fc_value": 7027,
-   "ktc_value": 7027,
-   "disagree": false,
-   "motive": 0.2,
-   "why": "vipkraken is contending, so they'll want help now in return",
-   "ppg": 18.4,
-   "injury_status": null,
-   "net_gain": 6534,
-   "score": 1307,
-   "gives_starter": [
-    {
-     "name": "Drake Maye",
-     "ppg": 19.3
-    }
-   ],
-   "offer": {
-    "assets": [
-     {
-      "id": "11564",
-      "label": "Drake Maye",
-      "kind": "player",
-      "value": 6480,
-      "age": 24.2,
-      "pos": "QB",
-      "core": true,
-      "injury_status": "Out"
-     },
-     {
-      "id": "9753",
-      "label": "Zach Charbonnet",
-      "kind": "player",
-      "value": 2010,
-      "age": 25.9,
-      "pos": "RB",
-      "core": false,
-      "injury_status": null
-     },
-     {
-      "id": "8136",
-      "label": "Rachaad White",
-      "kind": "player",
-      "value": 1116,
-      "age": 27.9,
-      "pos": "RB",
-      "core": false,
-      "injury_status": null
-     }
-    ],
-    "total": 9605,
-    "ratio": 1.367,
-    "fit": 0.66
    }
   }
  ],
@@ -1591,86 +1611,86 @@
   {
    "label": "2029 1st",
    "kind": "pick",
-   "value": 2195.0,
+   "value": 2181.5,
    "age": null,
    "pos": null
   },
   {
    "label": "Zach Charbonnet",
    "kind": "player",
-   "value": 2009.5,
+   "value": 2002.0,
    "age": 25.9,
    "pos": "RB"
   },
   {
    "label": "2027 2nd (Mid)",
    "kind": "pick",
-   "value": 1880.5,
+   "value": 1870.0,
    "age": null,
    "pos": null
   },
   {
    "label": "2028 2nd",
    "kind": "pick",
-   "value": 1516.0,
+   "value": 1519.0,
    "age": null,
    "pos": null
   },
   {
    "label": "2029 2nd",
    "kind": "pick",
-   "value": 1387.5,
+   "value": 1387.0,
    "age": null,
    "pos": null
   },
   {
    "label": "Dallas Goedert",
    "kind": "player",
-   "value": 1157.0,
+   "value": 1171.5,
    "age": 31.9,
    "pos": "TE"
   },
   {
    "label": "Rachaad White",
    "kind": "player",
-   "value": 1115.5,
+   "value": 1122.0,
    "age": 27.9,
    "pos": "RB"
   },
   {
-   "label": "Roman Wilson",
-   "kind": "player",
-   "value": 1096.5,
-   "age": 25.4,
-   "pos": "WR"
-  },
-  {
    "label": "2027 3rd (Late) (from vipkraken)",
    "kind": "pick",
-   "value": 1090.5,
+   "value": 1093.5,
    "age": null,
    "pos": null
   },
   {
-   "label": "Courtland Sutton",
+   "label": "Roman Wilson",
    "kind": "player",
-   "value": 1042.5,
-   "age": 31.1,
+   "value": 1081.5,
+   "age": 25.4,
    "pos": "WR"
   },
   {
    "label": "2028 3rd (from Coke Heads)",
    "kind": "pick",
-   "value": 1032.5,
+   "value": 1037.0,
    "age": null,
    "pos": null
   },
   {
    "label": "2028 3rd",
    "kind": "pick",
-   "value": 1032.5,
+   "value": 1037.0,
    "age": null,
    "pos": null
+  },
+  {
+   "label": "Courtland Sutton",
+   "kind": "player",
+   "value": 1018.5,
+   "age": 31.1,
+   "pos": "WR"
   }
  ],
  "teams": [
@@ -1710,7 +1730,7 @@
    "win_now_rank": 3,
    "dynasty_rank": 12,
    "age": 27.3,
-   "youth": 0.027,
+   "youth": 0.028,
    "label": "contender",
    "reasons": [
     "16-4, 2nd in standings",
@@ -1730,7 +1750,7 @@
    "win_now_rank": 1,
    "dynasty_rank": 8,
    "age": 27.9,
-   "youth": 0.211,
+   "youth": 0.212,
    "label": "contender",
    "reasons": [
     "15-5, 3rd in standings",
@@ -1825,7 +1845,7 @@
    "win_now_rank": 2,
    "dynasty_rank": 2,
    "age": 26.0,
-   "youth": 0.497,
+   "youth": 0.496,
    "label": "contender",
    "reasons": [
     "10-10, 7th in standings",
@@ -1848,14 +1868,14 @@
    "win_now_rank": 8,
    "dynasty_rank": 9,
    "age": 26.3,
-   "youth": 0.555,
+   "youth": 0.554,
    "label": "rebuilder",
    "reasons": [
     "8-12, 8th in standings",
     "8th in win-now value",
     "has been trading for picks and young players",
     "value-weighted age 26.3",
-    "56% of value in picks and players 24 or under"
+    "55% of value in picks and players 24 or under"
    ],
    "picks": [
     "2027 1st (Mid)",
@@ -1878,7 +1898,7 @@
    "win_now_rank": 9,
    "dynasty_rank": 6,
    "age": 24.6,
-   "youth": 0.545,
+   "youth": 0.546,
    "label": "rebuilder",
    "reasons": [
     "5-15, 9th in standings",
@@ -1971,14 +1991,14 @@
    "win_now_rank": 11,
    "dynasty_rank": 7,
    "age": 24.4,
-   "youth": 0.884,
+   "youth": 0.886,
    "label": "rebuilder",
    "reasons": [
     "1-19, 12th in standings",
     "11th in win-now value",
     "has been trading for picks and young players",
     "value-weighted age 24.4",
-    "88% of value in picks and players 24 or under"
+    "89% of value in picks and players 24 or under"
    ],
    "picks": [
     "2027 1st (Early) (from Goodbye My Lova)",
