@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T10:14:07+00:00",
+ "generated_at": "2026-11-21T10:15:12+00:00",
  "season": 2026,
  "week": 11,
  "deadline_week": 12,
@@ -1678,19 +1678,19 @@
        "injury_status": null
       },
       {
-       "id": "12489",
-       "label": "RJ Harvey",
+       "id": "11783",
+       "label": "Ryan Flournoy",
        "kind": "player",
-       "pos": "RB",
-       "age": 25.8,
-       "value": 1522,
-       "redraft": 168,
-       "ppg": 9.2,
-       "injury_status": "IR"
+       "pos": "WR",
+       "age": 27.1,
+       "value": 1271,
+       "redraft": 490,
+       "ppg": 8.4,
+       "injury_status": null
       }
      ],
-     "total": 5832,
-     "ratio": 0.865,
+     "total": 5580,
+     "ratio": 0.827,
      "net_gain": 2834,
      "motive": 1.0,
      "score": 2834
@@ -1759,19 +1759,19 @@
        "injury_status": null
       },
       {
-       "id": "12489",
-       "label": "RJ Harvey",
+       "id": "11783",
+       "label": "Ryan Flournoy",
        "kind": "player",
-       "pos": "RB",
-       "age": 25.8,
-       "value": 1522,
-       "redraft": 168,
-       "ppg": 9.2,
-       "injury_status": "IR"
+       "pos": "WR",
+       "age": 27.1,
+       "value": 1271,
+       "redraft": 490,
+       "ppg": 8.4,
+       "injury_status": null
       }
      ],
-     "total": 5832,
-     "ratio": 0.906,
+     "total": 5580,
+     "ratio": 0.867,
      "net_gain": 2834,
      "motive": 1.0,
      "score": 2834
