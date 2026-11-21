@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T10:15:12+00:00",
+ "generated_at": "2026-11-21T10:25:55+00:00",
  "season": 2026,
  "week": 11,
  "deadline_week": 12,
@@ -1678,56 +1678,44 @@
        "injury_status": null
       },
       {
-       "id": "11783",
-       "label": "Ryan Flournoy",
-       "kind": "player",
-       "pos": "WR",
-       "age": 27.1,
-       "value": 1271,
-       "redraft": 490,
-       "ppg": 8.4,
-       "injury_status": null
+       "id": "2028 1st",
+       "label": "2028 1st",
+       "kind": "pick",
+       "pos": null,
+       "age": null,
+       "value": 2655,
+       "redraft": 0,
+       "ppg": null
       }
      ],
-     "total": 5580,
-     "ratio": 0.827,
+     "total": 6964,
+     "ratio": 1.033,
      "net_gain": 2834,
-     "motive": 1.0,
-     "score": 2834
+     "motive": 0.6,
+     "score": 1700
     },
     {
-     "owner": "Moonster",
-     "owner_label": "rebuilder",
-     "owner_roster_id": 9,
+     "owner": "KPop Travis Hunter",
+     "owner_label": "middle",
+     "owner_roster_id": 10,
      "get": [
       {
-       "id": "12519",
-       "label": "Luther Burden III",
-       "kind": "player",
-       "pos": "WR",
-       "age": 22.9,
-       "value": 4900,
-       "redraft": 3871,
-       "ppg": 12.4,
-       "injury_status": null
-      },
-      {
-       "id": "1373",
-       "label": "Geno Smith",
+       "id": "7523",
+       "label": "Trevor Lawrence",
        "kind": "player",
        "pos": "QB",
-       "age": 36.1,
-       "value": 1227,
-       "redraft": 426,
-       "ppg": 13.9,
+       "age": 27.1,
+       "value": 6172,
+       "redraft": 6381,
+       "ppg": 19.9,
        "injury_status": null
       }
      ],
-     "total": 6128,
-     "ratio": 0.908,
-     "net_gain": 2121,
-     "motive": 1.0,
-     "score": 2121
+     "total": 6172,
+     "ratio": 0.915,
+     "net_gain": 4411,
+     "motive": 0.35,
+     "score": 1544
     }
    ],
    "injury_status": "IR"
@@ -1742,74 +1730,6 @@
    "redraft": 0,
    "ppg": 19.3,
    "deals": [
-    {
-     "owner": "WR U ",
-     "owner_label": "rebuilder",
-     "owner_roster_id": 2,
-     "get": [
-      {
-       "id": "11584",
-       "label": "Bucky Irving",
-       "kind": "player",
-       "pos": "RB",
-       "age": 24.3,
-       "value": 4310,
-       "redraft": 4804,
-       "ppg": 16.5,
-       "injury_status": null
-      },
-      {
-       "id": "11783",
-       "label": "Ryan Flournoy",
-       "kind": "player",
-       "pos": "WR",
-       "age": 27.1,
-       "value": 1271,
-       "redraft": 490,
-       "ppg": 8.4,
-       "injury_status": null
-      }
-     ],
-     "total": 5580,
-     "ratio": 0.867,
-     "net_gain": 2834,
-     "motive": 1.0,
-     "score": 2834
-    },
-    {
-     "owner": "Moonster",
-     "owner_label": "rebuilder",
-     "owner_roster_id": 9,
-     "get": [
-      {
-       "id": "12519",
-       "label": "Luther Burden III",
-       "kind": "player",
-       "pos": "WR",
-       "age": 22.9,
-       "value": 4900,
-       "redraft": 3871,
-       "ppg": 12.4,
-       "injury_status": null
-      },
-      {
-       "id": "1373",
-       "label": "Geno Smith",
-       "kind": "player",
-       "pos": "QB",
-       "age": 36.1,
-       "value": 1227,
-       "redraft": 426,
-       "ppg": 13.9,
-       "injury_status": null
-      }
-     ],
-     "total": 6128,
-     "ratio": 0.953,
-     "net_gain": 2121,
-     "motive": 1.0,
-     "score": 2121
-    },
     {
      "owner": "Honolulu Blues",
      "owner_label": "rebuilder",
@@ -1842,6 +1762,62 @@
      "net_gain": 3082,
      "motive": 0.6,
      "score": 1849
+    },
+    {
+     "owner": "WR U ",
+     "owner_label": "rebuilder",
+     "owner_roster_id": 2,
+     "get": [
+      {
+       "id": "11584",
+       "label": "Bucky Irving",
+       "kind": "player",
+       "pos": "RB",
+       "age": 24.3,
+       "value": 4310,
+       "redraft": 4804,
+       "ppg": 16.5,
+       "injury_status": null
+      },
+      {
+       "id": "2027 2nd (Early)",
+       "label": "2027 2nd (Early)",
+       "kind": "pick",
+       "pos": null,
+       "age": null,
+       "value": 2152,
+       "redraft": 0,
+       "ppg": null
+      }
+     ],
+     "total": 6462,
+     "ratio": 1.005,
+     "net_gain": 2834,
+     "motive": 0.6,
+     "score": 1700
+    },
+    {
+     "owner": "KPop Travis Hunter",
+     "owner_label": "middle",
+     "owner_roster_id": 10,
+     "get": [
+      {
+       "id": "7523",
+       "label": "Trevor Lawrence",
+       "kind": "player",
+       "pos": "QB",
+       "age": 27.1,
+       "value": 6172,
+       "redraft": 6381,
+       "ppg": 19.9,
+       "injury_status": null
+      }
+     ],
+     "total": 6172,
+     "ratio": 0.96,
+     "net_gain": 4411,
+     "motive": 0.35,
+     "score": 1544
     }
    ],
    "injury_status": "Out"
