@@ -1052,9 +1052,17 @@ class InjuredSellTests(unittest.TestCase):
         self.assertGreater(deal["net_gain"], 0)
         self.assertTrue(0.8 <= deal["ratio"] <= 1.16)
 
-    def test_sell_section_renders(self):
-        from sitstart.trades_page import _sell_section
-        html = _sell_section([{"name": "Young QB", "pos": "QB", "age": 23, "nfl_team": "BBB", "value": 7000,
-                               "redraft": 300, "injury_status": "Out", "deals": []}])
-        self.assertIn("Sell injured value", html)
-        self.assertIn("Hold.", html)
+    def test_injured_sells_render_inside_bigger_swings(self):
+        from sitstart.trades_page import _swing_items, _swing_rows
+        rep = {"bigger_swings": [], "injured_sells": [{
+            "name": "Young QB", "pos": "QB", "age": 23, "nfl_team": "BBB", "value": 7000, "redraft": 0,
+            "injury_status": "Out", "deals": [{"owner": "seller", "owner_label": "rebuilder", "net_gain": 900,
+                                               "ratio": 1.0, "score": 900, "get": [
+                {"label": "Vet WR", "value": 4000, "kind": "player", "pos": "WR", "age": 30, "ppg": 14.0},
+                {"label": "2028 1st", "value": 3000, "kind": "pick", "pos": None, "age": None, "ppg": None}]}]}]}
+        items = _swing_items(rep)
+        self.assertEqual(len(items), 1)
+        html = _swing_rows(items)
+        self.assertIn("Young QB", html)
+        self.assertIn("Vet WR", html)
+        self.assertIn("100% of what you get", html)
