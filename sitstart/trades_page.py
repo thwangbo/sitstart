@@ -33,6 +33,9 @@ td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-chil
 .ttable td:nth-last-child(3)::before{content:"Your lineup ";color:var(--sub);font-size:12px}
 .ttable td:nth-last-child(2)::before{content:"Market value ";color:var(--sub);font-size:12px}
 .ttable td:last-child::before{content:"Suggested offer";display:block;color:var(--sub);font-size:12px}
+.stable td::before{content:none!important}
+.stable td:nth-child(2)::before{content:"You get"!important;display:block;color:var(--sub);font-size:12px}
+.stable td:last-child::before{content:"Your lineup gain"!important;display:block;color:var(--sub);font-size:12px}
 .offer div{white-space:normal}.offer .reuse{max-width:none}td{white-space:normal}}
 """
 
@@ -151,7 +154,7 @@ def _sell_section(sells: list[dict]) -> str:
                         f'<div class="sub small">{d["ratio"]:.0%} of his value</div></td>'
                         f'<td><span class="gain">+{_fmt(d["net_gain"])}</span><div class="sub small">your lineup, '
                         f'rest of season</div></td></tr>')
-        blocks.append(head + '<table class="ttable"><tr class="head"><td>Their team</td><td>You get</td>'
+        blocks.append(head + '<table class="ttable stable"><tr class="head"><td>Their team</td><td>You get</td>'
                              f'<td>Your lineup gain</td></tr>{"".join(rows)}</table>')
     return ('<section class="card"><h2>Sell injured value <span class="sub">out long-term, still worth a lot in dynasty</span></h2>'
             + "".join(blocks)

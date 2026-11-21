@@ -267,7 +267,9 @@ def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[s
         for rid, t in teams.items():
             if rid == me.roster_id or t.label not in ("rebuilder", "middle"):
                 continue
-            players = sorted([p for p in t.players if market.redraft(p) > 0 and 0 < market.value(p) <= give],
+            # Only players who help this season (no injured or stash throw-ins; picks balance the value)
+            players = sorted([p for p in t.players if 0 < market.value(p) <= give
+                              and market.redraft(p) >= LONG_TERM_RATIO * market.value(p)],
                              key=lambda p: -market.redraft(p))[:12]
             picks = [{"label": pk["label"], "value": pk["value"]} for pk in sorted(t.picks, key=lambda x: -x["value"])
                      if 0 < pk["value"] < give][:6]
