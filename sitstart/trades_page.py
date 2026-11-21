@@ -202,7 +202,8 @@ def render(rep: dict) -> str:
     lens = ("You're contending, so targets are ranked on how much they improve your starting lineup this season, "
             "weighted by how likely their manager is to sell (their team's direction and the player's age). "
             "Offers never include your best lineup or the players filling in for your injured starters; "
-            "they favor picks and the players who add the least to your lineup this season.") if me["label"] != "rebuilder" else (
+            "they favor picks and the players who add the least to your lineup this season. "
+            "Injured players out long-term are offered only to teams that aren't contending.") if me["label"] != "rebuilder" else (
             "You're rebuilding, so targets are young players ranked on dynasty value, "
             "weighted by how likely their manager is to sell.")
     targets = rep.get("targets") or []
@@ -232,7 +233,7 @@ def render(rep: dict) -> str:
     chips = "".join(f'<span>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span></span>'
                     for a in rep.get("my_assets") or [])
     chips += "".join(f'<span>{escape(x["name"])} <span class="sub">{_fmt(x["value"])}</span> '
-                     f'<span class="tag inj">out long-term: rebuilders only</span></span>'
+                     f'<span class="tag inj">out long-term: non-contenders only</span></span>'
                      for x in rep.get("injured_sells") or [] if x["deals"])
     team_rows = "".join(
         f'<tr class="{"me" if t["roster_id"] == me["roster_id"] else ""}">'

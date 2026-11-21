@@ -182,7 +182,8 @@ def build_offer(target_value: float, target_pos: str | None, partner: Team, me: 
 
 def _offer_dict(combo, total: float, target_value: float, f: float) -> dict:
     return {"assets": [{"id": a["id"], "label": a["label"], "kind": a["kind"], "value": round(a["value"]),
-                        "age": a["age"], "pos": a["pos"], "core": bool(a.get("core"))} for a in combo],
+                        "age": a["age"], "pos": a["pos"], "core": bool(a.get("core")),
+                        "injured": bool(a.get("injured"))} for a in combo],
             "total": round(total), "ratio": round(total / target_value, 3), "fit": round(f, 2)}
 
 
@@ -194,6 +195,10 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
     long_term = {p for p in (long_term or set()) if p in me.players}
     core = core_players(me, market, slots, positions, protect, unavailable, long_term)
     assets = my_assets(me, market, positions, protect, core, exclude=long_term)
+    # Long-term injured players are tradeable, but only to teams that aren't contending:
+    # a contender wants help this season, a rebuilder or in-between team can wait for him.
+    injured = [dict(_player_asset(p, market, False), injured=True) for p in long_term if market.value(p) > 0]
+    pool_for = partner_pool(assets, injured)
     contender = me.label != "rebuilder"
     my_floor = min((market.redraft(p) for p in me.starters), default=0.0)
     out = []
@@ -217,7 +222,7 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
                     continue
                 gain, replaced = mp["value"], []
             motive, why = seller_motive(t, pid, market)
-            offer = build_offer(mp["value"], mp["pos"], t, me, market, assets)
+            offer = build_offer(mp["value"], mp["pos"], t, me, market, pool_for(t))
             out.append({
                 "player_id": pid, "name": mp["name"], "pos": mp["pos"], "age": mp["age"], "nfl_team": mp["team"],
                 "owner": t.name, "owner_label": t.label, "owner_roster_id": rid,
@@ -234,9 +239,9 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
             })
     out.sort(key=lambda x: -x["score"])
     targets = [x for x in out if x["offer"]][:MAX_TARGETS]
-    flag_reuse(targets, teams, me, market, assets)
+    flag_reuse(targets, teams, me, market, pool_for)
     unreachable = [x for x in out if not x["offer"]]
-    swings = bigger_swings(teams, me, market, slots, positions, unreachable, assets, core, ppg)
+    swings = bigger_swings(teams, me, market, slots, positions, unreachable, pool_for, core, ppg)
     sells = sell_injured(teams, me, market, slots, positions, long_term, ppg) if me.label != "rebuilder" else []
     return {"targets": targets, "out_of_reach": unreachable[:5], "bigger_swings": swings, "assets": assets,
             "injured_sells": sells}
@@ -312,7 +317,14 @@ def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[s
     return out
 
 
-def flag_reuse(targets: list[dict], teams: dict[int, Team], me: Team, market: Market, assets: list[dict]) -> None:
+def partner_pool(assets: list[dict], injured: list[dict]):
+    """What you can offer a given team: your regular assets, plus long-term injured players
+    if that team isn't contending. Highest value first."""
+    with_injured = sorted(assets + injured, key=lambda a: -a["value"])
+    return lambda team: with_injured if team.label != "contender" else assets
+
+
+def flag_reuse(targets: list[dict], teams: dict[int, Team], me: Team, market: Market, pool_for) -> None:
     """Each offer is built on its own, so one pick can appear in several. Mark shared pieces and,
     where possible, add the next-best package without them (`alt_offer`)."""
     from collections import Counter
@@ -323,7 +335,7 @@ def flag_reuse(targets: list[dict], teams: dict[int, Team], me: Team, market: Ma
         t["alt_offer"] = None
         if shared:
             drop = {a["id"] for a in shared}
-            rest = [a for a in assets if a["id"] not in drop]
+            rest = [a for a in pool_for(teams[t["owner_roster_id"]]) if a["id"] not in drop]
             t["alt_offer"] = build_offer(t["value"], t["pos"], teams[t["owner_roster_id"]], me, market, rest)
 
 
@@ -338,7 +350,7 @@ def _player_asset(pid: str, market: Market, core: bool) -> dict:
 
 
 def bigger_swings(teams: dict[int, Team], me: Team, market: Market, slots: list[str], positions: dict[str, str],
-                  candidates: list[dict], assets: list[dict], core: set[str], ppg: dict[str, float] | None,
+                  candidates: list[dict], pool_for, core: set[str], ppg: dict[str, float] | None,
                   max_extra: int = 2) -> list[dict]:
     """Two-for-ones for players your surplus can't reach: one of your core players plus up to two other
     pieces. Kept only if your best lineup still improves after losing the core player."""
@@ -347,7 +359,7 @@ def bigger_swings(teams: dict[int, Team], me: Team, market: Market, slots: list[
     for x in candidates[:10]:
         T = x["value"]
         partner = teams[x["owner_roster_id"]]
-        others = [a for a in assets if a["value"] >= 0.08 * T][:16]
+        others = [a for a in pool_for(partner) if a["value"] >= 0.08 * T][:16]
         best = None
         for c in core_assets:
             for k_extra in range(0, max_extra + 1):

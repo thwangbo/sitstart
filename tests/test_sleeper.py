@@ -804,7 +804,7 @@ class SwingAndReuseTests(unittest.TestCase):
         mk = lambda name: {"name": name, "value": 2900, "pos": "RB", "owner_roster_id": 3,
                            "offer": {"assets": [{"id": "A", "label": "2028 1st"}]}}
         targets = [mk("T1"), mk("T2")]
-        flag_reuse(targets, self.teams, self.me, self.m, [A, B])
+        flag_reuse(targets, self.teams, self.me, self.m, lambda _t: [A, B])
         self.assertEqual(targets[0]["shared"], [{"label": "2028 1st", "offers": 2}])
         self.assertEqual([a["label"] for a in targets[0]["alt_offer"]["assets"]], ["2029 1st"])
 
@@ -812,7 +812,7 @@ class SwingAndReuseTests(unittest.TestCase):
         from sitstart.trades import flag_reuse
         t = [{"name": "T1", "value": 2900, "pos": "RB", "owner_roster_id": 3,
               "offer": {"assets": [{"id": "A", "label": "2028 1st"}]}}]
-        flag_reuse(t, self.teams, self.me, self.m, [])
+        flag_reuse(t, self.teams, self.me, self.m, lambda _t: [])
         self.assertEqual(t[0]["shared"], [])
         self.assertIsNone(t[0]["alt_offer"])
 
@@ -825,7 +825,7 @@ class SwingAndReuseTests(unittest.TestCase):
                 "owner_label": "rebuilder", "owner_roster_id": 2, "value": 6500, "fc_value": 6500, "ktc_value": None,
                 "disagree": False, "motive": 1.0, "why": "", "ppg": 25.0}
         core = {"q2", "q3", "r2"}
-        swings = bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], [], core,
+        swings = bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], lambda _t: [], core,
                                {"q2": 18.0, "s1": 25.0})
         self.assertEqual(len(swings), 1)
         s = swings[0]
@@ -834,7 +834,7 @@ class SwingAndReuseTests(unittest.TestCase):
         self.assertTrue(s["offer"]["assets"][0]["core"])
         # A lineup-neutral swap is not shown
         m.players["s1"]["redraft"] = 4100.0
-        self.assertEqual(bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], [], core, None), [])
+        self.assertEqual(bigger_swings(self.teams, self.me, m, MarketTests.SLOTS, self.pos, [cand], lambda _t: [], core, None), [])
 
 
 class QbGuardTests(unittest.TestCase):
@@ -1044,7 +1044,8 @@ class InjuredSellTests(unittest.TestCase):
         res = find_targets(teams, me, m, MarketTests.SLOTS, pos, unavailable={"q2"}, long_term={"q2"})
         self.assertNotIn("Young QB", [a["label"] for a in res["assets"]])
         for t in res["targets"] + res["bigger_swings"]:
-            self.assertNotIn("Young QB", [a["label"] for a in t["offer"]["assets"]])
+            if t["owner_label"] == "contender":
+                self.assertNotIn("Young QB", [a["label"] for a in t["offer"]["assets"]])
         sells = res["injured_sells"]
         self.assertEqual(sells[0]["name"], "Young QB")
         deal = sells[0]["deals"][0]
@@ -1066,3 +1067,21 @@ class InjuredSellTests(unittest.TestCase):
         self.assertIn("Young QB", html)
         self.assertIn("Vet WR", html)
         self.assertIn("100% of what you get", html)
+
+
+class InjuredPoolTests(unittest.TestCase):
+    def test_injured_offered_only_to_non_contenders(self):
+        from sitstart.trades import build_offer, partner_pool
+        m, pos, teams = MarketTests().teams()
+        m.players["q2"]["redraft"] = 0.0      # out for the season
+        regular = [{"kind": "pick", "id": "pk", "label": "2028 2nd", "pos": None, "age": None, "value": 1400.0, "redraft": 0.0}]
+        hurt = [{"kind": "player", "id": "q2", "label": "Young QB", "pos": "QB", "age": 23, "value": 7000.0,
+                 "redraft": 0.0, "injured": True}]
+        pool_for = partner_pool(regular, hurt)
+        teams[3].label = "contender"
+        self.assertEqual([a["label"] for a in pool_for(teams[3])], ["2028 2nd"])
+        self.assertEqual([a["label"] for a in pool_for(teams[2])], ["Young QB", "2028 2nd"])
+        o = build_offer(6500, "RB", teams[2], teams[1], m, pool_for(teams[2]))
+        self.assertEqual([a["label"] for a in o["assets"]], ["Young QB"])
+        self.assertTrue(o["assets"][0]["injured"])
+        self.assertIsNone(build_offer(6500, "RB", teams[3], teams[1], m, pool_for(teams[3])))
