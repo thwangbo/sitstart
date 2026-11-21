@@ -127,6 +127,43 @@ def _swing_rows(swings: list[dict]) -> str:
     return "".join(rows)
 
 
+def _sell_section(sells: list[dict]) -> str:
+    if not sells:
+        return ""
+    blocks = []
+    for x in sells:
+        inj = f' <span class="tag inj">{escape(x["injury_status"])}</span>' if x.get("injury_status") else ""
+        head = (f'<p><span class="pname">{escape(x["name"])}</span>{inj} <span class="sub small">{escape(x["pos"] or "")}, '
+                f'{_age(x["age"])}, {escape(x.get("nfl_team") or "FA")}</span><br><span class="sub small">Dynasty value '
+                f'{_fmt(x["value"])}; worth {_fmt(x["redraft"])} to anyone for the rest of this season</span></p>')
+        if not x["deals"]:
+            blocks.append(head + '<p class="sub">No rebuilding or in-between team has players who would improve your '
+                                 'lineup at a fair price for him. Hold.</p>')
+            continue
+        rows = []
+        for d in x["deals"]:
+            get = "".join(
+                f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
+                + (f' <span class="sub small">{a["ppg"]:.1f} pts/game</span>' if isinstance(a.get("ppg"), (int, float)) else "")
+                + (f' <span class="tag inj">{escape(a["injury_status"])}</span>' if a.get("injury_status") else "")
+                + '</div>' for a in d["get"])
+            rows.append(f'<tr><td>{escape(d["owner"])} {_tag(d["owner_label"])}</td><td class="offer">{get}'
+                        f'<div class="sub small">{d["ratio"]:.0%} of his value</div></td>'
+                        f'<td><span class="gain">+{_fmt(d["net_gain"])}</span><div class="sub small">your lineup, '
+                        f'rest of season</div></td></tr>')
+        blocks.append(head + '<table class="ttable"><tr class="head"><td>Their team</td><td>You get</td>'
+                             f'<td>Your lineup gain</td></tr>{"".join(rows)}</table>')
+    return ('<section class="card"><h2>Sell injured value <span class="sub">out long-term, still worth a lot in dynasty</span></h2>'
+            + "".join(blocks)
+            + '<p class="sub">These players won\'t help you this season, so they\'re offered only to rebuilding and '
+              'in-between teams, who can wait for them to come back, in exchange for players who start for you now. '
+              'You get 80% to 100% of his dynasty value (a bit more when they send two or three pieces), sometimes '
+              'with one of their picks to make up the difference. They\'re kept out of the other offers on this page. '
+              'The cost is real: you give up future value to win now, so take a deal only if the lineup gain matters for '
+              'the title. A player counts as out long-term when he\'s on IR, or he\'s Out and the market values his '
+              'rest of season at under 30% of his dynasty value.</p></section>')
+
+
 def _target_rows(targets: list[dict]) -> str:
     rows = []
     for i, t in enumerate(targets, 1):
@@ -210,6 +247,7 @@ def render(rep: dict) -> str:
 <section class="card"><h2>Top targets</h2>{target_html}{oor_html}
 <p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
 Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. A benched player still counts as depth, so offers prefer giving up the least win-now value.</p></section>
+{_sell_section(rep.get("injured_sells") or [])}
 {swings_html}
 <section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
 <section class="card"><h2>League map</h2><table>

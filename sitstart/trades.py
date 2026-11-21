@@ -26,6 +26,26 @@ from .market import VET_AGE, YOUTH_AGE, Market, Team, best_win_now
 MAX_TARGETS = 12
 QB_STARTABLE = 1500.0        # win-now value of a usable bye/injury fill-in QB in Superflex
 MIN_QBS = 3
+LONG_TERM_RATIO = 0.3        # injured and rest-of-season value under 30% of dynasty value = not coming back soon
+SELL_MIN_VALUE = 1000        # injured players worth less than this aren't worth a dedicated sell deal
+
+
+def long_term_injured(player_ids, market: Market, sleeper_players: dict) -> set[str]:
+    """Injured players who won't help this season but still carry dynasty value.
+    Sleeper often lists a season-ending injury as plain "Out", so the market decides: an injured
+    player whose rest-of-season (redraft) value has collapsed relative to his dynasty value is
+    priced as out for a long time. IR and PUP count regardless."""
+    out = set()
+    for pid in player_ids:
+        sp = sleeper_players.get(pid) or {}
+        status = sp.get("injury_status")
+        if market.value(pid) <= 0 or not status:
+            continue
+        if status in ("IR", "PUP") or sp.get("status") == "Injured Reserve":
+            out.add(pid)
+        elif status in ("Out", "Doubtful", "Sus") and market.redraft(pid) < LONG_TERM_RATIO * market.value(pid):
+            out.add(pid)
+    return out
 
 
 def _age(market: Market, pid: str):
@@ -70,25 +90,29 @@ def position_needs(teams: dict[int, Team], me: Team, market: Market) -> list[dic
 
 
 def core_players(me: Team, market: Market, slots: list[str], positions: dict[str, str],
-                 protect: set[str] | None = None, unavailable: set[str] | None = None) -> set[str]:
+                 protect: set[str] | None = None, unavailable: set[str] | None = None,
+                 long_term: set[str] | None = None) -> set[str]:
     """Players you shouldn't trade away for help elsewhere:
     - your best lineup at full health (season-long win-now values)
     - the best lineup without your currently injured players, i.e. who's filling in for them
-    - injured players worth at least as much as your weakest starter (an injured star isn't surplus)
+    - injured players worth at least as much as your weakest starter (an injured star isn't surplus),
+      unless he's out long-term: then he's a sell candidate for a rebuilder (see sell_injured), not core
     - anyone in `protect` (this week's recommended lineup)"""
     healthy = [p for p in me.players if p not in (unavailable or set())]
     fill_ins = best_win_now(healthy, slots, market, positions) if slots else []
     # Injured players lose win-now value and can drop out of "your best lineup", but an injured
     # star isn't surplus: keep any injured player worth at least as much as your weakest starter.
     floor = min((market.value(p) for p in fill_ins or me.starters), default=float("inf"))
-    injured_core = {p for p in (unavailable or set()) if p in me.players and market.value(p) >= floor}
+    injured_core = {p for p in (unavailable or set()) if p in me.players and market.value(p) >= floor
+                    and p not in (long_term or set())}
     return set(me.starters) | set(fill_ins) | set(protect or ()) | injured_core
 
 
 def my_assets(me: Team, market: Market, positions: dict[str, str], protect: set[str] | None = None,
-              core: set[str] | None = None) -> list[dict]:
-    """What you can offer: players outside your core, and picks."""
-    keep = set(me.starters) | set(protect or ()) | set(core or ())
+              core: set[str] | None = None, exclude: set[str] | None = None) -> list[dict]:
+    """What you can offer: players outside your core, and picks. `exclude`: long-term injured
+    players, who get their own sell deals instead of being used as filler in every offer."""
+    keep = set(me.starters) | set(protect or ()) | set(core or ()) | set(exclude or ())
     assets = []
     for pid in me.players:
         if pid in keep or market.value(pid) <= 0:
@@ -169,10 +193,12 @@ def _offer_dict(combo, total: float, target_value: float, f: float) -> dict:
 
 def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[str],
                  positions: dict[str, str], ppg: dict[str, float] | None = None,
-                 protect: set[str] | None = None, unavailable: set[str] | None = None) -> dict:
+                 protect: set[str] | None = None, unavailable: set[str] | None = None,
+                 long_term: set[str] | None = None) -> dict:
     """{"targets": [...] with offers, "out_of_reach": [...] that would help but can't be matched from your surplus}"""
-    core = core_players(me, market, slots, positions, protect, unavailable)
-    assets = my_assets(me, market, positions, protect, core)
+    long_term = {p for p in (long_term or set()) if p in me.players}
+    core = core_players(me, market, slots, positions, protect, unavailable, long_term)
+    assets = my_assets(me, market, positions, protect, core, exclude=long_term)
     contender = me.label != "rebuilder"
     my_floor = min((market.redraft(p) for p in me.starters), default=0.0)
     out = []
@@ -216,7 +242,75 @@ def find_targets(teams: dict[int, Team], me: Team, market: Market, slots: list[s
     flag_reuse(targets, teams, me, market, assets)
     unreachable = [x for x in out if not x["offer"]]
     swings = bigger_swings(teams, me, market, slots, positions, unreachable, assets, core, ppg)
-    return {"targets": targets, "out_of_reach": unreachable[:5], "bigger_swings": swings, "assets": assets}
+    sells = sell_injured(teams, me, market, slots, positions, long_term, ppg) if me.label != "rebuilder" else []
+    return {"targets": targets, "out_of_reach": unreachable[:5], "bigger_swings": swings, "assets": assets,
+            "injured_sells": sells}
+
+
+MAX_SELL_DEALS = 3
+
+
+def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[str], positions: dict[str, str],
+                 long_term: set[str], ppg: dict[str, float] | None = None) -> list[dict]:
+    """For a contender: turn a long-term injured player with real dynasty value into help this season.
+    Partners are rebuilding (or in-between) teams, who can wait for him to come back. You get 1-2 of
+    their players who improve your best lineup, plus at most one of their picks to balance value.
+    Value band: what you get is 80% to 100% of his value (+8% per extra piece, since they consolidate
+    into one asset). Kept only if your best lineup improves by at least SWING_MIN_GAIN."""
+    out = []
+    for pid in sorted(long_term, key=lambda p: -market.value(p)):
+        give = market.value(pid)
+        if give < SELL_MIN_VALUE:
+            continue
+        mp = market.player(pid) or {}
+        deals = []
+        for rid, t in teams.items():
+            if rid == me.roster_id or t.label not in ("rebuilder", "middle"):
+                continue
+            players = sorted([p for p in t.players if market.redraft(p) > 0 and 0 < market.value(p) <= give],
+                             key=lambda p: -market.redraft(p))[:12]
+            picks = [{"label": pk["label"], "value": pk["value"]} for pk in sorted(t.picks, key=lambda x: -x["value"])
+                     if 0 < pk["value"] < give][:6]
+            best = None
+            for k in (1, 2):
+                for combo in combinations(players, k):
+                    pv = sum(market.value(p) for p in combo)
+                    if pv > give * 1.16:
+                        continue
+                    new = best_win_now([p for p in me.players if p != pid] + list(combo), slots, market, positions)
+                    net = sum(market.redraft(p) for p in new) - me.win_now
+                    if net < SWING_MIN_GAIN:
+                        continue
+                    for pick in [None] + picks:
+                        n = k + (1 if pick else 0)
+                        total = pv + (pick["value"] if pick else 0)
+                        if not (0.8 * give <= total <= give * (1 + CONSOLIDATION * (n - 1))):
+                            continue
+                        if not qb_safe(me, market, [{"kind": "player", "id": pid}],
+                                       "QB" if any(_pos(market, p) == "QB" for p in combo) else None):
+                            continue
+                        motive = max(seller_motive(t, p, market)[0] for p in combo)
+                        key = (round(net / 250), motive, total, -n)
+                        if best is None or key > best[0]:
+                            best = (key, combo, pick, total, net, motive)
+            if best:
+                _, combo, pick, total, net, motive = best
+                get = [{"id": p, "label": (market.player(p) or {}).get("name") or p, "kind": "player",
+                        "pos": _pos(market, p), "age": _age(market, p), "value": round(market.value(p)),
+                        "redraft": round(market.redraft(p)),
+                        "ppg": round(ppg[p], 1) if ppg and p in ppg else None} for p in combo]
+                if pick:
+                    get.append({"id": pick["label"], "label": pick["label"], "kind": "pick", "pos": None, "age": None,
+                                "value": round(pick["value"]), "redraft": 0, "ppg": None})
+                deals.append({"owner": t.name, "owner_label": t.label, "owner_roster_id": rid,
+                              "get": get, "total": round(total), "ratio": round(total / give, 3),
+                              "net_gain": round(net), "motive": motive, "score": round(net * motive)})
+        deals.sort(key=lambda d: -d["score"])
+        out.append({"player_id": pid, "name": mp.get("name") or pid, "pos": mp.get("pos"), "age": mp.get("age"),
+                    "nfl_team": mp.get("team"), "value": round(give), "redraft": round(market.redraft(pid)),
+                    "ppg": round(ppg[pid], 1) if ppg and pid in ppg else None,
+                    "deals": deals[:MAX_SELL_DEALS]})
+    return out
 
 
 def flag_reuse(targets: list[dict], teams: dict[int, Team], me: Team, market: Market, assets: list[dict]) -> None:
@@ -360,7 +454,14 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
     ppg = season_ppg(client.get_url, season, lg["scoring_settings"], positions)
     unavailable = {pid for pid in me.players
                    if (sleeper_players.get(pid) or {}).get("injury_status") in ("Out", "IR", "PUP", "Sus", "Doubtful")}
-    found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable)
+    long_term = long_term_injured(me.players, market, sleeper_players)
+    found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable, long_term)
+    for s_ in found["injured_sells"]:
+        s_["injury_status"] = (sleeper_players.get(s_["player_id"]) or {}).get("injury_status")
+        for d in s_["deals"]:
+            for a in d["get"]:
+                if a["kind"] == "player":
+                    a["injury_status"] = (sleeper_players.get(a["id"]) or {}).get("injury_status")
     for t in found["targets"] + found["out_of_reach"] + found["bigger_swings"]:
         t["injury_status"] = (sleeper_players.get(t["player_id"]) or {}).get("injury_status")
         for offer in (t.get("offer"), t.get("alt_offer")):
@@ -380,6 +481,11 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
         "league_name": lg["name"], "me": team_row(me),
         "needs": position_needs(teams, me, market),
         "targets": found["targets"], "out_of_reach": found["out_of_reach"], "bigger_swings": found["bigger_swings"],
+        "injured_sells": found["injured_sells"],
+        "injured_mine": [{"name": (market.player(p) or {}).get("name") or p,
+                          "status": (sleeper_players.get(p) or {}).get("injury_status"),
+                          "value": round(market.value(p)), "redraft": round(market.redraft(p)),
+                          "long_term": p in long_term} for p in sorted(unavailable, key=lambda p: -market.value(p))],
         "my_assets": [{k: a[k] for k in ("label", "kind", "value", "age", "pos")} for a in found["assets"][:12]],
         "teams": [team_row(t) for t in sorted(teams.values(), key=lambda t: t.record_rank)],
         "trades_this_season": len(trades),
@@ -387,6 +493,6 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
     }
     if return_context:
         ctx = {"market": market, "teams": teams, "me": me, "positions": positions, "players": sleeper_players,
-               "slots": slots, "core": core_players(me, market, slots, positions, protect, unavailable)}
+               "slots": slots, "core": core_players(me, market, slots, positions, protect, unavailable, long_term)}
         return report, ctx
     return report

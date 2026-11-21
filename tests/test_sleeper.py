@@ -1011,3 +1011,49 @@ class WaiverValueCapTests(unittest.TestCase):
         b = recommend_bid(comps, hot=False, my_left=64, others_left=[100], weeks_left=7)
         self.assertEqual(b["bid"], 1)
         self.assertIn("$1 should win", b["reason"])
+
+
+class InjuredSellTests(unittest.TestCase):
+    def setup(self):
+        m, pos, teams = MarketTests().teams()
+        # Young QB is out for the season: his rest-of-season value collapses, dynasty value holds.
+        m.players["q2"]["redraft"] = 300.0
+        # The rebuilder has two win-now vets that would start for me.
+        for pid, name, p, age, v, rd in [("w1", "Vet WR", "RB", 30, 2400, 4200), ("w2", "Vet RB2", "RB", 29, 2100, 3800)]:
+            m.players[pid] = {"name": name, "pos": p, "age": age, "team": "ZZZ", "value": float(v),
+                              "redraft": float(rd), "trend": None, "tier": None}
+            pos[pid] = p
+            teams[2].players.append(pid)
+        sleeper = {"q2": {"injury_status": "Out", "status": "Active"}, "q3": {"injury_status": "Questionable"}}
+        return m, pos, teams, sleeper
+
+    def test_long_term_detection(self):
+        from sitstart.trades import long_term_injured
+        m, pos, teams, sleeper = self.setup()
+        self.assertEqual(long_term_injured(teams[1].players, m, sleeper), {"q2"})
+        m.players["q2"]["redraft"] = 4000.0        # short-term: still valuable this season
+        self.assertEqual(long_term_injured(teams[1].players, m, sleeper), set())
+
+    def test_long_term_injured_not_core_not_filler_and_sold_to_rebuilder(self):
+        from sitstart.market import best_win_now
+        from sitstart.trades import find_targets
+        m, pos, teams, sleeper = self.setup()
+        me = teams[1]
+        me.win_now = sum(m.redraft(p) for p in best_win_now(me.players, MarketTests.SLOTS, m, pos))
+        res = find_targets(teams, me, m, MarketTests.SLOTS, pos, unavailable={"q2"}, long_term={"q2"})
+        self.assertNotIn("Young QB", [a["label"] for a in res["assets"]])
+        for t in res["targets"] + res["bigger_swings"]:
+            self.assertNotIn("Young QB", [a["label"] for a in t["offer"]["assets"]])
+        sells = res["injured_sells"]
+        self.assertEqual(sells[0]["name"], "Young QB")
+        deal = sells[0]["deals"][0]
+        self.assertEqual(deal["owner_label"], "rebuilder")
+        self.assertGreater(deal["net_gain"], 0)
+        self.assertTrue(0.8 <= deal["ratio"] <= 1.16)
+
+    def test_sell_section_renders(self):
+        from sitstart.trades_page import _sell_section
+        html = _sell_section([{"name": "Young QB", "pos": "QB", "age": 23, "nfl_team": "BBB", "value": 7000,
+                               "redraft": 300, "injury_status": "Out", "deals": []}])
+        self.assertIn("Sell injured value", html)
+        self.assertIn("Hold.", html)
