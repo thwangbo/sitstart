@@ -1030,9 +1030,10 @@ class InjuredSellTests(unittest.TestCase):
     def test_long_term_detection(self):
         from sitstart.trades import long_term_injured
         m, pos, teams, sleeper = self.setup()
-        self.assertEqual(long_term_injured(teams[1].players, m, sleeper), {"q2"})
-        m.players["q2"]["redraft"] = 4000.0        # short-term: still valuable this season
-        self.assertEqual(long_term_injured(teams[1].players, m, sleeper), set())
+        S = MarketTests.SLOTS
+        self.assertEqual(long_term_injured(teams[1], m, sleeper, S, pos), {"q2"})
+        m.players["q2"]["redraft"] = 4000.0        # back in time to start for you: stays protected
+        self.assertEqual(long_term_injured(teams[1], m, sleeper, S, pos), set())
 
     def test_long_term_injured_not_core_not_filler_and_sold_to_rebuilder(self):
         from sitstart.market import best_win_now

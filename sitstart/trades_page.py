@@ -160,11 +160,12 @@ def _sell_section(sells: list[dict]) -> str:
             + "".join(blocks)
             + '<p class="sub">These players won\'t help you this season, so they\'re offered only to rebuilding and '
               'in-between teams, who can wait for them to come back, in exchange for players who start for you now. '
-              'You get 80% to 100% of his dynasty value (a bit more when they send two or three pieces), sometimes '
-              'with one of their picks to make up the difference. They\'re kept out of the other offers on this page. '
-              'The cost is real: you give up future value to win now, so take a deal only if the lineup gain matters for '
-              'the title. A player counts as out long-term when he\'s on IR, or he\'s Out and the market values his '
-              'rest of season at under 30% of his dynasty value.</p></section>')
+              'A player shows up here when he\'s injured and his rest-of-season market value is below your weakest '
+              'healthy starter\'s, so he wouldn\'t make your lineup even once he\'s back. Deals are priced on dynasty '
+              'value (FantasyCalc and KeepTradeCut): you get 80% to 100% of his, a bit more when they send two or three '
+              'pieces. Every player you get must start for you; one of their picks can make up the difference. These '
+              'players are kept out of the other offers on this page. The cost is real: you give up future value to win '
+              'now, so take a deal only if the lineup gain matters for the title.</p></section>')
 
 
 def _target_rows(targets: list[dict]) -> str:

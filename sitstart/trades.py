@@ -26,26 +26,21 @@ from .market import VET_AGE, YOUTH_AGE, Market, Team, best_win_now
 MAX_TARGETS = 12
 QB_STARTABLE = 1500.0        # win-now value of a usable bye/injury fill-in QB in Superflex
 MIN_QBS = 3
-LONG_TERM_RATIO = 0.3        # injured and rest-of-season value under 30% of dynasty value = not coming back soon
 SELL_MIN_VALUE = 1000        # injured players worth less than this aren't worth a dedicated sell deal
+INJURED = ("Out", "Doubtful", "IR", "PUP", "Sus")
 
 
-def long_term_injured(player_ids, market: Market, sleeper_players: dict) -> set[str]:
-    """Injured players who won't help this season but still carry dynasty value.
-    Sleeper often lists a season-ending injury as plain "Out", so the market decides: an injured
-    player whose rest-of-season (redraft) value has collapsed relative to his dynasty value is
-    priced as out for a long time. IR and PUP count regardless."""
-    out = set()
-    for pid in player_ids:
-        sp = sleeper_players.get(pid) or {}
-        status = sp.get("injury_status")
-        if market.value(pid) <= 0 or not status:
-            continue
-        if status in ("IR", "PUP") or sp.get("status") == "Injured Reserve":
-            out.add(pid)
-        elif status in ("Out", "Doubtful", "Sus") and market.redraft(pid) < LONG_TERM_RATIO * market.value(pid):
-            out.add(pid)
-    return out
+def long_term_injured(me: Team, market: Market, sleeper_players: dict, slots: list[str],
+                      positions: dict[str, str]) -> set[str]:
+    """Injured players who won't help you this season: their rest-of-season (redraft) value is
+    below your weakest healthy starter's, so even back on the field they wouldn't make your best
+    lineup. A player expected back for the playoffs keeps enough rest-of-season value to stay
+    protected. This only decides who's a sell candidate; trades are still priced on dynasty value."""
+    injured = {p for p in me.players if (sleeper_players.get(p) or {}).get("injury_status") in INJURED}
+    healthy = [p for p in me.players if p not in injured]
+    lineup = best_win_now(healthy, slots, market, positions) if slots else []
+    floor = min((market.redraft(p) for p in lineup), default=0.0)
+    return {p for p in injured if market.value(p) > 0 and market.redraft(p) < floor}
 
 
 def _age(market: Market, pid: str):
@@ -267,9 +262,7 @@ def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[s
         for rid, t in teams.items():
             if rid == me.roster_id or t.label not in ("rebuilder", "middle"):
                 continue
-            # Only players who help this season (no injured or stash throw-ins; picks balance the value)
-            players = sorted([p for p in t.players if 0 < market.value(p) <= give
-                              and market.redraft(p) >= LONG_TERM_RATIO * market.value(p)],
+            players = sorted([p for p in t.players if 0 < market.value(p) <= give and market.redraft(p) > 0],
                              key=lambda p: -market.redraft(p))[:12]
             picks = [{"label": pk["label"], "value": pk["value"]} for pk in sorted(t.picks, key=lambda x: -x["value"])
                      if 0 < pk["value"] < give][:6]
@@ -280,6 +273,8 @@ def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[s
                     if pv > give * 1.16:
                         continue
                     new = best_win_now([p for p in me.players if p != pid] + list(combo), slots, market, positions)
+                    if any(p not in new for p in combo):
+                        continue    # everyone you get must start for you; their picks balance the value
                     net = sum(market.redraft(p) for p in new) - me.win_now
                     if net < SWING_MIN_GAIN:
                         continue
@@ -458,7 +453,7 @@ def build_report(client, snap: dict, fc_rows: list[dict], ktc_rows: list[dict] |
     ppg = season_ppg(client.get_url, season, lg["scoring_settings"], positions)
     unavailable = {pid for pid in me.players
                    if (sleeper_players.get(pid) or {}).get("injury_status") in ("Out", "IR", "PUP", "Sus", "Doubtful")}
-    long_term = long_term_injured(me.players, market, sleeper_players)
+    long_term = long_term_injured(me, market, sleeper_players, slots, positions)
     found = find_targets(teams, me, market, slots, positions, ppg, protect, unavailable, long_term)
     for s_ in found["injured_sells"]:
         s_["injury_status"] = (sleeper_players.get(s_["player_id"]) or {}).get("injury_status")
