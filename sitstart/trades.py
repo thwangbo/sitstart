@@ -290,7 +290,9 @@ def sell_injured(teams: dict[int, Team], me: Team, market: Market, slots: list[s
                                        "QB" if any(_pos(market, p) == "QB" for p in combo) else None):
                             continue
                         motive = max(seller_motive(t, p, market)[0] for p in combo)
-                        key = (round(net / 250), motive, total, -n)
+                        # Biggest lineup gain first, then fewer pieces (no low-value throw-ins taking
+                        # roster spots), then the likelier seller, then more value back.
+                        key = (round(net / 250), -n, motive, total)
                         if best is None or key > best[0]:
                             best = (key, combo, pick, total, net, motive)
             if best:
