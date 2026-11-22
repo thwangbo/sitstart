@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T17:07:58+00:00",
+ "generated_at": "2026-11-22T19:29:43+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -47,10 +47,10 @@
    "score": 9.1,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 810,
+   "dynasty": 774,
    "consensus_rank": "QB25",
-   "hot": 37,
-   "value": 202,
+   "hot": 44,
+   "value": 194,
    "tier": "add",
    "bid": {
     "bid": 1,
@@ -97,7 +97,7 @@
    "age": 23,
    "injury_status": null,
    "proj": 4.5,
-   "score": 2.5,
+   "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
@@ -147,13 +147,13 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.6,
-   "score": 2.1,
+   "score": 2.2,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 130,
+   "dynasty": 152,
    "consensus_rank": "TE47",
    "hot": null,
-   "value": 33,
+   "value": 38,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -190,6 +190,56 @@
    }
   },
   {
+   "player_id": "8194",
+   "name": "Jashaun Corbin",
+   "pos": "RB",
+   "nfl_team": "DAL",
+   "age": 26,
+   "injury_status": null,
+   "proj": 4.0,
+   "score": 2.1,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 0,
+   "consensus_rank": "RB82",
+   "hot": null,
+   "value": 0,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.12,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Pierre Strong Jr.",
+      "week": 5,
+      "bid": 1,
+      "runner_up": null,
+      "proj": 4.3
+     },
+     {
+      "name": "Khalil Herbert",
+      "week": 9,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 3.6
+     },
+     {
+      "name": "Travis Homer",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.3
+     }
+    ]
+   }
+  },
+  {
    "player_id": "6001",
    "name": "Drew Sample",
    "pos": "TE",
@@ -197,7 +247,7 @@
    "age": 30,
    "injury_status": null,
    "proj": 3.7,
-   "score": 3.1,
+   "score": 3.2,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
@@ -290,56 +340,6 @@
    }
   },
   {
-   "player_id": "12700",
-   "name": "Gavin Bartholomew",
-   "pos": "TE",
-   "nfl_team": "MIN",
-   "age": 23,
-   "injury_status": null,
-   "proj": 1.7,
-   "score": 1.7,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 180,
-   "consensus_rank": "TE49",
-   "hot": 47,
-   "value": 45,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.25,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Sam Roush",
-      "week": 7,
-      "bid": 4,
-      "runner_up": null,
-      "proj": 1.8
-     },
-     {
-      "name": "Ben Sinnott",
-      "week": 3,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 1.9
-     },
-     {
-      "name": "Josh Cuevas",
-      "week": 8,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 1.4
-     }
-    ]
-   }
-  },
-  {
    "player_id": "8225",
    "name": "Daniel Bellinger",
    "pos": "TE",
@@ -347,13 +347,13 @@
    "age": 26,
    "injury_status": null,
    "proj": 3.1,
-   "score": 2.9,
+   "score": 3.0,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 24,
+   "dynasty": 33,
    "consensus_rank": "TE37",
    "hot": null,
-   "value": 6,
+   "value": 8,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -385,6 +385,56 @@
       "bid": 0,
       "runner_up": null,
       "proj": 3.3
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "12700",
+   "name": "Gavin Bartholomew",
+   "pos": "TE",
+   "nfl_team": "MIN",
+   "age": 23,
+   "injury_status": null,
+   "proj": 1.7,
+   "score": 1.7,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 168,
+   "consensus_rank": "TE49",
+   "hot": null,
+   "value": 42,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.25,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Sam Roush",
+      "week": 7,
+      "bid": 4,
+      "runner_up": null,
+      "proj": 1.8
+     },
+     {
+      "name": "Ben Sinnott",
+      "week": 3,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 1.9
+     },
+     {
+      "name": "Josh Cuevas",
+      "week": 8,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.4
      }
     ]
    }
@@ -435,56 +485,6 @@
       "bid": 0,
       "runner_up": 0,
       "proj": 3.4
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "4718",
-   "name": "Dare Ogunbowale",
-   "pos": "RB",
-   "nfl_team": "HOU",
-   "age": 32,
-   "injury_status": null,
-   "proj": 2.9,
-   "score": 2.0,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 0,
-   "consensus_rank": "RB62",
-   "hot": null,
-   "value": 0,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.25,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "George Holani",
-      "week": 9,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 2.8
-     },
-     {
-      "name": "Tyler Goodson",
-      "week": 3,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.2
-     },
-     {
-      "name": "Travis Homer",
-      "week": 4,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.3
      }
     ]
    }
