@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T11:10:11+00:00",
+ "generated_at": "2026-11-22T17:07:58+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -43,14 +43,14 @@
    "nfl_team": "ARI",
    "age": 40,
    "injury_status": null,
-   "proj": 8.9,
-   "score": 8.9,
+   "proj": 9.1,
+   "score": 9.1,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 788,
+   "dynasty": 810,
    "consensus_rank": "QB25",
-   "hot": 38,
-   "value": 197,
+   "hot": 37,
+   "value": 202,
    "tier": "add",
    "bid": {
     "bid": 1,
@@ -96,8 +96,8 @@
    "nfl_team": "KC",
    "age": 23,
    "injury_status": null,
-   "proj": 4.6,
-   "score": 2.7,
+   "proj": 4.5,
+   "score": 2.5,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
@@ -147,10 +147,10 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.6,
-   "score": 2.2,
+   "score": 2.1,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 134,
+   "dynasty": 130,
    "consensus_rank": "TE47",
    "hot": null,
    "value": 33,
@@ -190,106 +190,6 @@
    }
   },
   {
-   "player_id": "7812",
-   "name": "Simi Fehoko",
-   "pos": "WR",
-   "nfl_team": "ARI",
-   "age": 29,
-   "injury_status": null,
-   "proj": 3.9,
-   "score": 3.5,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 0,
-   "consensus_rank": "WR77",
-   "hot": null,
-   "value": 0,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": true,
-    "contested_share": 0.5,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Tutu Atwell",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 4,
-      "proj": 4.0
-     },
-     {
-      "name": "Devontez Walker",
-      "week": 2,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 4.0
-     },
-     {
-      "name": "Tai Felton",
-      "week": 4,
-      "bid": 2,
-      "runner_up": null,
-      "proj": 4.2
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "12520",
-   "name": "Xavier Restrepo",
-   "pos": "WR",
-   "nfl_team": "TEN",
-   "age": 24,
-   "injury_status": null,
-   "proj": 3.5,
-   "score": 2.5,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 22,
-   "consensus_rank": "WR95",
-   "hot": null,
-   "value": 6,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": true,
-    "contested_share": 0.5,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Anthony Gould",
-      "week": 10,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.5
-     },
-     {
-      "name": "Reggie Virgil",
-      "week": 9,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 3.4
-     },
-     {
-      "name": "Tutu Atwell",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 4,
-      "proj": 4.0
-     }
-    ]
-   }
-  },
-  {
    "player_id": "6001",
    "name": "Drew Sample",
    "pos": "TE",
@@ -297,7 +197,7 @@
    "age": 30,
    "injury_status": null,
    "proj": 3.7,
-   "score": 3.2,
+   "score": 3.1,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
@@ -340,20 +240,70 @@
    }
   },
   {
+   "player_id": "12520",
+   "name": "Xavier Restrepo",
+   "pos": "WR",
+   "nfl_team": "TEN",
+   "age": 24,
+   "injury_status": null,
+   "proj": 3.5,
+   "score": 2.5,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 14,
+   "consensus_rank": "WR95",
+   "hot": null,
+   "value": 3,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": true,
+    "contested_share": 0.5,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Anthony Gould",
+      "week": 10,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.5
+     },
+     {
+      "name": "Reggie Virgil",
+      "week": 9,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 3.4
+     },
+     {
+      "name": "Tutu Atwell",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 4,
+      "proj": 4.0
+     }
+    ]
+   }
+  },
+  {
    "player_id": "12700",
    "name": "Gavin Bartholomew",
    "pos": "TE",
    "nfl_team": "MIN",
    "age": 23,
    "injury_status": null,
-   "proj": 1.8,
-   "score": 1.8,
+   "proj": 1.7,
+   "score": 1.7,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 184,
+   "dynasty": 180,
    "consensus_rank": "TE49",
-   "hot": 36,
-   "value": 46,
+   "hot": 47,
+   "value": 45,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -397,13 +347,13 @@
    "age": 26,
    "injury_status": null,
    "proj": 3.1,
-   "score": 3.1,
+   "score": 2.9,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 34,
+   "dynasty": 24,
    "consensus_rank": "TE37",
    "hot": null,
-   "value": 9,
+   "value": 6,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -440,55 +390,105 @@
    }
   },
   {
-   "player_id": "13670",
-   "name": "Harrison Wallace III",
+   "player_id": "7812",
+   "name": "Simi Fehoko",
    "pos": "WR",
    "nfl_team": "ARI",
-   "age": 23,
+   "age": 29,
    "injury_status": null,
-   "proj": 1.4,
-   "score": 0.8,
+   "proj": 3.1,
+   "score": 3.1,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 161,
-   "consensus_rank": "WR115",
+   "dynasty": 0,
+   "consensus_rank": "WR77",
    "hot": null,
-   "value": 40,
+   "value": 0,
    "tier": "depth",
    "bid": {
     "bid": 1,
     "aggressive": 1,
-    "reason": "3 of 8 similar claims drew competing bids; most runners-up bid $0, so $1 should win.",
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
     "capped": false,
     "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.38,
+    "value_capped": true,
+    "contested_share": 0.5,
     "teams_can_outbid": 7,
     "examples": [
      {
-      "name": "Jordan Watkins",
+      "name": "Jalen Brooks",
+      "week": 5,
+      "bid": 3,
+      "runner_up": 2,
+      "proj": 2.9
+     },
+     {
+      "name": "Treylon Burks",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 2.8
+     },
+     {
+      "name": "Reggie Virgil",
+      "week": 9,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 3.4
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "4718",
+   "name": "Dare Ogunbowale",
+   "pos": "RB",
+   "nfl_team": "HOU",
+   "age": 32,
+   "injury_status": null,
+   "proj": 2.9,
+   "score": 2.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 0,
+   "consensus_rank": "RB62",
+   "hot": null,
+   "value": 0,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.25,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "George Holani",
+      "week": 9,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 2.8
+     },
+     {
+      "name": "Tyler Goodson",
       "week": 3,
       "bid": 0,
       "runner_up": null,
-      "proj": 1.2
+      "proj": 3.2
      },
      {
-      "name": "John Metchie III",
-      "week": 7,
+      "name": "Travis Homer",
+      "week": 4,
       "bid": 0,
       "runner_up": null,
-      "proj": 1.2
-     },
-     {
-      "name": "Mitch Tinsley",
-      "week": 4,
-      "bid": 5,
-      "runner_up": 0,
-      "proj": 1.1
+      "proj": 3.3
      }
     ]
    }
   }
  ],
- "free_agents_checked": 63
+ "free_agents_checked": 60
 }
