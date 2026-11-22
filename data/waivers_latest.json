@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T20:49:50+00:00",
+ "generated_at": "2026-11-22T21:59:19+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -49,7 +49,7 @@
    "ros_gain": 0,
    "dynasty": 774,
    "consensus_rank": "QB25",
-   "hot": 46,
+   "hot": 47,
    "value": 194,
    "tier": "add",
    "bid": {
@@ -147,7 +147,7 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.6,
-   "score": 2.4,
+   "score": 2.3,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 152,
