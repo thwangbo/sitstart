@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T23:46:11+00:00",
+ "generated_at": "2026-11-22T11:10:11+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -33,7 +33,7 @@
  "drop": {
   "player_id": "4098",
   "name": "Kareem Hunt",
-  "value": 2
+  "value": 0
  },
  "adds": [
   {
@@ -43,14 +43,14 @@
    "nfl_team": "ARI",
    "age": 40,
    "injury_status": null,
-   "proj": 8.7,
-   "score": 4.3,
+   "proj": 8.9,
+   "score": 8.9,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 503,
-   "consensus_rank": "QB32",
-   "hot": null,
-   "value": 126,
+   "dynasty": 788,
+   "consensus_rank": "QB25",
+   "hot": 38,
+   "value": 197,
    "tier": "add",
    "bid": {
     "bid": 1,
@@ -97,11 +97,11 @@
    "age": 23,
    "injury_status": null,
    "proj": 4.6,
-   "score": 2.3,
+   "score": 2.7,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "RB92",
+   "consensus_rank": "RB67",
    "hot": null,
    "value": 0,
    "tier": "depth",
@@ -146,14 +146,14 @@
    "nfl_team": "NYG",
    "age": 25,
    "injury_status": null,
-   "proj": 2.7,
+   "proj": 2.6,
    "score": 2.2,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 157,
-   "consensus_rank": "TE49",
+   "dynasty": 134,
+   "consensus_rank": "TE47",
    "hot": null,
-   "value": 39,
+   "value": 33,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -196,12 +196,12 @@
    "nfl_team": "ARI",
    "age": 29,
    "injury_status": null,
-   "proj": 3.8,
-   "score": 3.2,
+   "proj": 3.9,
+   "score": 3.5,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "WR79",
+   "consensus_rank": "WR77",
    "hot": null,
    "value": 0,
    "tier": "depth",
@@ -230,11 +230,61 @@
       "proj": 4.0
      },
      {
+      "name": "Tai Felton",
+      "week": 4,
+      "bid": 2,
+      "runner_up": null,
+      "proj": 4.2
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "12520",
+   "name": "Xavier Restrepo",
+   "pos": "WR",
+   "nfl_team": "TEN",
+   "age": 24,
+   "injury_status": null,
+   "proj": 3.5,
+   "score": 2.5,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 22,
+   "consensus_rank": "WR95",
+   "hot": null,
+   "value": 6,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": true,
+    "contested_share": 0.5,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
       "name": "Anthony Gould",
       "week": 10,
       "bid": 0,
       "runner_up": null,
       "proj": 3.5
+     },
+     {
+      "name": "Reggie Virgil",
+      "week": 9,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 3.4
+     },
+     {
+      "name": "Tutu Atwell",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 4,
+      "proj": 4.0
      }
     ]
    }
@@ -273,118 +323,18 @@
       "proj": 3.6
      },
      {
-      "name": "Elijah Higgins",
-      "week": 8,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.5
-     },
-     {
       "name": "John Bates",
       "week": 2,
       "bid": 0,
       "runner_up": null,
       "proj": 3.8
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "12520",
-   "name": "Xavier Restrepo",
-   "pos": "WR",
-   "nfl_team": "TEN",
-   "age": 24,
-   "injury_status": null,
-   "proj": 3.5,
-   "score": 2.5,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 4,
-   "consensus_rank": "WR93",
-   "hot": null,
-   "value": 1,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": true,
-    "contested_share": 0.5,
-    "teams_can_outbid": 7,
-    "examples": [
+     },
      {
-      "name": "Anthony Gould",
-      "week": 10,
+      "name": "Elijah Higgins",
+      "week": 8,
       "bid": 0,
       "runner_up": null,
       "proj": 3.5
-     },
-     {
-      "name": "Reggie Virgil",
-      "week": 9,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 3.4
-     },
-     {
-      "name": "Tutu Atwell",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 4,
-      "proj": 4.0
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "8225",
-   "name": "Daniel Bellinger",
-   "pos": "TE",
-   "nfl_team": "TEN",
-   "age": 26,
-   "injury_status": null,
-   "proj": 3.1,
-   "score": 2.9,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 4,
-   "consensus_rank": "TE38",
-   "hot": null,
-   "value": 1,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.12,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Jeremy Ruckert",
-      "week": 4,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.1
-     },
-     {
-      "name": "Tommy Tremble",
-      "week": 2,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.0
-     },
-     {
-      "name": "Foster Moreau",
-      "week": 4,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.3
      }
     ]
    }
@@ -400,10 +350,10 @@
    "score": 1.8,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 127,
-   "consensus_rank": "TE47",
-   "hot": 22,
-   "value": 32,
+   "dynasty": 184,
+   "consensus_rank": "TE49",
+   "hot": 36,
+   "value": 46,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -440,47 +390,47 @@
    }
   },
   {
-   "player_id": "4718",
-   "name": "Dare Ogunbowale",
-   "pos": "RB",
-   "nfl_team": "HOU",
-   "age": 32,
+   "player_id": "8225",
+   "name": "Daniel Bellinger",
+   "pos": "TE",
+   "nfl_team": "TEN",
+   "age": 26,
    "injury_status": null,
-   "proj": 2.9,
-   "score": 1.9,
+   "proj": 3.1,
+   "score": 3.1,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 0,
-   "consensus_rank": "RB64",
+   "dynasty": 34,
+   "consensus_rank": "TE37",
    "hot": null,
-   "value": 0,
+   "value": 9,
    "tier": "depth",
    "bid": {
     "bid": 1,
     "aggressive": 1,
-    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
     "capped": false,
     "cap": 22,
     "value_capped": false,
-    "contested_share": 0.25,
+    "contested_share": 0.12,
     "teams_can_outbid": 7,
     "examples": [
      {
-      "name": "George Holani",
-      "week": 9,
+      "name": "Jeremy Ruckert",
+      "week": 4,
       "bid": 0,
       "runner_up": null,
-      "proj": 2.8
+      "proj": 3.1
      },
      {
-      "name": "Tyler Goodson",
-      "week": 3,
+      "name": "Tommy Tremble",
+      "week": 2,
       "bid": 0,
       "runner_up": null,
-      "proj": 3.2
+      "proj": 3.0
      },
      {
-      "name": "Travis Homer",
+      "name": "Foster Moreau",
       "week": 4,
       "bid": 0,
       "runner_up": null,
@@ -488,7 +438,57 @@
      }
     ]
    }
+  },
+  {
+   "player_id": "13670",
+   "name": "Harrison Wallace III",
+   "pos": "WR",
+   "nfl_team": "ARI",
+   "age": 23,
+   "injury_status": null,
+   "proj": 1.4,
+   "score": 0.8,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 161,
+   "consensus_rank": "WR115",
+   "hot": null,
+   "value": 40,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "3 of 8 similar claims drew competing bids; most runners-up bid $0, so $1 should win.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.38,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Jordan Watkins",
+      "week": 3,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.2
+     },
+     {
+      "name": "John Metchie III",
+      "week": 7,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 1.2
+     },
+     {
+      "name": "Mitch Tinsley",
+      "week": 4,
+      "bid": 5,
+      "runner_up": 0,
+      "proj": 1.1
+     }
+    ]
+   }
   }
  ],
- "free_agents_checked": 65
+ "free_agents_checked": 63
 }
