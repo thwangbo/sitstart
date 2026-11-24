@@ -71,7 +71,8 @@ jobs:
           git config user.email "lineup-bot@users.noreply.github.com"
           git add data
           git commit -m "Lineup check $(date -u +%Y-%m-%dT%H:%MZ)" || echo "No changes"
-          git push
+          # Another run may have pushed meanwhile: rebase onto it (ours wins on data files), and never block the deploy
+          git push || (git pull --rebase -X theirs && git push) || echo "Snapshot history not saved this run"
 
       - uses: actions/configure-pages@v6
 
