@@ -23,14 +23,14 @@ ICONS = ["icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-i
 THEME = "#1f7a4d"
 
 MANIFEST = {
-    "name": "Sit/Start: lineup and trades",
+    "name": "Sit/Start: lineup, trades and waivers",
     "short_name": "Sit/Start",
     "description": "Weekly lineup calls and trade targets for your Sleeper dynasty team.",
     "start_url": "./",
     "scope": "./",
     "display": "standalone",
     "orientation": "portrait",
-    "background_color": "#f7f6f3",
+    "background_color": "#F6F5F1",
     "theme_color": THEME,
     "icons": [
         {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
@@ -38,7 +38,8 @@ MANIFEST = {
         {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
     ],
     "shortcuts": [
-        {"name": "Lineup", "url": "./", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+        {"name": "Today", "url": "./", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+        {"name": "Lineup", "url": "./lineup.html", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
         {"name": "Trade targets", "url": "./trades.html", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
         {"name": "Waivers", "url": "./waivers.html", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
     ],
@@ -70,7 +71,7 @@ SCRIPT = """<script>
     var m = Math.round((Date.now() - ts) / 60000);
     var t = m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' hr ago'
           : Math.round(m / 1440) + ' days ago';
-    el.textContent = 'Data from ' + t;
+    el.textContent = t;
     el.className = m > 720 ? 'stale' : '';
   }
   function reload() { location.replace(location.pathname + '?r=' + Date.now()); }

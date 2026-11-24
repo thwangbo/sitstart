@@ -1,41 +1,12 @@
-"""Render the trade-target report as a standalone page (trades.html)."""
+"""Trades page (trades.html) in the shared look from ui.py."""
 
 from __future__ import annotations
 
-from datetime import datetime
 from html import escape
 
-from . import pwa
-from .schedule import utc_to_pacific
+from . import ui
 
-CSS = """
-:root{--bg:#f7f6f3;--card:#fff;--ink:#1d1d1b;--sub:#6b6a66;--line:#e6e4de;--accent:#2f5bd3;--good:#1f7a4d;--warn:#a86400;--bad:#b3261e}
-@media (prefers-color-scheme:dark){:root{--bg:#151514;--card:#1f1f1d;--ink:#ecebe7;--sub:#a3a29d;--line:#33322f;--accent:#7f9cf5;--good:#5cc28f;--warn:#e0a84a;--bad:#f08a80}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-main{max-width:1120px;margin:0 auto;padding:28px 16px 48px}a{color:var(--accent)}
-header h1{margin:0;font-size:24px}header p{margin:4px 0 0;color:var(--sub)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:16px;overflow-x:auto}
-.card.accent{border-color:var(--accent);border-width:2px}
-h2{font-size:16px;margin:0 0 10px}table{width:100%;border-collapse:collapse}
-td{padding:8px;border-top:1px solid var(--line);vertical-align:top}tr:first-child td{border-top:none}
-.head td{color:var(--sub);font-size:12px;border-top:none;padding-top:0}
-.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.sub{color:var(--sub);font-size:13px}
-.pname{font-weight:600}tr.me td{font-weight:600}.small{font-size:12px}
-.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
-.tag.contender{color:var(--accent)}.tag.middle{color:var(--sub)}.tag.rebuilder{color:var(--warn)}
-.tag.below.avg,.tag[class~='below']{color:var(--bad)}.need-item{margin-right:18px}.tag.ok{color:var(--good)}.tag.inj{color:var(--bad)}.tag.core{color:var(--accent)}.offer .reuse{margin-top:4px;max-width:280px;white-space:normal}
-.offer div{white-space:nowrap}.gain{color:var(--good);font-weight:600}
-.chips span{display:inline-block;margin:2px 6px 2px 0}
-@media (max-width:700px){.hide-sm{display:none}td{padding:7px 5px}main{padding:16px 10px 40px}.card{padding:12px}
-.ttable,.ttable tbody,.ttable tr,.ttable td{display:block;width:100%}
-.ttable tr.head{display:none}.ttable tr{border-top:1px solid var(--line);padding:10px 0}.ttable tr:first-child{border-top:none}
-.ttable td{border:none;padding:3px 0;text-align:left}.ttable td.num{text-align:left}.ttable td.num.sub{display:none}
-.ttable td:nth-last-child(3)::before{content:"Your lineup ";color:var(--sub);font-size:12px}
-.ttable td:nth-last-child(2)::before{content:"Market value ";color:var(--sub);font-size:12px}
-.ttable td:last-child::before{content:"Suggested offer";display:block;color:var(--sub);font-size:12px}
-.swtable td:last-child::before{content:"You give"}
-.offer div{white-space:normal}.offer .reuse{max-width:none}td{white-space:normal}}
-"""
+LABEL_WORDS = {"rebuilder": "rebuilding", "middle": "in between", "contender": "contending"}
 
 
 def _fmt(v) -> str:
@@ -47,7 +18,15 @@ def _age(a) -> str:
 
 
 def _tag(label: str) -> str:
-    return f'<span class="tag {escape(label)}">{escape(label)}</span>'
+    return f'<span class="lbl-{escape(label)}">{escape(LABEL_WORDS.get(label, label))}</span>'
+
+
+def _inj(status) -> str:
+    return f' <span class="tag bad">{escape(status)}</span>' if status else ""
+
+
+def _suffix(n: int) -> str:
+    return "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
 
 
 def _deadline(rep: dict) -> str:
@@ -70,19 +49,18 @@ def _sources(t: dict) -> str:
         return ""
     parts = []
     if fc is not None:
-        parts.append(f"FC {_fmt(fc)}")
+        parts.append(f"FantasyCalc {_fmt(fc)}")
     if kt is not None:
         parts.append(f"KTC {_fmt(kt)}")
-    flag = ' <span class="tag inj">sources disagree</span>' if t.get("disagree") else ""
-    return f'<div class="sub small">{" &middot; ".join(parts)}</div>{flag}'
+    flag = ' <span class="tag warn">sources disagree</span>' if t.get("disagree") else ""
+    return f'<div class="sub small">{" &middot; ".join(parts)}{flag}</div>'
 
 
 def _values_note(rep: dict) -> str:
     vs = rep.get("value_sources") or {}
     if vs.get("ktc") == "blended":
         return ("Market value = average of FantasyCalc (from real trades) and KeepTradeCut (crowd votes), "
-                "with KTC converted to FantasyCalc's scale by rank (KTC's 50th most valuable asset gets "
-                "FantasyCalc's 50th value). Win-now value is FantasyCalc's. ")
+                "with KTC converted to FantasyCalc's scale by rank. Win-now value is FantasyCalc's. ")
     return "Market value = FantasyCalc (KeepTradeCut was unavailable this run). "
 
 
@@ -97,7 +75,28 @@ def _reuse(t: dict) -> str:
                  + f" ({alt['ratio']:.0%}).")
     else:
         alt_s = " No package works without it."
-    return f'<div class="sub small reuse">Shared: {names}.{alt_s}</div>'
+    return f'<div class="sub small">Shared: {names}.{alt_s}</div>'
+
+
+def _short(assets: list[dict]) -> str:
+    return ", ".join(escape(a["label"]) + (f' ({escape(a["injury_status"])})' if a.get("injury_status") else "")
+                     for a in assets)
+
+
+def _lines(assets: list[dict], tags: bool = False) -> str:
+    out = []
+    for a in assets:
+        extra = _inj(a.get("injury_status"))
+        if tags and a.get("tag") == "starter":
+            extra += ' <span class="tag blue">starter</span>'
+        out.append(f'<div class="row"><span>{escape(a["label"])}{extra}</span><span class="num">{_fmt(a["value"])}</span></div>')
+    return "".join(out)
+
+
+def _value_bar(give: float, get: float) -> str:
+    width = 100 if give <= 0 else max(5, min(100, round(get / give * 100))) if give > get else 100
+    return (f'<div class="vbar"><i style="width:{width}%"></i></div>'
+            f'<div class="row sub small"><span>You give {_fmt(give)}</span><span>You get {_fmt(get)}</span></div>')
 
 
 MAX_SWING_ROWS = 8
@@ -124,147 +123,177 @@ def _swing_items(rep: dict) -> list[dict]:
             if d["owner"] not in best or k > best[d["owner"]][0]:
                 best[d["owner"]] = (k, x, d)
     for _, x, d in best.values():
-        if True:
-            items.append({"score": d["score"], "owner": d["owner"], "owner_label": d["owner_label"],
-                          "why": "rebuilding, so they can wait for him to come back" if d["owner_label"] == "rebuilder"
-                                 else "in the middle, so they can wait for him to come back",
-                          "net_gain": d["net_gain"], "ratio": round(1 / d["ratio"], 3) if d["ratio"] else 1.0,
-                          "get": [dict(g, meta=(f'{g["pos"]}, {_age(g["age"])}' if g["kind"] == "player" else "pick"))
-                                  for g in d["get"]],
-                          "give": [{"label": x["name"], "value": x["value"], "kind": "player",
-                                    "injury_status": x.get("injury_status"), "tag": "out long-term"}],
-                          "note": f'{x["name"]} adds nothing to your lineup this season'})
+        items.append({"score": d["score"], "owner": d["owner"], "owner_label": d["owner_label"],
+                      "why": "rebuilding, so they can wait for him to come back" if d["owner_label"] == "rebuilder"
+                             else "in the middle, so they can wait for him to come back",
+                      "net_gain": d["net_gain"], "ratio": round(1 / d["ratio"], 3) if d["ratio"] else 1.0,
+                      "get": [dict(g, meta=(f'{g["pos"]}, {_age(g["age"])}' if g["kind"] == "player" else "pick"))
+                              for g in d["get"]],
+                      "give": [{"label": x["name"], "value": x["value"], "kind": "player",
+                                "injury_status": x.get("injury_status"), "tag": "out long-term"}],
+                      "note": f'{x["name"]} adds nothing to your lineup this season'})
     items.sort(key=lambda i: -i["score"])
     return items[:MAX_SWING_ROWS]
 
 
 def _swing_rows(items: list[dict]) -> str:
-    rows = []
+    out = []
     for x in items:
-        get = "".join(
-            f'<div><span class="pname">{escape(g["label"])}</span>'
-            + (f' <span class="tag inj">{escape(g["injury_status"])}</span>' if g.get("injury_status") else "")
-            + f' <span class="sub small">{escape(g.get("meta") or "")}'
-            + (f', {g["ppg"]:.1f} pts/game' if isinstance(g.get("ppg"), (int, float)) else "")
-            + '</span></div>' for g in x["get"])
-        give = "".join(
-            f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
-            + (f' <span class="tag core">{escape(a["tag"])}</span>' if a.get("tag") == "starter" else "")
-            + (f' <span class="tag inj">{escape(a["injury_status"])}</span>' if a.get("injury_status") else "")
-            + '</div>' for a in x["give"])
+        get_names = " + ".join(escape(g["label"]) for g in x["get"])
         get_value = sum(g["value"] for g in x["get"])
-        rows.append(
-            f'<tr><td>{get}</td>'
-            f'<td>{escape(x["owner"])} {_tag(x["owner_label"])}<div class="sub small">{escape(x["why"])}</div></td>'
-            f'<td><span class="gain">+{_fmt(x["net_gain"])}</span><div class="sub small">{escape(x["note"])}</div></td>'
-            f'<td class="num">{_fmt(get_value)}</td>'
-            f'<td class="offer">{give}<div class="sub small">{x["ratio"]:.0%} of what you get</div></td></tr>')
-    return "".join(rows)
+        give_value = sum(a["value"] for a in x["give"])
+        get_lines = "".join(
+            f'<div class="row"><span>{escape(g["label"])}{_inj(g.get("injury_status"))} '
+            f'<span class="sub small">{escape(g.get("meta") or "")}'
+            + (f', {g["ppg"]:.1f} pts/game' if isinstance(g.get("ppg"), (int, float)) else "")
+            + f'</span></span><span class="num">{_fmt(g["value"])}</span></div>' for g in x["get"])
+        out.append(
+            f'<details class="item"><summary>'
+            f'<div class="row"><span class="pname">{get_names}</span><span class="gain">+{_fmt(x["net_gain"])}</span></div>'
+            f'<div class="row sub small"><span>{escape(x["owner"])} · {_tag(x["owner_label"])}</span>'
+            f'<span>{escape(x["note"])}</span></div>'
+            f'<div class="row body"><span>Give: {_short(x["give"])}</span>'
+            f'<span class="sub" style="white-space:nowrap">{x["ratio"]:.0%} of what you get</span></div></summary>'
+            f'<div class="more"><div class="body">{escape(x["owner"])} is {escape(x["why"])}.</div>'
+            f'<div><span class="label sub">You get</span><div class="lines">{get_lines}</div></div>'
+            f'<div><span class="label sub">You give</span><div class="lines">{_lines(x["give"], tags=True)}</div></div>'
+            f'{_value_bar(give_value, get_value)}</div></details>')
+    return "".join(out)
 
 
-def _target_rows(targets: list[dict]) -> str:
-    rows = []
+def _target_items(targets: list[dict]) -> str:
+    out = []
     for i, t in enumerate(targets, 1):
         o = t["offer"]
-        offer = "".join(f'<div>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span>'
-                        + (f' <span class="tag inj">{escape(a["injury_status"])}</span>' if a.get("injury_status") else "")
-                        + '</div>' for a in o["assets"])
+        give = sum(a["value"] for a in o["assets"])
         ppg = ""
         if isinstance(t.get("ppg"), (int, float)):
             rep_ppg = [p for p in t.get("replaces_ppg") or [] if isinstance(p, (int, float))]
-            ppg = f'<div class="sub small">{t["ppg"]:.1f} pts/game' + (
-                f' vs {rep_ppg[0]:.1f} for {escape(t["replaces"][0])}' if rep_ppg and t.get("replaces") else "") + '</div>'
-        replaces = f'<div class="sub small">replaces {escape(", ".join(t["replaces"]))}</div>' if t.get("replaces") else ""
+            ppg = f'{t["ppg"]:.1f} pts/game' + (
+                f' vs {rep_ppg[0]:.1f} for {escape(t["replaces"][0])}' if rep_ppg and t.get("replaces") else "")
+        replaces = f'Replaces {escape(", ".join(t["replaces"]))}.' if t.get("replaces") else ""
         trend = t.get("trend")
-        trend_s = f' <span class="sub small">{trend:+,} 30d</span>' if isinstance(trend, (int, float)) and abs(trend) >= 100 else ""
-        rows.append(
-            f'<tr><td class="num sub">{i}</td>'
-            f'<td><span class="pname">{escape(t["name"])}</span>'
-            + (f' <span class="tag inj">{escape(t["injury_status"])}</span>' if t.get("injury_status") else "")
-            + f'<div class="sub small">{escape(t["pos"] or "")}, '
-            f'{_age(t["age"])}, {escape(t.get("nfl_team") or "FA")}</div></td>'
-            f'<td>{escape(t["owner"])} {_tag(t["owner_label"])}<div class="sub small">{escape(t["why"])}</div></td>'
-            f'<td><span class="gain">+{_fmt(t["gain"])}</span>{replaces}{ppg}</td>'
-            f'<td class="num">{_fmt(t["value"])}{trend_s}{_sources(t)}</td>'
-            f'<td class="offer">{offer}<div class="sub small">{o["ratio"]:.0%} of his value</div>{_reuse(t)}</td></tr>')
-    return "".join(rows)
+        trend_s = f' ({trend:+,} in 30 days)' if isinstance(trend, (int, float)) and abs(trend) >= 100 else ""
+        alt = t.get("alt_offer")
+        out.append(
+            f'<details class="item" id="t{i}" data-label="{escape(t["owner_label"])}" data-pos="{escape(t["pos"] or "")}">'
+            f'<summary><div class="row"><span><span class="pname">{escape(t["name"])}</span>{_inj(t.get("injury_status"))} '
+            f'<span class="sub small">{escape(t["pos"] or "")} · {_age(t["age"])} · {escape(t.get("nfl_team") or "FA")}</span></span>'
+            f'<span class="gain">+{_fmt(t["gain"])}</span></div>'
+            f'<div class="row sub small"><span>{escape(t["owner"])} · {_tag(t["owner_label"])}</span>'
+            f'<span>value {_fmt(t["value"])}</span></div>'
+            f'<div class="row body"><span>Give: {_short(o["assets"])}</span>'
+            f'<span class="sub" style="white-space:nowrap">{o["ratio"]:.0%}</span></div></summary>'
+            f'<div class="more"><div class="body">{escape(t["why"])}. {replaces}</div>'
+            + (f'<div class="sub small">{ppg}</div>' if ppg else "")
+            + f'<div><span class="label sub">Suggested offer · {o["ratio"]:.0%} of his value</span>'
+            f'<div class="lines" style="margin-top:6px">{_lines(o["assets"])}</div></div>'
+            f'{_value_bar(give, t["value"])}'
+            f'<div class="sub small">Market value {_fmt(t["value"])}{trend_s}</div>{_sources(t)}{_reuse(t)}'
+            + (f'<div class="sub small">Alternate offer: {_short(alt["assets"])} ({alt["ratio"]:.0%}).</div>'
+               if alt and not t.get("shared") else "")
+            + '</div></details>')
+    return "".join(out)
+
+
+FILTER_JS = """<script>
+(function () {
+  var chips = document.querySelectorAll('.chip[data-f]');
+  function apply(f) {
+    var shown = 0;
+    document.querySelectorAll('#targets details.item').forEach(function (d) {
+      var ok = f === 'all' || d.getAttribute('data-label') === f || d.getAttribute('data-pos') === f;
+      d.hidden = !ok; if (ok) shown++;
+    });
+    var empty = document.getElementById('t-empty'); if (empty) empty.hidden = shown > 0;
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-f') === f ? 'true' : 'false'); });
+  }
+  chips.forEach(function (c) { c.addEventListener('click', function () { apply(c.getAttribute('data-f')); }); });
+  var h = location.hash && document.getElementById(location.hash.slice(1));
+  if (h && h.tagName === 'DETAILS') { h.open = true; }
+})();
+</script>"""
 
 
 def render(rep: dict) -> str:
     me = rep["me"]
-    updated = ""
-    if rep.get("generated_at"):
-        local = utc_to_pacific(datetime.fromisoformat(rep["generated_at"]))
-        updated = local.strftime("%a %b %d, %I:%M %p PT").replace(" 0", " ")
-    needs = "".join(
-        f'<span class="need-item"><b>{n["pos"]}</b> {n["rank"]}{_suffix(n["rank"])} of {len(rep["teams"])} '
-        f'{_tag("below avg") if n["need"] else _tag("ok")}</span>' for n in rep["needs"])
-    lens = ("You're contending, so targets are ranked on how much they improve your starting lineup this season, "
-            "weighted by how likely their manager is to sell (their team's direction and the player's age). "
-            "Offers never include your best lineup or the players filling in for your injured starters; "
-            "they favor picks and the players who add the least to your lineup this season. "
-            "Injured players out long-term are offered only to teams that aren't contending.") if me["label"] != "rebuilder" else (
-            "You're rebuilding, so targets are young players ranked on dynasty value, "
-            "weighted by how likely their manager is to sell.")
     targets = rep.get("targets") or []
-    target_html = (f'<table class="ttable"><tr class="head"><td></td><td>Player</td><td>Their team</td>'
-                   f'<td>Your lineup gain</td><td class="num">Market value</td><td>Suggested offer</td></tr>'
-                   f'{_target_rows(targets)}</table>') if targets else '<p class="sub">No upgrades found that your surplus can pay for.</p>'
+    labels = {t["owner_label"] for t in targets}
+    positions = [p for p in ("QB", "RB", "WR", "TE") if any(t["pos"] == p for t in targets)]
+    chips = [("all", f"All {len(targets)}")]
+    chips += [(lab, LABEL_WORDS[lab].capitalize()) for lab in ("rebuilder", "middle") if lab in labels]
+    chips += [(p, p) for p in positions]
+    chip_html = "".join(f'<button type="button" class="chip" data-f="{k}" aria-pressed="{"true" if k == "all" else "false"}">'
+                        f'{escape(v)}</button>' for k, v in chips) if targets else ""
+    target_html = (f'<div class="card flush" id="targets">{_target_items(targets)}'
+                   '<p class="sub" id="t-empty" hidden style="padding:10px 0">No targets match this filter.</p></div>'
+                   ) if targets else '<div class="card"><div class="body">No upgrades found that your surplus can pay for.</div></div>'
     oor = rep.get("out_of_reach") or []
-    oor_html = ('<p class="sub">Would help but cost more than your tradeable players and picks can cover: '
-                + ", ".join(f'{escape(t["name"])} ({escape(t["owner"])}, value {_fmt(t["value"])})' for t in oor)
-                + ". See Bigger swings below for trades that include one of your starters.</p>") if oor else ""
+    oor_html = ('<p class="sub small" style="margin:0 4px">Out of reach without a starter: '
+                + ", ".join(f'{escape(t["name"])} ({escape(t["owner"])})' for t in oor)
+                + ". See Bigger swings.</p>") if oor else ""
+
     swing_items = _swing_items(rep)
     swings_html = ""
     if swing_items:
-        swings_html = ('<section class="card"><h2>Bigger swings <span class="sub">trades built around one of your starters '
-                       'or a player out long-term</span></h2>'
-                       '<table class="ttable swtable"><tr class="head"><td>You get</td><td>Their team</td><td>Your lineup, net</td>'
-                       '<td class="num">Market value</td><td>You give</td></tr>'
-                       f'{_swing_rows(swing_items)}</table>'
-                       '<p class="sub">Two kinds of trade, ranked together on lineup gain and how likely the other '
-                       'manager is to deal. <b>Starter</b>: for players your other assets can\'t reach, you send a starter '
-                       'plus up to two other pieces, and it only shows up if your lineup still improves after losing him. '
-                       '<b>Out long-term</b>: an injured player whose rest-of-season value is below your weakest healthy '
-                       'starter\'s goes only to rebuilding or in-between teams, who can wait for him, for players who start '
-                       'for you now; one of their picks can make up the difference. Both are priced on dynasty value '
-                       '(FantasyCalc and KeepTradeCut), same rules as above. Selling an injured young player gives up future '
-                       'value to win now, so take it only if the lineup gain matters for the title.</p></section>')
-    chips = "".join(f'<span>{escape(a["label"])} <span class="sub">{_fmt(a["value"])}</span></span>'
-                    for a in rep.get("my_assets") or [])
-    chips += "".join(f'<span>{escape(x["name"])} <span class="sub">{_fmt(x["value"])}</span> '
-                     f'<span class="tag inj">out long-term: non-contenders only</span></span>'
-                     for x in rep.get("injured_sells") or [] if x["deals"])
+        swings_html = (f'<details class="fold" id="swings"><summary><div><h2>Bigger swings</h2><div class="sub small">'
+                       f'{len(swing_items)} trades built around a starter or an injured player</div></div>'
+                       '<span class="twisty"><span class="o">Show</span><span class="c">Hide</span></span></summary>'
+                       f'<div class="in">{_swing_rows(swing_items)}'
+                       '<p class="sub small">Starter: for players your other assets can\'t reach, you send a starter plus up '
+                       'to two pieces, shown only if your lineup still improves. Out long-term: an injured player who '
+                       'wouldn\'t start for you this season goes only to rebuilding or in-between teams, for players who '
+                       'start now. Both are priced on dynasty value. Selling an injured young player gives up future value '
+                       'to win now.</p></div></details>')
+
+    chip_list = "".join(f'<div class="row"><span>{escape(a["label"])}</span><span class="num sub">{_fmt(a["value"])}</span></div>'
+                        for a in rep.get("my_assets") or [])
+    chip_list += "".join(f'<div class="row"><span>{escape(x["name"])} <span class="tag bad">non-contenders only</span></span>'
+                         f'<span class="num sub">{_fmt(x["value"])}</span></div>'
+                         for x in rep.get("injured_sells") or [] if x["deals"])
+    hurt_names = [x["name"] for x in rep.get("injured_sells") or [] if x["deals"]]
+    chips_sub = (f'{" and ".join(escape(n) for n in hurt_names)}: non-contenders only' if hurt_names
+                 else f'{len(rep.get("my_assets") or [])} players and picks you can deal')
+    chips_html = (f'<details class="fold"><summary><div><h2>Your trade chips</h2><div class="sub small">{chips_sub}</div></div>'
+                  f'<span class="twisty"><span class="o">Show</span><span class="c">Hide</span></span></summary>'
+                  f'<div class="in"><div class="lines">{chip_list}</div></div></details>')
+
+    needs = " · ".join(f'{n["pos"]} {n["rank"]}{_suffix(n["rank"])}' + (" (below avg)" if n["need"] else "")
+                       for n in rep.get("needs") or [])
+    lens = ("You're contending, so targets are ranked on how much they improve your starting lineup this season, "
+            "weighted by how likely their manager is to sell. Offers never include your best lineup or the players "
+            "filling in for your injured starters, and favor picks and the players who add the least this season. "
+            "Injured players out long-term are offered only to teams that aren't contending.") if me["label"] != "rebuilder" else (
+            "You're rebuilding, so targets are young players ranked on dynasty value, "
+            "weighted by how likely their manager is to sell.")
     team_rows = "".join(
-        f'<tr class="{"me" if t["roster_id"] == me["roster_id"] else ""}">'
-        f'<td>{escape(t["name"])}</td><td class="num">{t["wins"]}-{t["losses"]}</td><td>{_tag(t["label"])}</td>'
-        f'<td class="num">{t["win_now_rank"]}</td><td class="num">{t["dynasty_rank"]}</td>'
-        f'<td class="num hide-sm">{t["age"] if t["age"] else "&ndash;"}</td><td class="num hide-sm">{t["youth"]:.0%}</td>'
-        f'<td class="sub small hide-sm">{escape(", ".join(t["picks"][:6]))}</td></tr>'
+        f'<tr><td>{"<b>" if t["roster_id"] == me["roster_id"] else ""}{escape(t["name"])}'
+        f'{"</b>" if t["roster_id"] == me["roster_id"] else ""}</td><td class="r">{t["wins"]}-{t["losses"]}</td>'
+        f'<td>{_tag(t["label"])}</td><td class="r">{t["win_now_rank"]}</td><td class="r">{t["dynasty_rank"]}</td></tr>'
         for t in rep["teams"])
-    return f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trade targets &middot; Week {rep["week"]}</title>{pwa.HEAD}<style>{CSS}{pwa.CSS}</style></head><body><main>
-{pwa.appbar(rep.get("generated_at"))}
-<header><p><a href="./">&larr; Lineup</a> &middot; <a href="waivers.html">Waivers</a></p><h1>Trade targets &middot; Week {rep["week"]}</h1>
-<p>{escape(_deadline(rep))} &middot; Updated {updated}</p></header>
-<section class="card accent"><h2>Your team: {_tag(me["label"])}</h2>
-<p class="sub">{escape("; ".join(me["reasons"]))}.</p>
-<p class="chips">{needs}</p>
-<p class="sub">{lens}</p></section>
-<section class="card"><h2>Top targets</h2>{target_html}{oor_html}
-<p class="sub">{_values_note(rep)}Lineup gain uses win-now value. Points per game are this season's, in your league scoring.
-Offers total 100&ndash;120% of the player's market value, plus 8% for each extra piece, because the other manager gives up a roster spot. The best piece is always worth at least half of what you get. A benched player still counts as depth, so offers prefer giving up the least win-now value.</p></section>
+    team_html = (f'<details class="fold"><summary><div><h2>Your team and the league</h2><div class="sub small">'
+                 f'{escape("; ".join(me["reasons"]))}</div></div><span class="twisty"><span class="o">Show</span>'
+                 f'<span class="c">Hide</span></span></summary><div class="in"><div class="body">{lens}</div>'
+                 + (f'<p class="sub small">Your starters vs the league: {needs}</p>' if needs else "")
+                 + '<table class="plain"><tr class="h"><td>Team</td><td class="r">Record</td><td>Direction</td>'
+                 f'<td class="r">Win-now</td><td class="r">Dynasty</td></tr>{team_rows}</table>'
+                 f'<p class="sub small">Direction combines standings, win-now and dynasty value, roster age, youth and '
+                 f'this season\'s trades ({rep.get("trades_this_season", 0)} in the league).</p></div></details>')
+
+    deadline = _deadline(rep)
+    body = f"""<div class="stack">
+{f'<div class="sub">{escape(deadline)}</div>' if deadline else ''}
+<div class="chips">{chip_html}</div>
+{target_html}
+{oor_html}
 {swings_html}
-<section class="card"><h2>Your trade chips</h2><p class="chips">{chips}</p></section>
-<section class="card"><h2>League map</h2><table>
-<tr class="head"><td>Team</td><td class="num">Record</td><td>Lifecycle</td><td class="num">Win-now rank</td><td class="num">Dynasty rank</td>
-<td class="num hide-sm">Avg age</td><td class="num hide-sm">Youth</td><td class="hide-sm">1st and 2nd round picks</td></tr>{team_rows}</table>
-<p class="sub">Lifecycle combines standings, win-now value, dynasty value, roster age, the share of value in picks and players 24 or under, and this season's trades ({rep.get("trades_this_season", 0)} in the league).</p></section>
-<p class="sub">Market values: FantasyCalc and KeepTradeCut, Superflex. League data: Sleeper.</p>
-</main>{pwa.SCRIPT}</body></html>
-"""
-
-
-def _suffix(n: int) -> str:
-    return "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+{chips_html}
+{team_html}
+{ui.footer(_values_note(rep) + "Lineup gain uses win-now value. Offers total 100&ndash;120% of the player's market "
+           "value, plus 8% for each extra piece; the best piece is worth at least half of what you get.")}
+</div>"""
+    rank = me.get("record_rank")
+    eyebrow = (f"You're {'a ' + me['label'] if me['label'] != 'middle' else 'in between'} · {me['wins']}-{me['losses']}"
+               + (f", {rank}{_suffix(rank)}" if rank else ""))
+    return ui.page(f"Trades &middot; Week {rep['week']}", "trades", escape(eyebrow), "Trades",
+                   rep.get("generated_at"), body, script=FILTER_JS)

@@ -54,7 +54,7 @@ def load_consensus(client, schedule, ids_text):
     return map_to_sleeper(ecr, ids, client.players())
 
 
-def run_waivers(client, snap, args, ctx, consensus) -> None:
+def run_waivers(client, snap, args, ctx, consensus):
     """Waiver targets and FAAB bids. Never fails the weekly run."""
     from .waivers import build_waiver_report
     from .waivers_page import render as render_waivers
@@ -62,7 +62,7 @@ def run_waivers(client, snap, args, ctx, consensus) -> None:
         rep = build_waiver_report(client, snap.to_dict(), ctx, consensus, args.expert_weight)
     except Exception as e:
         print(f"Warning: waiver targets not updated ({e})", file=sys.stderr)
-        return
+        return None
     Path(args.out, "waivers_latest.json").write_text(json.dumps(rep, indent=1, default=str), encoding="utf-8")
     out = Path(args.waivers)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -70,10 +70,11 @@ def run_waivers(client, snap, args, ctx, consensus) -> None:
     print(f"\nWaivers: ${rep['my_left']} FAAB left; {len(rep['adds'])} season adds, {len(rep['streamers'])} streamers. Wrote {out}")
     for r in (rep["adds"][:3] + rep["streamers"][:2]):
         print(f"  {r['name']} ({r['pos']}, {r['nfl_team']}): bid ${r['bid']['bid']} (up to ${r['bid']['aggressive']})")
+    return rep
 
 
-def run_trades(client, snap, args, consensus=None) -> None:
-    """v2 trade finder. Never fails the weekly run."""
+def run_trades(client, snap, args, consensus=None):
+    """v2 trade finder. Never fails the weekly run. Returns (trades report, waivers report), either may be None."""
     from .consensus import fetch
     from .market import FC_URL
     from .trades import build_report
@@ -92,7 +93,7 @@ def run_trades(client, snap, args, consensus=None) -> None:
                                    return_context=True)
     except Exception as e:
         print(f"Warning: trade targets not updated ({e})", file=sys.stderr)
-        return
+        return None, None
     Path(args.out, "trades_latest.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
     out = Path(args.trades)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -103,10 +104,10 @@ def run_trades(client, snap, args, consensus=None) -> None:
     print(f"  Values: FantasyCalc {vs.get('fantasycalc_players')} players; KTC {vs.get('ktc')}"
           + (f" ({vs.get('ktc_players_mapped')} matched, {vs.get('ktc_players_unmapped')} unmatched, {vs.get('ktc_picks')} picks)"
              if vs.get("ktc") == "blended" else ""))
-    if getattr(args, "waivers", None):
-        run_waivers(client, snap, args, ctx, consensus)
+    waivers = run_waivers(client, snap, args, ctx, consensus) if getattr(args, "waivers", None) else None
     for t in report["targets"][:3]:
         print(f"  {t['name']} ({t['owner']}): offer " + ", ".join(a["label"] for a in t["offer"]["assets"]))
+    return report, waivers
 
 
 def main(argv=None) -> int:
@@ -184,17 +185,21 @@ def main(argv=None) -> int:
     print(format_summary(snap))
     print(f"\nSaved {path}")
 
+    trades_rep = waivers_rep = None
+    if args.trades:
+        trades_rep, waivers_rep = run_trades(client, snap, args, consensus)
+
     if args.html:
-        from .page import render
+        # index.html is the Today page; the full lineup sits beside it as lineup.html
+        from .page import render, render_today
+        from .pwa import write_static
         html_path = Path(args.html)
         html_path.parent.mkdir(parents=True, exist_ok=True)
-        html_path.write_text(render(snap.to_dict()), encoding="utf-8")
-        from .pwa import write_static
+        lineup_path = html_path.parent / "lineup.html"
+        lineup_path.write_text(render(snap.to_dict()), encoding="utf-8")
+        html_path.write_text(render_today(snap.to_dict(), trades_rep, waivers_rep), encoding="utf-8")
         write_static(html_path.parent)
-        print(f"Wrote {html_path}")
-
-    if args.trades:
-        run_trades(client, snap, args, consensus)
+        print(f"Wrote {html_path} and {lineup_path}")
 
     if args.notify:
         from .notify import alert_key, build_alert, send

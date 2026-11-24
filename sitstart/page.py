@@ -1,13 +1,12 @@
-"""Render a snapshot as one self-contained HTML page (no scripts, no external calls)."""
+"""Today (home) and Lineup pages, in the shared look from ui.py."""
 
 from __future__ import annotations
 
-from datetime import datetime
 from html import escape
 
-from . import pwa
-from .schedule import utc_to_pacific
+from . import ui
 from .sleeper import card_value
+from .ui import fmt, icon, pt, pts
 
 FLAG_WORDS = {
     "EMPTY_SLOT": "Empty slot",
@@ -20,20 +19,12 @@ FLAG_WORDS = {
     "NO_NFL_TEAM": "No NFL team",
     "INELIGIBLE_FOR_SLOT": "Can't play this slot",
 }
+SLOT_SHORT = {"SUPER_FLEX": "SF", "FLEX": "FLX", "REC_FLEX": "RFX", "WRRB_FLEX": "W/R", "IDP_FLEX": "IDP"}
+INJURED = ("Out", "IR", "Doubtful", "PUP", "Sus")
 
 
-def _pt(iso: str | None, fmt: str = "%a %-I:%M %p") -> str:
-    if not iso:
-        return ""
-    local = utc_to_pacific(datetime.fromisoformat(iso))
-    try:
-        return local.strftime(fmt)
-    except ValueError:  # Windows strftime lacks %-I
-        return local.strftime(fmt.replace("%-I", "%I"))
-
-
-def _pts(v) -> str:
-    return f"{v:.1f}" if isinstance(v, (int, float)) else "&ndash;"
+def _slot(s: str) -> str:
+    return SLOT_SHORT.get(s, s.replace("_", " ")[:4])
 
 
 def _status(card: dict | None, flag: str | None = None, locked: bool = False) -> str:
@@ -47,56 +38,93 @@ def _status(card: dict | None, flag: str | None = None, locked: bool = False) ->
         tags.append(f'<span class="tag {cls}">{escape(card["injury_status"])}</span>')
     elif card and not card.get("team"):
         tags.append('<span class="tag muted">No team</span>')
-    if locked or (card and card.get("locked")):
-        tags.append('<span class="tag muted">Locked</span>')
-    return " ".join(tags)
+    return " ".join(tags)   # "locked" is shown in the game line instead of a tag
 
 
-def _player_cells(card: dict | None) -> str:
+def _meta(card: dict, slot: str = "", locked: bool = False) -> str:
+    """Short game line: position only where the slot doesn't say it, then game, then kickoff or 'locked'."""
+    parts = []
+    if slot not in ("QB", "RB", "WR", "TE", "K", "DEF"):
+        parts.append(escape(card.get("position") or ""))
+    game = " ".join(x for x in (card.get("team"), card.get("opponent")) if x)
+    if game:
+        parts.append(escape(game))
+    if locked or card.get("locked"):
+        parts.append("locked")
+    else:
+        when = pt(card.get("kickoff_utc"), "%a %-I:%M%p").replace("AM", "a").replace("PM", "p")
+        if when:
+            parts.append(when)
+    return " · ".join(p for p in parts if p)
+
+
+def _row(slot: str, card: dict | None, flag: str | None = None, locked: bool = False, scale: float = 25.0) -> str:
     if not card:
-        return '<td class="name empty">Empty</td><td class="game"></td><td class="xp"></td><td class="st"></td>'
-    who = f'<span class="pname">{escape(card["name"])}</span> <span class="sub">{escape(card.get("position") or "")}' \
-          f'{", " + escape(card["team"]) if card.get("team") else ""}</span>'
-    game = escape(card.get("opponent") or "")
-    when = _pt(card.get("kickoff_utc"))
-    rank = escape(card.get("consensus_rank") or "")
-    game_cell = f'{game}<span class="sub when">{when}</span>' if when else game
-    return (f'<td class="name">{who}</td><td class="game">{game_cell}</td>'
-            f'<td class="sub xp">{rank}</td><td class="st">{_stats_cell(card)}</td>')
+        return (f'<div class="grid5 trow"><span class="slot">{escape(slot)}</span>'
+                f'<div><div class="pn">Empty</div><div class="meta">{_status(None, flag)}</div></div>'
+                '<span></span><span></span><div class="sc"><b>&ndash;</b></div></div>')
+    v = card_value(card)
+    width = 0 if not isinstance(v, (int, float)) or scale <= 0 else max(0, min(100, round(v / scale * 100)))
+    tags = _status(card, flag, False)
+    return (f'<div class="grid5 trow"><span class="slot">{escape(slot)}</span>'
+            f'<div style="min-width:0"><div class="pn">{escape(card["name"])}</div>'
+            f'<div class="meta">{_meta(card, slot, locked)}{" " + tags if tags else ""}</div></div>'
+            f'<span class="c3 r">{pts(card.get("proj_pts"))}</span><span class="c3 r">{pts(card.get("expert_pts"))}</span>'
+            f'<div class="sc"><b>{pts(v)}</b><div class="bar"><i style="width:{width}%"></i></div></div></div>')
 
 
-def _stats_cell(card: dict) -> str:
-    adj = card.get("stat_adj")
-    if not isinstance(adj, (int, float)):
-        return ""
-    cls = "up" if adj > 0.025 else "down" if adj < -0.025 else "flat"
-    tip = f'Recent expected points {card.get("xfp")}, usage trend {card.get("usage_trend")}'
-    return f'<span class="stat {cls}" title="{escape(tip)}">{adj:+.0%}</span>'
+def _table(rows: str, head_slot: str = "SLOT") -> str:
+    return (f'<div class="card flush"><div class="grid5 thead"><span>{head_slot}</span><span>PLAYER</span>'
+            f'<span class="r">SLPR</span><span class="r">EXP</span><span class="r">SCORE</span></div>{rows}</div>')
 
 
-def _suggestion_block(sug: dict | None) -> str:
+def _totals(snap: dict) -> tuple[float, float | None]:
+    mine = sum(card_value(r["player"]) or 0 for r in snap["lineup"])
+    opp = snap.get("opponent") or {}
+    return mine, opp.get("proj_total")
+
+
+def _scoreboard(snap: dict, in_hero: bool = False) -> str:
+    mine, theirs = _totals(snap)
+    me_name = escape(snap["me"].get("team_name") or snap["me"].get("display_name") or "You")
+    opp = snap.get("opponent") or {}
+    if theirs is None:
+        return (f'<div class="score3"><div><div class="nm">{me_name}</div><div class="big me">{mine:.1f}</div></div>'
+                '<div class="mid"><span class="small">projected</span></div><div></div></div>')
+    diff = mine - theirs
+    opp_name = escape(opp.get("team_name") or opp.get("display_name") or "Opponent")
+    return (f'<div class="score3"><div><div class="nm">{me_name}</div><div class="big me">{mine:.1f}</div></div>'
+            f'<div class="mid"><b class="{"" if diff >= 0 else "behind"}">{diff:+.1f}</b><span class="small sub">projected</span></div>'
+            f'<div class="r"><div class="nm">{opp_name}</div><div class="big">{theirs:.1f}</div></div></div>')
+
+
+def _moves(sug: dict) -> list[str]:
+    starts, sits = sug.get("start") or [], sug.get("sit") or []
+    out = []
+    for i, c in enumerate(starts):
+        over = f" over {escape(sits[i]['name'])}" if i < len(sits) else ""
+        q = " (Questionable)" if c.get("injury_status") == "Questionable" else ""
+        out.append(f"Start <b>{escape(c['name'])}</b>{q}{over}")
+    for c in sits[len(starts):]:
+        out.append(f"Bench <b>{escape(c['name'])}</b>")
+    if not out and sug.get("slot_moves"):
+        out.append("Rearrange slots: " + escape(", ".join(f'{_slot(r["slot"])} {r["name"]}' for r in sug["lineup"] if r["name"])))
+    return out
+
+
+def _verdict(sug: dict | None) -> str:
     if not sug:
-        return '<section class="card"><h2>Suggested changes</h2><p class="sub">Projections unavailable this run.</p></section>'
+        return f'<div class="strip warn">{icon("alert", 16, 2.4)}Projections unavailable this run</div>'
     if not sug.get("actionable"):
-        return ('<section class="card ok"><h2>Your lineup is set</h2>'
-                '<p>No changes beat your current lineup on Score.</p></section>')
-    rows = []
-    for verb, group in (("Start", sug["start"]), ("Sit", sug["sit"])):
-        for c in group:
-            note = ""
-            if c.get("injury_status") == "Questionable":
-                note = f' <span class="tag warn">Questionable, counted as {c["value"]:.1f}</span>'
-            rows.append(f'<tr><td class="verb {verb.lower()}">{verb}</td><td class="name">{escape(c["name"])}{note}</td>'
-                        f'<td class="num">{_pts(c["proj_pts"])}</td></tr>')
-    gain = f' <span class="gain">+{sug["gain"]:.1f} pts</span>' if sug["gain"] > 0.05 else ""
-    moves = ""
+        return f'<div class="strip ok">{icon("check", 16, 2.6)}Best lineup · no changes</div>'
+    rows = "".join(f'<div class="row"><span>{m}</span></div>' for m in _moves(sug))
+    slots = ""
     if sug.get("slot_moves"):
-        moves = '<p class="sub">Then set slots: ' + escape(", ".join(
-            f'{r["slot"]} {r["name"]}' for r in sug["lineup"] if r["name"])) + "</p>"
-    return (f'<section class="card accent"><h2>Suggested changes{gain}</h2>'
-            f'<table class="sug">{"".join(rows)}</table>{moves}'
-            '<p class="sub">Ranked on Score (Sleeper projections blended with expert consensus). Questionable players are discounted 15%.</p>'
-            '</section>')
+        slots = ('<div class="sub small">Then set slots: ' + escape(", ".join(
+            f'{_slot(r["slot"])} {r["name"]}' for r in sug["lineup"] if r["name"])) + "</div>")
+    return (f'<div class="card"><div class="row"><span class="label warn">Make these changes</span>'
+            f'<span class="gain">+{sug["gain"]:.1f} pts</span></div><div class="lines" style="margin-top:8px">{rows}</div>'
+            f'{slots}<div class="sub small" style="margin-top:6px">Questionable players are discounted 15%.</div></div>')
 
 
 def _stats_view_note(snap: dict) -> str:
@@ -108,134 +136,174 @@ def _stats_view_note(snap: dict) -> str:
         return ""
     starts = ", ".join(escape(c["name"]) for c in sv["start"])
     sits = ", ".join(escape(c["name"]) for c in sv["sit"])
-    return ('<section class="card"><h2>Stats view <span class="sub">shadow mode, not applied</span></h2>'
-            f'<p>Usage and matchup data would start <b>{starts}</b>' + (f' over <b>{sits}</b>' if sits else '') + '.</p>'
-            '<p class="sub">Shown for comparison only. It joins the recommendations once the report card shows it beating the app.</p></section>')
+    return ('<div class="card"><span class="label sub">Stats view · not applied</span>'
+            f'<div class="body" style="margin-top:4px">Usage and matchup data would start <b>{starts}</b>'
+            + (f' over <b>{sits}</b>' if sits else '') + '. Shown for comparison until the report card shows it '
+            'beating the app.</div></div>')
 
 
 def _report_card(grades: list[dict]) -> str:
     if not grades:
         return ""
     from .grades import stats_streak
-    def cell(v):
-        return f"{v:.1f}" if isinstance(v, (int, float)) else "&ndash;"
     rows = "".join(
-        f'<tr class="{"bt" if g.get("source") == "backtest" else ""}"><td>Week {g["week"]}</td>'
-        f'<td>{cell(g.get("you"))}</td><td>{cell(g.get("app"))}</td><td class="rc-sl">{cell(g.get("sleeper"))}</td>'
-        f'<td class="rc-st">{cell(g.get("stats"))}</td><td>{cell(g.get("best"))}</td></tr>'
+        f'<tr class="{"bt" if g.get("source") == "backtest" else ""}"><td>Wk {g["week"]}</td>'
+        f'<td class="r">{pts(g.get("you"))}</td><td class="r">{pts(g.get("app"))}</td><td class="r">{pts(g.get("sleeper"))}</td>'
+        f'<td class="r">{pts(g.get("stats"))}</td><td class="r">{pts(g.get("best"))}</td></tr>'
         for g in sorted(grades, key=lambda g: -g["week"]))
     tot = lambda k: sum(g.get(k) or 0 for g in grades)
-    has_stats = [g for g in grades if isinstance(g.get("stats"), (int, float))]
-    stats_tot = f"{sum(g['stats'] for g in has_stats):.1f}*" if has_stats else "&ndash;"
-    same = ""
-    if has_stats and len(has_stats) < len(grades):
-        wks = [g["week"] for g in has_stats]
-        same = (f" *Stats view covers Weeks {min(wks)}&ndash;{max(wks)} only; over those weeks the app scored "
-                f"{sum(g['app'] or 0 for g in has_stats):.1f} and the stats view {sum(g['stats'] for g in has_stats):.1f}.")
     note = ("Stats view has beaten the app 3 weeks running. Consider switching it on."
             if stats_streak(grades) else
-            "Gray rows are backtest weeks (before the app existed, no injury info). The stats view is shadow-only.") + same
-    return ('<section class="card"><h2>Report card</h2><table class="grades">'
-            '<tr class="head"><td>Week</td><td>You</td><td>App</td><td class="rc-sl">Sleeper only</td><td class="rc-st">Stats view</td><td>Best possible</td></tr>'
-            f'{rows}<tr class="total"><td>Season</td><td>{tot("you"):.1f}</td><td>{tot("app"):.1f}</td>'
-            f'<td class="rc-sl">{tot("sleeper"):.1f}</td><td class="rc-st">{stats_tot}</td><td>{tot("best"):.1f}</td></tr></table>'
-            f'<p class="sub">Points your lineup scored under each approach. {note}</p></section>')
+            "Gray rows are backtest weeks (before the app existed, no injury info). Stats view is shadow-only.")
+    return ('<details class="fold"><summary><h2>Report card</h2><span class="twisty"><span class="o">Show</span>'
+            '<span class="c">Hide</span></span></summary><div class="in">'
+            '<table class="plain"><tr class="h"><td>Week</td><td class="r">You</td><td class="r">App</td>'
+            '<td class="r">Sleeper</td><td class="r">Stats</td><td class="r">Best</td></tr>'
+            f'{rows}<tr class="tot"><td>Season</td><td class="r">{tot("you"):.1f}</td><td class="r">{tot("app"):.1f}</td>'
+            f'<td class="r">{tot("sleeper"):.1f}</td><td class="r">&ndash;</td><td class="r">{tot("best"):.1f}</td></tr></table>'
+            f'<p class="sub small">Points your lineup scored under each approach. {note}</p></div></details>')
 
 
 def _blend_note(ds: dict) -> str:
     if ds.get("consensus_players"):
         w = ds.get("blend_weight", 0.5)
-        return (f"Score = {1 - w:.0%} Sleeper projection in your league scoring + {w:.0%} expert consensus "
-                f"(FantasyPros rankings via DynastyProcess, {ds.get('consensus_scrape_date')}). "
-                "Experts = consensus positional rank.")
+        return (f"Score blends Sleeper's projection in your scoring ({1 - w:.0%}) with the expert consensus ({w:.0%}, "
+                f"FantasyPros via DynastyProcess, {ds.get('consensus_scrape_date')}). SLPR = Sleeper, EXP = experts.")
     return "Score = Sleeper projection in your league scoring. Expert consensus was unavailable this run."
 
 
 def render(snap: dict) -> str:
-    lg = snap["league"]
-    sc = lg["scoring_summary"]
+    """The Lineup page (lineup.html)."""
     ds = snap.get("data_status") or {}
-    updated = _pt(snap.get("generated_at"), "%a %b %-d, %-I:%M %p PT")
-
-    lineup_rows = "".join(
-        f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td>{_player_cells(r["player"])}'
-        f'<td>{_status(r["player"], r["flag"], r.get("locked"))}</td><td class="num">{_pts(card_value(r["player"]))}</td></tr>'
-        for r in snap["lineup"])
-    total = sum(card_value(r["player"]) or 0 for r in snap["lineup"])
+    starters = [r for r in snap["lineup"]]
+    scale = max([card_value(r["player"]) or 0 for r in starters] + [1.0])
+    rows = "".join(_row(_slot(r["slot"]), r["player"], r["flag"], r.get("locked"), scale) for r in starters)
+    mine, _ = _totals(snap)
+    rows += (f'<div class="grid5 trow"><span></span><b class="pn">Projected total</b><span></span><span></span>'
+             f'<div class="sc"><b>{mine:.1f}</b></div></div>')
 
     bench = sorted(snap["bench"], key=lambda c: -(card_value(c) or 0))
-    bench_rows = "".join(
-        f'<tr>{_player_cells(c)}<td>{_status(c)}</td><td class="num">{_pts(card_value(c))}</td></tr>'
-        for c in bench)
+    top3 = " · ".join(f'{escape(c["name"])} {pts(card_value(c))}' for c in bench[:3] if (card_value(c) or 0) > 0)
+    hurt = {}
+    for c in bench + list(snap.get("reserve") or []):
+        s = c.get("injury_status") or ("IR" if c in (snap.get("reserve") or []) else None)
+        if s in INJURED:
+            hurt.setdefault(s, []).append(escape(c["name"]))
+    hurt_line = " · ".join(f'{s}: {", ".join(n)}' for s, n in hurt.items())
+    bench_rows = "".join(_row("BN", c, scale=scale) for c in bench)
+    taxi = ", ".join(escape(c["name"]) for c in snap.get("taxi") or [])
+    bench_html = (f'<details class="fold"><summary><div><h2>Bench</h2><div class="sub small">{top3 or "No bench points"}</div>'
+                  + (f'<div class="small" style="color:var(--warn)">{hurt_line}</div>' if hurt_line else "")
+                  + f'</div><span class="twisty"><span class="o">All {len(bench)}</span><span class="c">Hide</span></span>'
+                  f'</summary><div class="in">{_table(bench_rows, "")}'
+                  + (f'<p class="sub small">Taxi: {taxi}</p>' if taxi else "") + '</div></details>')
 
     opp_html = ""
     opp = snap.get("opponent")
     if opp:
-        def opp_row(r):
-            c = r["player"]
-            who = (f'<span class="pname">{escape(c["name"])}</span> <span class="sub">{escape(c.get("position") or "")}'
-                   f'{", " + escape(c["team"]) if c.get("team") else ""}</span>') if c else "Empty"
-            rank = escape((c or {}).get("consensus_rank") or "")
-            return (f'<tr><td class="slot">{escape(r["slot"].replace("_", " "))}</td><td class="name">{who}</td>'
-                    f'<td class="sub">{rank}</td><td>{_status(c, r["flag"], r.get("locked"))}</td>'
-                    f'<td class="num">{_pts(card_value(c))}</td></tr>')
-        opp_rows = "".join(opp_row(r) for r in opp["lineup"])
-        opp_html = (f'<section class="card"><h2>Opponent: {escape(opp.get("team_name") or "")}'
-                    f' <span class="sub">projected {_pts(opp.get("proj_total"))}</span></h2>'
-                    '<table><tr class="head"><td>Slot</td><td>Player</td><td>Experts</td><td></td><td class="num">Score</td></tr>'
-                    f'{opp_rows}</table></section>')
-
-    reserve = ", ".join(escape(c["name"]) for c in snap.get("reserve") or [])
-    taxi = ", ".join(escape(c["name"]) for c in snap.get("taxi") or [])
-    extras = ""
-    if reserve:
-        extras += f'<p class="sub">IR: {reserve}</p>'
-    if taxi:
-        extras += f'<p class="sub">Taxi: {taxi}</p>'
+        oscale = max([card_value(r["player"]) or 0 for r in opp["lineup"]] + [1.0])
+        orows = "".join(_row(_slot(r["slot"]), r["player"], r["flag"], r.get("locked"), oscale) for r in opp["lineup"])
+        opp_html = (f'<details class="fold"><summary><h2>{escape(opp.get("team_name") or "Opponent")} '
+                    f'<span class="sub">{pts(opp.get("proj_total"))}</span></h2><span class="twisty"><span class="o">Show lineup</span>'
+                    f'<span class="c">Hide</span></span></summary><div class="in">{_table(orows)}</div></details>')
 
     byes = ", ".join(ds.get("bye_teams") or []) or "none"
-    return f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lineup &middot; Week {snap["week"]}</title>{pwa.HEAD}
-<style>
-:root{{--bg:#f7f6f3;--card:#fff;--ink:#1d1d1b;--sub:#6b6a66;--line:#e6e4de;--accent:#2f5bd3;--good:#1f7a4d;--warn:#a86400;--bad:#b3261e}}
-@media (prefers-color-scheme:dark){{:root{{--bg:#151514;--card:#1f1f1d;--ink:#ecebe7;--sub:#a3a29d;--line:#33322f;--accent:#7f9cf5;--good:#5cc28f;--warn:#e0a84a;--bad:#f08a80}}}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}}
-main{{max-width:1120px;margin:0 auto;padding:28px 16px 48px}}a{{color:var(--accent)}}
-header h1{{margin:0;font-size:24px}}header p{{margin:4px 0 0;color:var(--sub)}}
-.grid{{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}}
-@media (min-width:1000px){{.grid{{grid-template-columns:minmax(0,11fr) minmax(0,9fr)}}}}
-.card{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:16px;overflow-x:auto}}
-.grid .card{{margin-top:0}}.grid>div{{min-width:0}}.grid>div>.card+.card{{margin-top:16px}}
-.card.accent{{border-color:var(--accent);border-width:2px}}.card.ok{{border-color:var(--good)}}
-h2{{font-size:16px;margin:0 0 10px}}.gain{{color:var(--good);margin-left:6px}}
-table{{width:100%;border-collapse:collapse}}td{{padding:7px 8px;border-top:1px solid var(--line);vertical-align:middle;white-space:nowrap}}
-tr:first-child td{{border-top:none}}.num{{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}}
-.slot{{color:var(--sub);font-size:12px;letter-spacing:.04em;width:88px}}.name{{white-space:normal;min-width:150px}}.pname{{font-weight:600;display:block}}.name .sub{{display:block;font-size:12px}}
-.sub{{color:var(--sub);font-size:13px}}.empty{{color:var(--bad)}}
-.tag{{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid currentColor}}
-.tag.bad{{color:var(--bad)}}.tag.warn{{color:var(--warn)}}.tag.muted{{color:var(--sub)}}
-.verb{{font-weight:700;width:56px}}.verb.start{{color:var(--good)}}.verb.sit{{color:var(--bad)}}
-.total td{{font-weight:700;border-top:2px solid var(--line)}}.head td{{color:var(--sub);font-size:12px;border-top:none;padding-top:0}}
-.game .when{{display:block;font-size:12px}}
-@media (max-width:640px){{.game,.xp,.st,.rc-sl,.rc-st{{display:none}}main{{padding:16px 10px 40px}}.card{{padding:12px}}.slot{{width:auto;font-size:11px;white-space:normal}}td{{padding:7px 4px;white-space:normal}}.tag{{font-size:11px;padding:0 5px}}.num{{white-space:nowrap}}}}.stat{{font-size:12px;font-variant-numeric:tabular-nums}}.stat.up{{color:var(--good)}}.stat.down{{color:var(--bad)}}.stat.flat{{color:var(--sub)}}
-.grades td{{text-align:right;font-variant-numeric:tabular-nums}}.grades td:first-child{{text-align:left}}.grades .bt td{{color:var(--sub)}}
-{pwa.CSS}</style></head><body><main>
-{pwa.appbar(snap.get("generated_at"))}
-<header><h1>{escape(lg["name"] or "")} &middot; Week {snap["week"]}</h1>
-<p>{escape(snap["me"].get("team_name") or "")} &middot; {escape(sc["format"])}, {"Superflex" if lg["is_superflex"] else "1QB"} &middot; Updated {updated}{' &middot; <a href="trades.html">Trade targets &rarr;</a>' if ds.get("trades_page") else ""}{' &middot; <a href="waivers.html">Waivers &rarr;</a>' if ds.get("waivers_page") else ""}</p></header>
-<div class="grid">
-<div>
-{_suggestion_block(snap.get("suggestion"))}
+    body = f"""<div class="stack">
+<div class="card">{_scoreboard(snap)}</div>
+{_verdict(snap.get("suggestion"))}
 {_stats_view_note(snap)}
-<section class="card"><h2>Current lineup</h2><table><tr class="head"><td>Slot</td><td>Player</td><td class="game">Game (PT)</td><td class="xp">Experts</td><td class="st">Stats</td><td></td><td class="num">Score</td></tr>{lineup_rows}
-<tr class="total"><td colspan="2">Projected total</td><td class="game"></td><td class="xp"></td><td class="st"></td><td></td><td class="num">{total:.1f}</td></tr></table></section>
-</div>
-<div>{opp_html}</div>
-</div>
+{_table(rows)}
+{bench_html}
+{opp_html}
 {_report_card(snap.get("grades") or [])}
-<section class="card"><h2>Bench</h2><table><tr class="head"><td>Player</td><td class="game">Game (PT)</td><td class="xp">Experts</td><td class="st">Stats</td><td></td><td class="num">Score</td></tr>{bench_rows}</table>{extras}</section>
-<p class="sub">{escape(_blend_note(ds))}</p>
-<p class="sub">Projections: Sleeper ({escape(str(ds.get("projections_source")))}, {ds.get("projections_count")} players). Byes: {escape(byes)}. Kickoff times are Pacific.</p>
-</main>{pwa.SCRIPT}</body></html>
-"""
+{ui.footer(escape(_blend_note(ds)) + f' Projections: Sleeper ({escape(str(ds.get("projections_source")))}, '
+           f'{ds.get("projections_count")} players). Byes: {escape(byes)}. Times are Pacific.')}
+</div>"""
+    return ui.page(f"Lineup &middot; Week {snap['week']}", "lineup",
+                   f"Week {snap['week']}", "Lineup", snap.get("generated_at"), body)
+
+
+def _record(trades: dict | None) -> str:
+    me = (trades or {}).get("me") or {}
+    if "wins" not in me:
+        return ""
+    r = me.get("record_rank")
+    suffix = "th" if r and 10 <= r % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get((r or 0) % 10, "th")
+    return f" · {me['wins']}-{me['losses']}" + (f", {r}{suffix}" if r else "")
+
+
+def _trade_card(trades: dict | None) -> str:
+    targets = (trades or {}).get("targets") or []
+    if not targets:
+        return ""
+    t = targets[0]
+    phrase = {"rebuilder": "is rebuilding", "middle": "is in between", "contender": "is contending"}.get(t["owner_label"], "")
+    offer = ", ".join(escape(a["label"]) + (f' ({escape(a["injury_status"])})' if a.get("injury_status") else "")
+                      for a in t["offer"]["assets"])
+    return (f'<a class="card" href="trades.html#t1"><div class="row"><span class="label good">Top trade</span>'
+            f'<span class="sub small">1 of {len(targets)} targets</span></div>'
+            f'<div class="title">{escape(t["name"])} is gettable</div>'
+            f'<div class="body">{escape(t["owner"])} {phrase}. Offer {offer}.</div>'
+            f'<div class="row" style="margin-top:6px"><span class="gain">+{fmt(t["gain"])} lineup value</span>'
+            f'<span class="gain">See offer &rarr;</span></div></a>')
+
+
+def _waiver_card(w: dict | None) -> str:
+    if not w:
+        return ""
+    meta = f'${w["my_left"]} left · {w["weeks_left"]} weeks'
+    adds, streams = w.get("adds") or [], w.get("streamers") or []
+    if adds:
+        r = adds[0]
+        title = f'Bid ${r["bid"]["bid"]} on {escape(r["name"])}'
+        body = (f'{escape(r["pos"] or "")}, {escape(r.get("nfl_team") or "FA")}. '
+                + (f'Improves your lineup by {fmt(r["ros_gain"])} for the rest of the season.' if r["ros_gain"] > 0
+                   else f'Stash value {fmt(r["dynasty"])}.')
+                + (f' {len(adds) - 1} more worth a claim.' if len(adds) > 1 else ""))
+    elif streams:
+        r = streams[0]
+        title = f'Stream {escape(r["name"])}'
+        body = f'+{r["week_gain"]:.1f} points to this week\'s best lineup. Bid ${r["bid"]["bid"]}.'
+    else:
+        title = "Nothing worth a bid"
+        body = "Nobody on the wire would start for you. Depth options are $1 claims."
+    return (f'<a class="card" href="waivers.html"><div class="row"><span class="label warn">Waivers</span>'
+            f'<span class="sub small">{meta}</span></div><div class="title">{title}</div><div class="body">{body}</div></a>')
+
+
+def _grade_card(grades: list[dict]) -> str:
+    live = [g for g in grades if isinstance(g.get("you"), (int, float)) and isinstance(g.get("best"), (int, float))]
+    if not live:
+        return ""
+    g = max(live, key=lambda g: g["week"])
+    if g["best"] - g["you"] < 0.05:
+        title, body = f'Week {g["week"]}: perfect lineup', f'You scored {g["you"]:.1f}, the most your roster could have scored.'
+    else:
+        app = f' The app\'s lineup would have scored {g["app"]:.1f}.' if isinstance(g.get("app"), (int, float)) else ""
+        title = f'Week {g["week"]}: {g["you"]:.1f} points'
+        body = f'Best possible was {g["best"]:.1f}.{app}'
+    return (f'<a class="card" href="lineup.html"><span class="label blue">Report card</span>'
+            f'<div class="title">{title}</div><div class="body">{body}</div></a>')
+
+
+def render_today(snap: dict, trades: dict | None = None, waivers: dict | None = None) -> str:
+    """The home page (index.html): what needs doing, one card each."""
+    sug = snap.get("suggestion")
+    if not sug:
+        top, msg, cls, moves = "PROJECTIONS UNAVAILABLE", "Sleeper didn't return projections this run.", "act", ""
+    elif sug.get("actionable"):
+        mv = _moves(sug)
+        top = f'{len(mv)} CHANGE{"S" if len(mv) != 1 else ""} TO MAKE'
+        msg = f'Your best lineup scores {sug["gain"]:.1f} more.'
+        cls = "act"
+        moves = '<div class="moves">' + "<br>".join(mv) + "</div>"
+    else:
+        top, msg, cls, moves = "LINEUP IS SET", "No changes needed. You're starting the best possible lineup.", "", ""
+    hero = (f'<a class="hero {cls}" href="lineup.html"><div class="h-top"><span style="display:flex;align-items:center;gap:8px">'
+            f'{icon("check" if not cls else "alert", 18, 2.4)}{top}</span><span style="font-weight:500">View &rarr;</span></div>'
+            f'<div class="h-msg">{msg}</div>{moves}{_scoreboard(snap, in_hero=True)}</a>')
+    cards = "".join(c for c in (_trade_card(trades), _waiver_card(waivers), _grade_card(snap.get("grades") or [])) if c)
+    body = (f'<div class="stack">{hero}' + (f'<div class="section">Worth a look</div>{cards}' if cards else "")
+            + ui.footer(f'Updated {pt(snap.get("generated_at"), "%a %b %-d, %-I:%M %p PT")}.') + '</div>')
+    return ui.page(f"Today &middot; Week {snap['week']}", "today", f"Week {snap['week']}{_record(trades)}", "Today",
+                   snap.get("generated_at"), body)

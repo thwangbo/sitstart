@@ -305,11 +305,11 @@ class PageAndAlertTests(unittest.TestCase):
     def test_page_renders(self):
         from sitstart.page import render
         html = render(self.snap)
-        self.assertIn("The Dynasty", html)
-        self.assertIn("Suggested changes", html)
+        self.assertIn("<h1>Lineup</h1>", html)
+        self.assertIn("Make these changes", html)
         self.assertIn("On bye", html)
-        self.assertIn("Locked", html)
-        self.assertIn("Thu 5:15 PM", html)  # WAS @ NYG, 8:15 PM ET
+        self.assertIn("locked", html)
+        self.assertIn("WAS @ NYG · locked", html)  # Thursday game, already kicked off
 
     def test_page_escapes_names(self):
         from sitstart.page import render
@@ -672,7 +672,7 @@ class MarketTests(unittest.TestCase):
         self.assertIn("Vet QB", html)
         self.assertIn("2 weeks left", html)
         rep["targets"][0]["injury_status"] = "Questionable"
-        self.assertIn("tag inj", render(rep))
+        self.assertIn('<span class="tag bad">Questionable</span>', render(rep))
 
 
 class KtcTests(unittest.TestCase):
@@ -991,7 +991,7 @@ class WaiverTests(unittest.TestCase):
                           "median_runner_up": 1.0, "max_bid": 86},
                "drop": {"player_id": "d", "name": "Bench Guy", "value": 120}, "adds": [row], "streamers": []}
         html = render(rep)
-        for s in ("FA RB", "$9", "trending #4", "Bench Guy", "You have <b>$64</b>", "beat $8"):
+        for s in ("FA RB", "$9", "trending #4", "Bench Guy", "$64", "beat $8"):
             self.assertIn(s, html)
 
 
@@ -1085,3 +1085,34 @@ class InjuredPoolTests(unittest.TestCase):
         self.assertEqual([a["label"] for a in o["assets"]], ["Young QB"])
         self.assertTrue(o["assets"][0]["injured"])
         self.assertIsNone(build_offer(6500, "RB", teams[3], teams[1], m, pool_for(teams[3])))
+
+
+class TodayPageTests(unittest.TestCase):
+    def setUp(self):
+        self.snap = build_snapshot(FakeClient(ROUTES), "tim", schedule=make_schedule(), now=FRIDAY).to_dict()
+
+    def test_today_without_trades_or_waivers(self):
+        from sitstart.page import render_today
+        html = render_today(self.snap)
+        self.assertIn("TO MAKE", html)              # the fixture lineup has changes to make
+        self.assertIn('aria-current=page>', html.split('nav class="tabs"')[1].split("Today")[0] + ">")
+        self.assertNotIn("Worth a look", html)
+
+    def test_today_with_cards(self):
+        from sitstart.page import render_today
+        trades = {"me": {"wins": 14, "losses": 6, "record_rank": 5},
+                  "targets": [{"name": "Star WR", "owner": "Rebuilders", "owner_label": "rebuilder", "gain": 7623,
+                               "offer": {"assets": [{"label": "Hurt Guy", "injury_status": "IR"}, {"label": "2029 1st"}]}}]}
+        waivers = {"my_left": 64, "weeks_left": 7, "adds": [], "streamers": []}
+        snap = dict(self.snap, grades=[{"week": 10, "you": 92.8, "app": 92.8, "best": 92.8}])
+        html = render_today(snap, trades, waivers)
+        for s in ("14-6, 5th", "Star WR is gettable", "Hurt Guy (IR), 2029 1st", "+7,623", "Nothing worth a bid",
+                  "Week 10: perfect lineup", 'href="trades.html#t1"'):
+            self.assertIn(s, html)
+
+    def test_dark_mode_and_tabs_on_every_page(self):
+        from sitstart.page import render, render_today
+        for html in (render(self.snap), render_today(self.snap)):
+            self.assertIn("prefers-color-scheme:dark", html)
+            for href in ('href="./"', 'href="lineup.html"', 'href="trades.html"', 'href="waivers.html"'):
+                self.assertIn(href, html)
