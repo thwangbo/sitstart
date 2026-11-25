@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T00:01:24+00:00",
+ "generated_at": "2026-11-25T00:06:04+00:00",
  "season": "2026",
  "week": 11,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -239,56 +239,6 @@
    }
   },
   {
-   "player_id": "8917",
-   "name": "KaVontae Turpin",
-   "pos": "WR",
-   "nfl_team": "DAL",
-   "age": 30,
-   "injury_status": null,
-   "proj": 2.2,
-   "score": 2.2,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 135,
-   "consensus_rank": null,
-   "hot": null,
-   "value": 34,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 2 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 22,
-    "value_capped": false,
-    "contested_share": 0.25,
-    "teams_can_outbid": 7,
-    "examples": [
-     {
-      "name": "Calvin Ridley",
-      "week": 5,
-      "bid": 4,
-      "runner_up": null,
-      "proj": 2.2
-     },
-     {
-      "name": "Jacob Cowing",
-      "week": 3,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 2.3
-     },
-     {
-      "name": "Darius Cooper",
-      "week": 3,
-      "bid": 1,
-      "runner_up": null,
-      "proj": 1.9
-     }
-    ]
-   }
-  },
-  {
    "player_id": "12520",
    "name": "Xavier Restrepo",
    "pos": "WR",
@@ -299,10 +249,10 @@
    "score": 3.5,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 0,
+   "dynasty": 11,
    "consensus_rank": null,
    "hot": null,
-   "value": 0,
+   "value": 3,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -349,10 +299,10 @@
    "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 51,
+   "dynasty": 98,
    "consensus_rank": null,
    "hot": null,
-   "value": 13,
+   "value": 24,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -384,6 +334,56 @@
       "bid": 0,
       "runner_up": null,
       "proj": 3.1
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "8225",
+   "name": "Daniel Bellinger",
+   "pos": "TE",
+   "nfl_team": "TEN",
+   "age": 26,
+   "injury_status": null,
+   "proj": 3.1,
+   "score": 3.1,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 12,
+   "consensus_rank": null,
+   "hot": null,
+   "value": 3,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 22,
+    "value_capped": false,
+    "contested_share": 0.12,
+    "teams_can_outbid": 7,
+    "examples": [
+     {
+      "name": "Jeremy Ruckert",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.1
+     },
+     {
+      "name": "Tommy Tremble",
+      "week": 2,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.0
+     },
+     {
+      "name": "Foster Moreau",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.3
      }
     ]
    }
@@ -439,5 +439,5 @@
    }
   }
  ],
- "free_agents_checked": 24
+ "free_agents_checked": 56
 }
