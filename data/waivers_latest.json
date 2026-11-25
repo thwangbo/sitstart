@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T12:38:22+00:00",
+ "generated_at": "2026-11-25T23:33:17+00:00",
  "season": "2026",
  "week": 12,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -44,13 +44,13 @@
    "pos": "WR",
    "nfl_team": "MIN",
    "age": 24,
-   "injury_status": null,
+   "injury_status": "Questionable",
    "proj": 2.2,
-   "score": 2.9,
+   "score": 2.7,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 352,
-   "consensus_rank": "WR88",
+   "dynasty": 350,
+   "consensus_rank": "WR93",
    "hot": null,
    "value": 88,
    "tier": "depth",
@@ -95,14 +95,14 @@
    "nfl_team": "GB",
    "age": 26,
    "injury_status": null,
-   "proj": 3.7,
-   "score": 3.7,
+   "proj": 3.6,
+   "score": 3.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 66,
-   "consensus_rank": "RB63",
+   "dynasty": 50,
+   "consensus_rank": "RB61",
    "hot": null,
-   "value": 16,
+   "value": 13,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -122,18 +122,18 @@
       "proj": 3.6
      },
      {
-      "name": "Jashaun Corbin",
-      "week": 11,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 4.0
-     },
-     {
       "name": "Travis Homer",
       "week": 4,
       "bid": 0,
       "runner_up": null,
       "proj": 3.3
+     },
+     {
+      "name": "Jashaun Corbin",
+      "week": 11,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 4.0
      }
     ]
    }
@@ -145,31 +145,31 @@
    "nfl_team": "ARI",
    "age": 29,
    "injury_status": null,
-   "proj": 4.2,
+   "proj": 4.0,
    "score": 3.9,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "WR89",
+   "consensus_rank": "WR88",
    "hot": null,
    "value": 0,
    "tier": "depth",
    "bid": {
     "bid": 1,
     "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 5 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
     "capped": false,
     "cap": 20,
     "value_capped": true,
-    "contested_share": 0.62,
+    "contested_share": 0.5,
     "teams_can_outbid": 6,
     "examples": [
      {
-      "name": "Tai Felton",
-      "week": 4,
-      "bid": 2,
-      "runner_up": null,
-      "proj": 4.2
+      "name": "Tutu Atwell",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 4,
+      "proj": 4.0
      },
      {
       "name": "Devontez Walker",
@@ -179,61 +179,11 @@
       "proj": 4.0
      },
      {
-      "name": "Tutu Atwell",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 4,
-      "proj": 4.0
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "260",
-   "name": "Josh Johnson",
-   "pos": "QB",
-   "nfl_team": "ARI",
-   "age": 40,
-   "injury_status": null,
-   "proj": 0.0,
-   "score": 0.0,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 374,
-   "consensus_rank": "QB31",
-   "hot": null,
-   "value": 94,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 5 of 8 similar claims drew competing bids; $16 or less was enough to beat 3 in 4 of the runners-up.",
-    "capped": false,
-    "cap": 20,
-    "value_capped": true,
-    "contested_share": 0.62,
-    "teams_can_outbid": 6,
-    "examples": [
-     {
-      "name": "Tanner McKee",
-      "week": 5,
-      "bid": 1,
-      "runner_up": 0,
-      "proj": 0.0
-     },
-     {
-      "name": "Joe Fagnano",
-      "week": 8,
-      "bid": 25,
+      "name": "Tai Felton",
+      "week": 4,
+      "bid": 2,
       "runner_up": null,
-      "proj": 0.0
-     },
-     {
-      "name": "DJ Uiagalelei",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 13,
-      "proj": 0.0
+      "proj": 4.2
      }
     ]
    }
@@ -245,14 +195,14 @@
    "nfl_team": "NYG",
    "age": 25,
    "injury_status": null,
-   "proj": 2.6,
+   "proj": 2.7,
    "score": 2.3,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 114,
+   "dynasty": 124,
    "consensus_rank": "TE57",
    "hot": null,
-   "value": 29,
+   "value": 31,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -296,11 +246,11 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.7,
-   "score": 3.0,
+   "score": 2.7,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 85,
-   "consensus_rank": "TE43",
+   "dynasty": 83,
+   "consensus_rank": "TE45",
    "hot": null,
    "value": 21,
    "tier": "depth",
@@ -345,12 +295,12 @@
    "nfl_team": "CIN",
    "age": 30,
    "injury_status": null,
-   "proj": 3.4,
-   "score": 2.8,
+   "proj": 3.3,
+   "score": 2.7,
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "TE55",
+   "consensus_rank": "TE53",
    "hot": null,
    "value": 0,
    "tier": "depth",
@@ -379,11 +329,61 @@
       "proj": 3.5
      },
      {
-      "name": "Brevyn Spann-Ford",
-      "week": 9,
+      "name": "Jeremy Ruckert",
+      "week": 4,
       "bid": 0,
       "runner_up": null,
-      "proj": 3.6
+      "proj": 3.1
+     }
+    ]
+   }
+  },
+  {
+   "player_id": "260",
+   "name": "Josh Johnson",
+   "pos": "QB",
+   "nfl_team": "ARI",
+   "age": 40,
+   "injury_status": null,
+   "proj": 0.0,
+   "score": 0.0,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 319,
+   "consensus_rank": "QB31",
+   "hot": null,
+   "value": 80,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 5 of 8 similar claims drew competing bids; $16 or less was enough to beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 20,
+    "value_capped": true,
+    "contested_share": 0.62,
+    "teams_can_outbid": 6,
+    "examples": [
+     {
+      "name": "Tanner McKee",
+      "week": 5,
+      "bid": 1,
+      "runner_up": 0,
+      "proj": 0.0
+     },
+     {
+      "name": "Joe Fagnano",
+      "week": 8,
+      "bid": 25,
+      "runner_up": null,
+      "proj": 0.0
+     },
+     {
+      "name": "DJ Uiagalelei",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 13,
+      "proj": 0.0
      }
     ]
    }
@@ -399,10 +399,10 @@
    "score": 2.2,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 85,
-   "consensus_rank": "TE56",
+   "dynasty": 76,
+   "consensus_rank": "TE54",
    "hot": null,
-   "value": 21,
+   "value": 19,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -439,5 +439,5 @@
    }
   }
  ],
- "free_agents_checked": 68
+ "free_agents_checked": 62
 }
