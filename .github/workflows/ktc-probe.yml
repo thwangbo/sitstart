@@ -19,7 +19,11 @@ jobs:
           print("PV", re.search(r"playersVersion = '([^']+)'", html).group(1))
           js = get("https://keeptradecut.com" + src)
           print("JSLEN", len(js))
-          for kw in ["ktcFetchPlayerPool", "fetch(", "/api", ".json", "dynasty", "playersVersion", "indexedDB", "localStorage"]:
-              for m in list(re.finditer(re.escape(kw), js))[:4]:
-                  print("KW", kw, "|", js[max(0, m.start()-250):m.start()+350].replace("\n", " "))
+          i = js.index("function ktcFetchPlayerPool")
+          print("FN", js[i:i+2600].replace("\n", " "))
+          print("PATHS", sorted(set(re.findall(r"['\"](/[A-Za-z0-9_/\-]+)['\"]", js))))
+          j = js.find("baseUrl +")
+          print("BASE", js[max(0,j-300):j+300].replace("\n", " "))
+          for m in re.finditer(r"\?v=|version=|'\?'", js):
+              print("Q", js[max(0,m.start()-150):m.start()+150].replace("\n", " "))
           PY
