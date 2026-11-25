@@ -83,7 +83,7 @@ def run_trades(client, snap, args, consensus=None):
     ktc_rows = None
     try:
         from . import ktc
-        ktc_rows = ktc.parse(ktc.fetch_html(lg["is_superflex"]), superflex=lg["is_superflex"])
+        ktc_rows = ktc.fetch_rows(lg["is_superflex"])
     except Exception as e:
         print(f"Warning: KeepTradeCut values unavailable ({e}). Using FantasyCalc only.", file=sys.stderr)
     try:

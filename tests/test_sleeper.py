@@ -1116,3 +1116,20 @@ class TodayPageTests(unittest.TestCase):
             self.assertIn("prefers-color-scheme:dark", html)
             for href in ('href="./"', 'href="lineup.html"', 'href="trades.html"', 'href="waivers.html"'):
                 self.assertIn(href, html)
+
+
+class KtcPoolTests(unittest.TestCase):
+    def test_pool_url_and_rows(self):
+        from sitstart.ktc import parse_rows, pool_url
+        html = "<script> var playersVersion = '2611250000-8e8f'; var playersArray = []; </script>"
+        js = "var KTC_DATA_CACHE_SCHEMA_REV = '2';"
+        self.assertEqual(pool_url(html, js),
+                         "https://keeptradecut.com/dynasty-rankings/player-pool?v=2611250000-8e8f&sr=2")
+        rows = [{"playerName": "Ja'Marr Chase", "position": "WR", "team": "CIN", "age": 26.7, "mflid": 15232,
+                 "superflexValues": {"value": 9197}, "oneQBValues": {"value": 9999}},
+                {"playerName": "2027 Mid 1st", "position": "RDP", "superflexValues": {"value": 3500}}]
+        out = parse_rows(rows)
+        self.assertEqual(out[0]["value"], 9197.0)
+        self.assertEqual(out[1]["pick_label"], "2027 1st (Mid)")
+        with self.assertRaises(ValueError):
+            pool_url("<html>new layout</html>")
