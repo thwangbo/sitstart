@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T07:29:58+00:00",
+ "generated_at": "2026-11-26T22:55:12+00:00",
  "season": "2026",
  "week": 12,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -46,13 +46,13 @@
    "age": 24,
    "injury_status": "Questionable",
    "proj": 2.2,
-   "score": 2.7,
+   "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 343,
-   "consensus_rank": "WR93",
+   "dynasty": 350,
+   "consensus_rank": "WR97",
    "hot": null,
-   "value": 86,
+   "value": 88,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -99,10 +99,10 @@
    "score": 3.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 60,
+   "dynasty": 48,
    "consensus_rank": "RB61",
    "hot": null,
-   "value": 15,
+   "value": 12,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -139,56 +139,6 @@
    }
   },
   {
-   "player_id": "7812",
-   "name": "Simi Fehoko",
-   "pos": "WR",
-   "nfl_team": "ARI",
-   "age": 29,
-   "injury_status": null,
-   "proj": 4.0,
-   "score": 3.9,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 0,
-   "consensus_rank": "WR88",
-   "hot": null,
-   "value": 0,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
-    "capped": false,
-    "cap": 20,
-    "value_capped": true,
-    "contested_share": 0.5,
-    "teams_can_outbid": 6,
-    "examples": [
-     {
-      "name": "Tutu Atwell",
-      "week": 9,
-      "bid": 21,
-      "runner_up": 4,
-      "proj": 4.0
-     },
-     {
-      "name": "Devontez Walker",
-      "week": 2,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 4.0
-     },
-     {
-      "name": "Tai Felton",
-      "week": 4,
-      "bid": 2,
-      "runner_up": null,
-      "proj": 4.2
-     }
-    ]
-   }
-  },
-  {
    "player_id": "11597",
    "name": "Theo Johnson",
    "pos": "TE",
@@ -196,13 +146,13 @@
    "age": 25,
    "injury_status": null,
    "proj": 2.6,
-   "score": 2.2,
+   "score": 2.4,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 128,
-   "consensus_rank": "TE57",
+   "dynasty": 144,
+   "consensus_rank": "TE51",
    "hot": null,
-   "value": 32,
+   "value": 36,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -239,6 +189,56 @@
    }
   },
   {
+   "player_id": "7812",
+   "name": "Simi Fehoko",
+   "pos": "WR",
+   "nfl_team": "ARI",
+   "age": 29,
+   "injury_status": null,
+   "proj": 4.0,
+   "score": 3.9,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 0,
+   "consensus_rank": "WR86",
+   "hot": null,
+   "value": 0,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "He wouldn't start for you and has little trade value, so $1 at most. 4 of 8 similar claims drew competing bids; $2 or less was enough to beat 3 in 4 of the runners-up.",
+    "capped": false,
+    "cap": 20,
+    "value_capped": true,
+    "contested_share": 0.5,
+    "teams_can_outbid": 6,
+    "examples": [
+     {
+      "name": "Devontez Walker",
+      "week": 2,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 4.0
+     },
+     {
+      "name": "Tutu Atwell",
+      "week": 9,
+      "bid": 21,
+      "runner_up": 4,
+      "proj": 4.0
+     },
+     {
+      "name": "Tai Felton",
+      "week": 4,
+      "bid": 2,
+      "runner_up": null,
+      "proj": 4.2
+     }
+    ]
+   }
+  },
+  {
    "player_id": "260",
    "name": "Josh Johnson",
    "pos": "QB",
@@ -249,10 +249,10 @@
    "score": 0.0,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 366,
-   "consensus_rank": "QB31",
+   "dynasty": 384,
+   "consensus_rank": "QB32",
    "hot": null,
-   "value": 92,
+   "value": 96,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -299,10 +299,10 @@
    "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 94,
+   "dynasty": 89,
    "consensus_rank": "TE45",
    "hot": null,
-   "value": 24,
+   "value": 22,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -346,13 +346,13 @@
    "age": 23,
    "injury_status": null,
    "proj": 2.4,
-   "score": 2.2,
+   "score": 2.3,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 95,
-   "consensus_rank": "TE54",
+   "dynasty": 115,
+   "consensus_rank": "TE53",
    "hot": null,
-   "value": 24,
+   "value": 29,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -400,7 +400,7 @@
    "week_gain": 0.0,
    "ros_gain": 0,
    "dynasty": 0,
-   "consensus_rank": "TE53",
+   "consensus_rank": "TE52",
    "hot": null,
    "value": 0,
    "tier": "depth",
