@@ -42,9 +42,6 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
 
@@ -80,5 +77,24 @@ jobs:
         with:
           path: site
 
+  # Publishing is its own job (GitHub's standard setup). Deploying in the same job right after the
+  # upload sometimes found no artifact yet ("No artifacts named github-pages"); a separate job gives
+  # GitHub time to register it, and one retry after 60 seconds covers the rest.
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url || steps.retry.outputs.page_url }}
+    steps:
       - id: deploy
+        uses: actions/deploy-pages@v5
+        continue-on-error: true
+
+      - name: Wait before retrying
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 60
+
+      - id: retry
+        if: steps.deploy.outcome == 'failure'
         uses: actions/deploy-pages@v5
