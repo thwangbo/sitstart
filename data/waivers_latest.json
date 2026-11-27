@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T01:40:27+00:00",
+ "generated_at": "2026-11-27T04:29:52+00:00",
  "season": "2026",
  "week": 12,
  "league_name": "11 Beginners and 1 Pro Dynasty League",
@@ -49,10 +49,10 @@
    "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 344,
+   "dynasty": 333,
    "consensus_rank": "WR97",
    "hot": null,
-   "value": 86,
+   "value": 83,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -99,10 +99,10 @@
    "score": 2.4,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 17,
+   "dynasty": 11,
    "consensus_rank": "RB94",
    "hot": null,
-   "value": 4,
+   "value": 3,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -127,56 +127,6 @@
       "bid": 1,
       "runner_up": null,
       "proj": 4.3
-     },
-     {
-      "name": "Jashaun Corbin",
-      "week": 11,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 4.0
-     }
-    ]
-   }
-  },
-  {
-   "player_id": "11370",
-   "name": "Chris Brooks",
-   "pos": "RB",
-   "nfl_team": "GB",
-   "age": 26,
-   "injury_status": null,
-   "proj": 3.6,
-   "score": 3.6,
-   "week_gain": 0.0,
-   "ros_gain": 0,
-   "dynasty": 48,
-   "consensus_rank": "RB61",
-   "hot": null,
-   "value": 12,
-   "tier": "depth",
-   "bid": {
-    "bid": 1,
-    "aggressive": 1,
-    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
-    "capped": false,
-    "cap": 20,
-    "value_capped": false,
-    "contested_share": 0.12,
-    "teams_can_outbid": 6,
-    "examples": [
-     {
-      "name": "Khalil Herbert",
-      "week": 9,
-      "bid": 0,
-      "runner_up": 0,
-      "proj": 3.6
-     },
-     {
-      "name": "Travis Homer",
-      "week": 4,
-      "bid": 0,
-      "runner_up": null,
-      "proj": 3.3
      },
      {
       "name": "Jashaun Corbin",
@@ -239,6 +189,56 @@
    }
   },
   {
+   "player_id": "11370",
+   "name": "Chris Brooks",
+   "pos": "RB",
+   "nfl_team": "GB",
+   "age": 26,
+   "injury_status": null,
+   "proj": 3.6,
+   "score": 3.6,
+   "week_gain": 0.0,
+   "ros_gain": 0,
+   "dynasty": 37,
+   "consensus_rank": "RB61",
+   "hot": null,
+   "value": 9,
+   "tier": "depth",
+   "bid": {
+    "bid": 1,
+    "aggressive": 1,
+    "reason": "Only 1 of 8 similar claims drew a competing bid. $1 beats every $0 bid, whatever your waiver order.",
+    "capped": false,
+    "cap": 20,
+    "value_capped": false,
+    "contested_share": 0.12,
+    "teams_can_outbid": 6,
+    "examples": [
+     {
+      "name": "Khalil Herbert",
+      "week": 9,
+      "bid": 0,
+      "runner_up": 0,
+      "proj": 3.6
+     },
+     {
+      "name": "Travis Homer",
+      "week": 4,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 3.3
+     },
+     {
+      "name": "Jashaun Corbin",
+      "week": 11,
+      "bid": 0,
+      "runner_up": null,
+      "proj": 4.0
+     }
+    ]
+   }
+  },
+  {
    "player_id": "11597",
    "name": "Theo Johnson",
    "pos": "TE",
@@ -249,10 +249,10 @@
    "score": 2.4,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 136,
+   "dynasty": 126,
    "consensus_rank": "TE51",
    "hot": null,
-   "value": 34,
+   "value": 32,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -299,10 +299,10 @@
    "score": 0.0,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 393,
+   "dynasty": 371,
    "consensus_rank": "QB32",
    "hot": null,
-   "value": 98,
+   "value": 93,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -349,9 +349,9 @@
    "score": 2.3,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 124,
+   "dynasty": 126,
    "consensus_rank": "TE53",
-   "hot": 50,
+   "hot": 38,
    "value": 31,
    "tier": "depth",
    "bid": {
@@ -399,10 +399,10 @@
    "score": 2.6,
    "week_gain": 0.0,
    "ros_gain": 0,
-   "dynasty": 90,
+   "dynasty": 83,
    "consensus_rank": "TE45",
    "hot": null,
-   "value": 22,
+   "value": 21,
    "tier": "depth",
    "bid": {
     "bid": 1,
@@ -439,5 +439,5 @@
    }
   }
  ],
- "free_agents_checked": 63
+ "free_agents_checked": 65
 }
